@@ -131,11 +131,6 @@
         .preview-row { display: flex; justify-content: center; gap: 30px; align-items: flex-end; }
         .preview-item { text-align: center; }
         .specs { font-size: 12px; color: #666; margin-top: 16px; }
-        .reference-icon { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; }
-        .reference-icon svg { width: 100%; height: 100%; }
-        .reference-icon img { width: 100%; height: 100%; image-rendering: pixelated; image-rendering: crisp-edges; }
-        #reference-container { display: none; }
-        #reference-container.show { display: block; }
         
         /* Pixel Editor */
         .editor-tools {
@@ -298,10 +293,6 @@
                     <div class="preview-item">
                         <div class="preview-label light" id="label-scaled">8× Scaled</div>
                         <canvas id="preview-scaled" class="preview-scaled"></canvas>
-                    </div>
-                    <div class="preview-item" id="reference-container">
-                        <div class="preview-label light" id="label-reference">Reference</div>
-                        <div class="reference-icon" id="reference-icon"></div>
                     </div>
                 </div>
             </div>
@@ -615,9 +606,6 @@
             const color = theme === 'light' ? 'black' : 'white';
             const canvasActual = document.getElementById('preview-actual');
             const canvasScaled = document.getElementById('preview-scaled');
-            const referenceContainer = document.getElementById('reference-container');
-            const referenceIcon = document.getElementById('reference-icon');
-            const labelReference = document.getElementById('label-reference');
             let specText;
 
             if (currentTab === 'letters') {
@@ -625,7 +613,6 @@
                 const { letterCount } = getLetterParams();
                 specText = `16×16px • ${letterCount} letter${letterCount > 1 ? 's' : ''} • "${letters}"`;
                 document.getElementById('letters').maxLength = letterCount;
-                referenceContainer.classList.remove('show');
                 showEditorTools(false);
                 editedPixels = null;
             } else {
@@ -640,10 +627,6 @@
                 
                 specText = `16×16px • Symbol • "${SYMBOLS[symbolKey].name}"`;
                 
-                // Show reference image
-                referenceContainer.classList.add('show');
-                referenceIcon.innerHTML = `<img src="references/${symbolKey}.png" alt="${SYMBOLS[symbolKey].name}">`;
-                labelReference.className = 'preview-label ' + theme;
                 showEditorTools(true);
             }
 
