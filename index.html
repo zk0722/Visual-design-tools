@@ -5,21 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pixel Icon Generator</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
             padding: 40px 20px;
             background: #f5f5f5;
         }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
+        h1 { text-align: center; color: #333; margin-bottom: 30px; }
         .card {
             background: white;
             border-radius: 12px;
@@ -42,34 +36,42 @@
             align-items: center;
             gap: 6px;
         }
-        .export-btn:hover {
-            background: #0056b3;
-        }
-        .export-btn svg {
-            width: 16px;
-            height: 16px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #444;
-        }
-        .radio-group {
+        .export-btn:hover { background: #0056b3; }
+        .export-btn svg { width: 16px; height: 16px; }
+        
+        /* Tabs */
+        .tabs {
             display: flex;
-            gap: 12px;
+            gap: 4px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0;
         }
-        .radio-option {
-            flex: 1;
-            position: relative;
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
         }
-        .radio-option input {
-            position: absolute;
-            opacity: 0;
+        .tab-btn:hover { color: #333; }
+        .tab-btn.active {
+            color: #007aff;
+            border-bottom-color: #007aff;
         }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; color: #444; }
+        .radio-group { display: flex; gap: 12px; }
+        .radio-option { flex: 1; position: relative; }
+        .radio-option input { position: absolute; opacity: 0; }
         .radio-option label {
             display: flex;
             flex-direction: column;
@@ -80,37 +82,14 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-        .radio-option input:checked + label {
-            border-color: #007aff;
-            background: #f0f7ff;
-        }
-        .radio-option label:hover {
-            border-color: #999;
-        }
-        .radio-option .icon-preview {
-            width: 48px;
-            height: 36px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .radio-option .icon-preview svg {
-            width: 100%;
-            height: 100%;
-        }
-        .theme-group {
-            display: flex;
-            gap: 8px;
-        }
-        .theme-option {
-            flex: 1;
-            position: relative;
-        }
-        .theme-option input {
-            position: absolute;
-            opacity: 0;
-        }
+        .radio-option input:checked + label { border-color: #007aff; background: #f0f7ff; }
+        .radio-option label:hover { border-color: #999; }
+        .radio-option .icon-preview { width: 48px; height: 36px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; }
+        .radio-option .icon-preview svg { width: 100%; height: 100%; }
+        
+        .theme-group { display: flex; gap: 8px; }
+        .theme-option { flex: 1; position: relative; }
+        .theme-option input { position: absolute; opacity: 0; }
         .theme-option label {
             display: flex;
             align-items: center;
@@ -123,25 +102,12 @@
             transition: all 0.2s;
             font-weight: 500;
         }
-        .theme-option input:checked + label {
-            border-color: #007aff;
-            background: #f0f7ff;
-        }
-        .theme-option label:hover {
-            border-color: #999;
-        }
-        .theme-swatch {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-        .theme-swatch.light {
-            background: #fefefe;
-        }
-        .theme-swatch.dark {
-            background: #3b4453;
-        }
+        .theme-option input:checked + label { border-color: #007aff; background: #f0f7ff; }
+        .theme-option label:hover { border-color: #999; }
+        .theme-swatch { width: 20px; height: 20px; border-radius: 4px; border: 1px solid #ccc; }
+        .theme-swatch.light { background: #fefefe; }
+        .theme-swatch.dark { background: #3b4453; }
+        
         input[type="text"] {
             width: 100%;
             padding: 12px;
@@ -152,65 +118,43 @@
             letter-spacing: 4px;
             text-align: center;
         }
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #007aff;
+        input[type="text"]:focus { outline: none; border-color: #007aff; }
+        
+        .preview-section { text-align: center; margin-top: 24px; padding-top: 24px; border-top: 1px solid #eee; }
+        .preview-container { display: inline-block; padding: 20px; border-radius: 8px; margin-bottom: 16px; transition: background 0.2s; }
+        .preview-container.light { background: #fefefe; border: 1px solid #e0e0e0; }
+        .preview-container.dark { background: #3b4453; }
+        .preview-label { font-size: 12px; margin-bottom: 8px; }
+        .preview-label.light { color: #888; }
+        .preview-label.dark { color: #aaa; }
+        .preview-actual, .preview-scaled { image-rendering: pixelated; image-rendering: crisp-edges; }
+        .preview-row { display: flex; justify-content: center; gap: 40px; align-items: flex-end; }
+        .preview-item { text-align: center; }
+        .specs { font-size: 12px; color: #666; margin-top: 16px; }
+        .hidden-canvas { display: none; }
+        
+        /* Symbol Grid */
+        .symbol-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
         }
-        .preview-section {
-            text-align: center;
-            margin-top: 24px;
-            padding-top: 24px;
-            border-top: 1px solid #eee;
-        }
-        .preview-container {
-            display: inline-block;
-            padding: 20px;
+        .symbol-btn {
+            aspect-ratio: 1;
+            border: 2px solid #ddd;
             border-radius: 8px;
-            margin-bottom: 16px;
-            transition: background 0.2s;
-        }
-        .preview-container.light {
-            background: #fefefe;
-            border: 1px solid #e0e0e0;
-        }
-        .preview-container.dark {
-            background: #3b4453;
-        }
-        .preview-label {
-            font-size: 12px;
-            margin-bottom: 8px;
-        }
-        .preview-label.light {
-            color: #888;
-        }
-        .preview-label.dark {
-            color: #aaa;
-        }
-        #preview-actual {
-            image-rendering: pixelated;
-            image-rendering: crisp-edges;
-        }
-        #preview-scaled {
-            image-rendering: pixelated;
-            image-rendering: crisp-edges;
-        }
-        .preview-row {
+            background: white;
+            cursor: pointer;
+            padding: 4px;
+            transition: all 0.2s;
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 40px;
-            align-items: flex-end;
         }
-        .preview-item {
-            text-align: center;
-        }
-        .specs {
-            font-size: 12px;
-            color: #666;
-            margin-top: 16px;
-        }
-        .hidden-canvas {
-            display: none;
-        }
+        .symbol-btn:hover { border-color: #999; }
+        .symbol-btn.selected { border-color: #007aff; background: #f0f7ff; }
+        .symbol-btn canvas { image-rendering: pixelated; image-rendering: crisp-edges; }
     </style>
 </head>
 <body>
@@ -223,44 +167,62 @@
             </svg>
             Export
         </button>
-        <div class="form-group">
-            <label>Number of Letters</label>
-            <div class="radio-group">
-                <div class="radio-option">
-                    <input type="radio" name="letterCount" id="opt1" value="1">
-                    <label for="opt1">
-                        <div class="icon-preview">
-                            <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="none" stroke="black" stroke-width="1"/><text x="8" y="11" text-anchor="middle" font-size="8" font-family="monospace">A</text></svg>
-                        </div>
-                        1 Letter
-                    </label>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="letters">Letters</button>
+            <button class="tab-btn" data-tab="symbols">Special Symbols</button>
+        </div>
+        
+        <!-- Letters Tab -->
+        <div class="tab-content active" id="tab-letters">
+            <div class="form-group">
+                <label>Number of Letters</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="letterCount" id="opt1" value="1">
+                        <label for="opt1">
+                            <div class="icon-preview">
+                                <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="none" stroke="black" stroke-width="1"/><text x="8" y="11" text-anchor="middle" font-size="8" font-family="monospace">A</text></svg>
+                            </div>
+                            1 Letter
+                        </label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="letterCount" id="opt2" value="2" checked>
+                        <label for="opt2">
+                            <div class="icon-preview">
+                                <svg viewBox="0 0 16 12"><rect x="0.5" y="0.5" width="15" height="11" rx="5" fill="none" stroke="black" stroke-width="1"/><text x="8" y="9" text-anchor="middle" font-size="6" font-family="monospace">AB</text></svg>
+                            </div>
+                            2 Letters
+                        </label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="letterCount" id="opt3" value="3">
+                        <label for="opt3">
+                            <div class="icon-preview">
+                                <svg viewBox="0 0 16 12"><rect x="0.5" y="0.5" width="15" height="11" rx="5" fill="none" stroke="black" stroke-width="1"/><text x="8" y="9" text-anchor="middle" font-size="5" font-family="monospace">ABC</text></svg>
+                            </div>
+                            3 Letters
+                        </label>
+                    </div>
                 </div>
-                <div class="radio-option">
-                    <input type="radio" name="letterCount" id="opt2" value="2" checked>
-                    <label for="opt2">
-                        <div class="icon-preview">
-                            <svg viewBox="0 0 16 12"><rect x="0.5" y="0.5" width="15" height="11" rx="5" fill="none" stroke="black" stroke-width="1"/><text x="8" y="9" text-anchor="middle" font-size="6" font-family="monospace">AB</text></svg>
-                        </div>
-                        2 Letters
-                    </label>
-                </div>
-                <div class="radio-option">
-                    <input type="radio" name="letterCount" id="opt3" value="3">
-                    <label for="opt3">
-                        <div class="icon-preview">
-                            <svg viewBox="0 0 16 12"><rect x="0.5" y="0.5" width="15" height="11" rx="5" fill="none" stroke="black" stroke-width="1"/><text x="8" y="9" text-anchor="middle" font-size="5" font-family="monospace">ABC</text></svg>
-                        </div>
-                        3 Letters
-                    </label>
-                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="letters">Enter Letters (A-Z)</label>
+                <input type="text" id="letters" maxlength="3" placeholder="AB" value="AB">
             </div>
         </div>
         
-        <div class="form-group">
-            <label for="letters">Enter Letters (A-Z)</label>
-            <input type="text" id="letters" maxlength="3" placeholder="AB" value="AB">
+        <!-- Symbols Tab -->
+        <div class="tab-content" id="tab-symbols">
+            <div class="form-group">
+                <label>Select Symbol (29 icons)</label>
+                <div class="symbol-grid" id="symbol-grid"></div>
+            </div>
         </div>
         
+        <!-- Shared Theme Selector -->
         <div class="form-group">
             <label>Theme (Preview)</label>
             <div class="theme-group">
@@ -287,11 +249,11 @@
                 <div class="preview-row">
                     <div class="preview-item">
                         <div class="preview-label light" id="label-actual">Actual Size</div>
-                        <canvas id="preview-actual"></canvas>
+                        <canvas id="preview-actual" class="preview-actual"></canvas>
                     </div>
                     <div class="preview-item">
                         <div class="preview-label light" id="label-scaled">8× Scaled</div>
-                        <canvas id="preview-scaled"></canvas>
+                        <canvas id="preview-scaled" class="preview-scaled"></canvas>
                     </div>
                 </div>
             </div>
@@ -299,14 +261,15 @@
         </div>
     </div>
     
-    <!-- Hidden canvases for export -->
     <canvas id="export-light" class="hidden-canvas"></canvas>
     <canvas id="export-dark" class="hidden-canvas"></canvas>
 
     <script>
-        // Pixel fonts for different sizes
-        
-        // Large font for single letter (6x10 pixels) - fits in 16x16 circle with 3px margin top/bottom
+        // Current mode: 'letters' or 'symbols'
+        let currentTab = 'letters';
+        let selectedSymbol = 0;
+
+        // ==================== LETTER FONTS ====================
         const FONT_LARGE = {
             'A': [[2,0],[3,0],[1,1],[4,1],[0,2],[5,2],[0,3],[5,3],[0,4],[5,4],[0,5],[1,5],[2,5],[3,5],[4,5],[5,5],[0,6],[5,6],[0,7],[5,7],[0,8],[5,8],[0,9],[5,9]],
             'B': [[0,0],[1,0],[2,0],[3,0],[4,0],[0,1],[5,1],[0,2],[5,2],[0,3],[5,3],[0,4],[1,4],[2,4],[3,4],[4,4],[0,5],[5,5],[0,6],[5,6],[0,7],[5,7],[0,8],[5,8],[0,9],[1,9],[2,9],[3,9],[4,9]],
@@ -336,7 +299,6 @@
             'Z': [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[5,1],[4,2],[3,3],[4,3],[2,4],[3,4],[1,5],[2,5],[1,6],[0,7],[1,7],[0,8],[0,9],[1,9],[2,9],[3,9],[4,9],[5,9]]
         };
 
-        // Medium font for two letters (4x7 pixels) - fits in 16x12 pill
         const FONT_MEDIUM = {
             'A': [[1,0],[2,0],[0,1],[3,1],[0,2],[3,2],[0,3],[1,3],[2,3],[3,3],[0,4],[3,4],[0,5],[3,5],[0,6],[3,6]],
             'B': [[0,0],[1,0],[2,0],[0,1],[3,1],[0,2],[3,2],[0,3],[1,3],[2,3],[0,4],[3,4],[0,5],[3,5],[0,6],[1,6],[2,6]],
@@ -366,7 +328,6 @@
             'Z': [[0,0],[1,0],[2,0],[3,0],[3,1],[2,2],[1,3],[2,3],[1,4],[0,5],[0,6],[1,6],[2,6],[3,6]]
         };
 
-        // Small font for three letters (3x5 pixels) - fits in 16x12 pill
         const FONT_SMALL = {
             'A': [[1,0],[0,1],[2,1],[0,2],[1,2],[2,2],[0,3],[2,3],[0,4],[2,4]],
             'B': [[0,0],[1,0],[0,1],[2,1],[0,2],[1,2],[0,3],[2,3],[0,4],[1,4]],
@@ -396,74 +357,68 @@
             'Z': [[0,0],[1,0],[2,0],[2,1],[1,2],[0,3],[0,4],[1,4],[2,4]]
         };
 
-        // Drawing functions
-        const CIRCLE_PIXELS = [
-            [5,0],[6,0],[7,0],[8,0],[9,0],[10,0],
-            [3,1],[4,1],[11,1],[12,1],
-            [2,2],[13,2],
-            [1,3],[14,3],
-            [1,4],[14,4],
-            [0,5],[15,5],
-            [0,6],[15,6],
-            [0,7],[15,7],
-            [0,8],[15,8],
-            [0,9],[15,9],
-            [0,10],[15,10],
-            [1,11],[14,11],
-            [1,12],[14,12],
-            [2,13],[13,13],
-            [3,14],[4,14],[11,14],[12,14],
-            [5,15],[6,15],[7,15],[8,15],[9,15],[10,15]
-        ];
+        // ==================== SPECIAL SYMBOLS (29 icons) ====================
+        const SYMBOLS = {
+            // Symbol name: [pixels array, display name]
+            'centerline': { name: 'Centerline', pixels: [[7,2],[8,2],[7,3],[8,3],[7,4],[8,4],[3,5],[4,5],[5,5],[6,5],[7,5],[8,5],[9,5],[10,5],[11,5],[12,5],[7,6],[8,6],[3,7],[4,7],[5,7],[6,7],[7,7],[8,7],[9,7],[10,7],[11,7],[12,7],[7,8],[8,8],[7,9],[8,9],[7,10],[8,10],[7,11],[8,11],[7,12],[8,12],[7,13],[8,13]] },
+            'loop': { name: 'Loop', pixels: [[6,2],[7,2],[8,2],[9,2],[4,3],[5,3],[10,3],[11,3],[3,4],[12,4],[3,5],[12,5],[3,6],[12,6],[3,7],[12,7],[3,8],[11,8],[12,8],[13,8],[14,8],[4,9],[5,9],[10,9],[12,9],[13,9],[6,10],[7,10],[8,10],[9,10],[11,10],[12,10]] },
+            'section': { name: 'Section §', pixels: [[6,1],[7,1],[8,1],[9,1],[5,2],[10,2],[5,3],[6,4],[7,4],[8,4],[5,5],[9,5],[6,6],[7,6],[8,6],[9,6],[6,7],[10,7],[7,8],[8,8],[9,8],[5,9],[10,9],[5,10],[6,11],[7,11],[8,11],[9,11]] },
+            'hArrow': { name: 'H-Arrow ↔', pixels: [[3,7],[4,7],[5,7],[6,7],[7,7],[8,7],[9,7],[10,7],[11,7],[12,7],[4,6],[11,6],[5,5],[10,5],[4,8],[11,8],[5,9],[10,9]] },
+            'dagger': { name: 'Dagger †', pixels: [[7,1],[8,1],[7,2],[8,2],[7,3],[8,3],[4,4],[5,4],[6,4],[7,4],[8,4],[9,4],[10,4],[11,4],[7,5],[8,5],[7,6],[8,6],[7,7],[8,7],[7,8],[8,8],[7,9],[8,9],[7,10],[8,10],[7,11],[8,11],[7,12],[8,12],[7,13],[8,13]] },
+            'tripleBar': { name: 'Triple Bar ≡', pixels: [[3,4],[4,4],[5,4],[6,4],[7,4],[8,4],[9,4],[10,4],[11,4],[12,4],[3,7],[4,7],[5,7],[6,7],[7,7],[8,7],[9,7],[10,7],[11,7],[12,7],[3,10],[4,10],[5,10],[6,10],[7,10],[8,10],[9,10],[10,10],[11,10],[12,10]] },
+            'arrowUR': { name: 'Arrow ↗', pixels: [[9,3],[10,3],[11,3],[12,3],[11,4],[12,4],[10,5],[12,5],[9,6],[12,6],[8,7],[7,8],[6,9],[5,10],[4,11],[3,12]] },
+            'arrowUR2': { name: 'Two Arrows', pixels: [[6,3],[7,3],[8,3],[7,4],[8,4],[6,5],[8,5],[5,6],[4,7],[11,4],[12,4],[13,4],[12,5],[13,5],[11,6],[13,6],[10,7],[9,8],[8,9]] },
+            'emptySet': { name: 'Empty Set ∅', pixels: [[6,2],[7,2],[8,2],[9,2],[5,3],[10,3],[12,3],[4,4],[11,4],[11,4],[4,5],[10,5],[4,6],[9,6],[4,7],[8,7],[4,8],[7,8],[11,8],[4,9],[6,9],[11,9],[5,10],[11,10],[3,10],[6,11],[7,11],[8,11],[9,11]] },
+            'plusMinus': { name: 'Plus-Minus ±', pixels: [[7,2],[8,2],[7,3],[8,3],[4,4],[5,4],[6,4],[7,4],[8,4],[9,4],[10,4],[11,4],[7,5],[8,5],[7,6],[8,6],[4,9],[5,9],[6,9],[7,9],[8,9],[9,9],[10,9],[11,9]] },
+            'degree': { name: 'Degree °', pixels: [[6,3],[7,3],[8,3],[9,3],[5,4],[10,4],[5,5],[10,5],[6,6],[7,6],[8,6],[9,6]] },
+            'arcTop': { name: 'Arc Top ⌒', pixels: [[7,4],[8,4],[5,5],[6,5],[9,5],[10,5],[4,6],[11,6],[3,7],[12,7],[2,8],[13,8],[2,9],[13,9]] },
+            'angle': { name: 'Angle ∠', pixels: [[12,3],[11,4],[10,5],[9,6],[8,7],[7,8],[6,9],[5,10],[4,11],[3,12],[4,12],[5,12],[6,12],[7,12],[8,12],[9,12],[10,12],[11,12],[12,12]] },
+            'perpendicular': { name: 'Perpendicular ⊥', pixels: [[7,3],[8,3],[7,4],[8,4],[7,5],[8,5],[7,6],[8,6],[7,7],[8,7],[7,8],[8,8],[7,9],[8,9],[7,10],[8,10],[3,11],[4,11],[5,11],[6,11],[7,11],[8,11],[9,11],[10,11],[11,11],[12,11]] },
+            'parallel': { name: 'Parallel //', pixels: [[10,3],[11,3],[9,4],[10,4],[8,5],[9,5],[7,6],[8,6],[6,7],[7,7],[5,8],[6,8],[4,9],[5,9],[3,10],[4,10],[12,5],[13,5],[11,6],[12,6],[10,7],[11,7],[9,8],[10,8],[8,9],[9,9],[7,10],[8,10],[6,11],[7,11]] },
+            'crosshair': { name: 'Crosshair ⊕', pixels: [[7,2],[8,2],[7,3],[8,3],[6,4],[9,4],[5,5],[10,5],[4,6],[11,6],[4,7],[5,7],[6,7],[7,7],[8,7],[9,7],[10,7],[11,7],[4,8],[5,8],[6,8],[7,8],[8,8],[9,8],[10,8],[11,8],[4,9],[11,9],[5,10],[10,10],[6,11],[9,11],[7,12],[8,12],[7,13],[8,13]] },
+            'concentric': { name: 'Concentric ⊙', pixels: [[5,2],[6,2],[7,2],[8,2],[9,2],[10,2],[3,3],[4,3],[11,3],[12,3],[2,4],[13,4],[2,5],[13,5],[2,6],[7,6],[8,6],[13,6],[2,7],[7,7],[8,7],[13,7],[2,8],[7,8],[8,8],[13,8],[2,9],[7,9],[8,9],[13,9],[2,10],[13,10],[2,11],[13,11],[3,12],[4,12],[11,12],[12,12],[5,13],[6,13],[7,13],[8,13],[9,13],[10,13]] },
+            'square': { name: 'Square □', pixels: [[3,3],[4,3],[5,3],[6,3],[7,3],[8,3],[9,3],[10,3],[11,3],[12,3],[3,4],[12,4],[3,5],[12,5],[3,6],[12,6],[3,7],[12,7],[3,8],[12,8],[3,9],[12,9],[3,10],[12,10],[3,11],[12,11],[3,12],[4,12],[5,12],[6,12],[7,12],[8,12],[9,12],[10,12],[11,12],[12,12]] },
+            'taper': { name: 'Taper', pixels: [[2,5],[3,5],[4,5],[5,5],[6,5],[7,5],[8,5],[9,5],[10,5],[11,5],[12,5],[13,5],[2,6],[13,6],[2,7],[5,7],[6,7],[7,7],[8,7],[9,7],[10,7],[13,7],[2,8],[7,8],[8,8],[13,8],[2,9],[13,9],[2,10],[3,10],[4,10],[5,10],[6,10],[7,10],[8,10],[9,10],[10,10],[11,10],[12,10],[13,10]] },
+            'triangle': { name: 'Triangle △', pixels: [[2,12],[3,12],[4,12],[5,12],[6,12],[7,12],[8,12],[9,12],[10,12],[11,12],[12,12],[13,12],[3,11],[4,10],[5,9],[6,8],[7,7],[8,6],[9,5],[10,4],[11,3],[12,12],[11,11],[10,10],[9,9],[8,8]] },
+            'rightAngle': { name: 'Right Angle ∟', pixels: [[4,3],[4,4],[4,5],[4,6],[4,7],[4,8],[4,9],[4,10],[4,11],[4,12],[5,12],[6,12],[7,12],[8,12],[9,12],[10,12],[11,12],[12,12]] },
+            'checkmark': { name: 'Checkmark ∨', pixels: [[3,5],[4,6],[5,7],[6,8],[7,9],[8,10],[9,9],[10,8],[11,7],[12,6],[13,5]] },
+            'downPerp': { name: 'Down Perp ⊥↓', pixels: [[7,2],[8,2],[7,3],[8,3],[7,4],[8,4],[7,5],[8,5],[3,6],[4,6],[5,6],[6,6],[7,6],[8,6],[9,6],[10,6],[11,6],[12,6],[7,7],[8,7],[7,8],[8,8],[7,9],[8,9],[5,10],[6,10],[7,10],[8,10],[9,10],[10,10],[6,11],[7,11],[8,11],[9,11],[7,12],[8,12]] },
+            'hLine': { name: 'H-Line —', pixels: [[2,7],[3,7],[4,7],[5,7],[6,7],[7,7],[8,7],[9,7],[10,7],[11,7],[12,7],[13,7]] },
+            'parallelogram': { name: 'Parallelogram', pixels: [[5,3],[6,3],[7,3],[8,3],[9,3],[10,3],[11,3],[12,3],[4,4],[13,4],[3,5],[12,5],[3,6],[12,6],[3,7],[12,7],[3,8],[12,8],[3,9],[12,9],[2,10],[11,10],[2,11],[11,11],[2,12],[3,12],[4,12],[5,12],[6,12],[7,12],[8,12],[9,12],[10,12],[11,12]] },
+            'circle': { name: 'Circle ○', pixels: [[5,2],[6,2],[7,2],[8,2],[9,2],[10,2],[3,3],[4,3],[11,3],[12,3],[2,4],[13,4],[2,5],[13,5],[2,6],[13,6],[2,7],[13,7],[2,8],[13,8],[2,9],[13,9],[2,10],[13,10],[2,11],[13,11],[3,12],[4,12],[11,12],[12,12],[5,13],[6,13],[7,13],[8,13],[9,13],[10,13]] },
+            'cylinder': { name: 'Cylinder /○/', pixels: [[1,4],[2,5],[3,6],[4,7],[5,8],[6,9],[7,10],[6,3],[7,3],[8,3],[9,3],[5,4],[10,4],[5,5],[10,5],[5,6],[10,6],[5,7],[10,7],[5,8],[10,8],[6,9],[7,9],[8,9],[9,9],[8,4],[9,5],[10,6],[11,7],[12,8],[13,9],[14,10]] },
+            'arcBottom': { name: 'Arc Bottom ⌢', pixels: [[2,6],[13,6],[2,7],[13,7],[3,8],[12,8],[4,9],[11,9],[5,10],[6,10],[9,10],[10,10],[7,11],[8,11]] },
+            'centerline2': { name: 'Centerline 2', pixels: [[7,1],[8,1],[7,2],[8,2],[4,3],[5,3],[6,3],[7,3],[8,3],[9,3],[10,3],[11,3],[7,4],[8,4],[7,5],[8,5],[4,6],[5,6],[6,6],[7,6],[8,6],[9,6],[10,6],[11,6],[7,7],[8,7],[7,8],[8,8],[4,9],[5,9],[6,9],[7,9],[8,9],[9,9],[10,9],[11,9],[7,10],[8,10],[7,11],[8,11],[4,12],[5,12],[6,12],[7,12],[8,12],[9,12],[10,12],[11,12],[7,13],[8,13],[7,14],[8,14]] }
+        };
+        const SYMBOL_KEYS = Object.keys(SYMBOLS);
 
-        // Pill pixels: 13px tall, starting at y=1 (1px top margin, 2px bottom margin in 16x16)
-        const PILL_PIXELS = [
-            [3,1],[4,1],[5,1],[6,1],[7,1],[8,1],[9,1],[10,1],[11,1],[12,1],
-            [2,2],[13,2],
-            [1,3],[14,3],
-            [0,4],[15,4],
-            [0,5],[15,5],
-            [0,6],[15,6],
-            [0,7],[15,7],
-            [0,8],[15,8],
-            [0,9],[15,9],
-            [0,10],[15,10],
-            [1,11],[14,11],
-            [2,12],[13,12],
-            [3,13],[4,13],[5,13],[6,13],[7,13],[8,13],[9,13],[10,13],[11,13],[12,13]
-        ];
+        // ==================== SHAPE PIXELS ====================
+        const CIRCLE_PIXELS = [[5,0],[6,0],[7,0],[8,0],[9,0],[10,0],[3,1],[4,1],[11,1],[12,1],[2,2],[13,2],[1,3],[14,3],[1,4],[14,4],[0,5],[15,5],[0,6],[15,6],[0,7],[15,7],[0,8],[15,8],[0,9],[15,9],[0,10],[15,10],[1,11],[14,11],[1,12],[14,12],[2,13],[13,13],[3,14],[4,14],[11,14],[12,14],[5,15],[6,15],[7,15],[8,15],[9,15],[10,15]];
+        const PILL_PIXELS = [[3,1],[4,1],[5,1],[6,1],[7,1],[8,1],[9,1],[10,1],[11,1],[12,1],[2,2],[13,2],[1,3],[14,3],[0,4],[15,4],[0,5],[15,5],[0,6],[15,6],[0,7],[15,7],[0,8],[15,8],[0,9],[15,9],[0,10],[15,10],[1,11],[14,11],[2,12],[13,12],[3,13],[4,13],[5,13],[6,13],[7,13],[8,13],[9,13],[10,13],[11,13],[12,13]];
 
-        function drawCircle(ctx, color) {
+        // ==================== DRAWING FUNCTIONS ====================
+        function drawPixels(ctx, pixels, color) {
             ctx.fillStyle = color;
-            CIRCLE_PIXELS.forEach(([x, y]) => ctx.fillRect(x, y, 1, 1));
-        }
-
-        function drawPill(ctx, color) {
-            ctx.fillStyle = color;
-            PILL_PIXELS.forEach(([x, y]) => ctx.fillRect(x, y, 1, 1));
+            pixels.forEach(([x, y]) => ctx.fillRect(x, y, 1, 1));
         }
 
         function drawLetter(ctx, letter, offsetX, offsetY, font, color) {
             if (!font[letter]) return;
             ctx.fillStyle = color;
-            font[letter].forEach(([x, y]) => {
-                ctx.fillRect(offsetX + x, offsetY + y, 1, 1);
-            });
+            font[letter].forEach(([x, y]) => ctx.fillRect(offsetX + x, offsetY + y, 1, 1));
         }
 
-        function getIconParams() {
+        // ==================== LETTER ICON GENERATION ====================
+        function getLetterParams() {
             const letterCount = parseInt(document.querySelector('input[name="letterCount"]:checked').value);
             const input = document.getElementById('letters').value.toUpperCase().replace(/[^A-Z]/g, '');
-            
-            // All icons are 16x16, design is centered
-            let width = 16, height = 16;
             let letters, font, letterWidth, letterHeight, spacing;
             
             if (letterCount === 1) {
                 letters = input.slice(0, 1) || 'A';
                 font = FONT_LARGE;
                 letterWidth = 6;
-                letterHeight = 10;  // Increased from 9 to 10
+                letterHeight = 10;
                 spacing = 0;
             } else if (letterCount === 2) {
                 letters = input.slice(0, 2) || 'AB';
@@ -478,134 +433,143 @@
                 letterHeight = 5;
                 spacing = 1;
             }
-            
-            // Pad letters if needed
-            while (letters.length < letterCount) {
-                letters += 'A';
-            }
-            
-            return { letterCount, width, height, letters, font, letterWidth, letterHeight, spacing };
+            while (letters.length < letterCount) letters += 'A';
+            return { letterCount, letters, font, letterWidth, letterHeight, spacing };
         }
 
-        function drawIconToCanvas(canvas, color) {
-            const { letterCount, width, height, letters, font, letterWidth, letterHeight, spacing } = getIconParams();
+        function drawLetterIcon(canvas, color) {
+            const { letterCount, letters, font, letterWidth, letterHeight, spacing } = getLetterParams();
             const ctx = canvas.getContext('2d');
-            
-            // Always 16x16 canvas
             canvas.width = 16;
             canvas.height = 16;
             ctx.clearRect(0, 0, 16, 16);
             
-            // Draw shape
-            if (letterCount === 1) {
-                drawCircle(ctx, color);
-            } else {
-                drawPill(ctx, color);
-            }
+            drawPixels(ctx, letterCount === 1 ? CIRCLE_PIXELS : PILL_PIXELS, color);
             
-            // Calculate letter positions (centered in 16x16 canvas)
             const totalLetterWidth = letterCount * letterWidth + (letterCount - 1) * spacing;
             const startX = Math.floor((16 - totalLetterWidth) / 2);
+            const startY = letterCount === 1 ? 3 : letterCount === 2 ? 4 : 5;
             
-            // Vertical positioning:
-            // 1 letter: center in 16x16 circle → (16-10)/2 = 3px top margin
-            // 2 letters: pill starts at y=1 (13px tall), 3px top margin within pill → startY = 1+3 = 4
-            // 3 letters: pill starts at y=1 (13px tall), 4px top margin within pill → startY = 1+4 = 5
-            let startY;
-            if (letterCount === 1) {
-                startY = 3;  // (16-10)/2 = 3px top margin
-            } else if (letterCount === 2) {
-                startY = 4;  // pill at y=1, +3px margin = 4
-            } else {
-                startY = 5;  // pill at y=1, +4px margin = 5
-            }
-            
-            // Draw letters
             for (let i = 0; i < letterCount; i++) {
-                const x = startX + i * (letterWidth + spacing);
-                drawLetter(ctx, letters[i], x, startY, font, color);
+                drawLetter(ctx, letters[i], startX + i * (letterWidth + spacing), startY, font, color);
             }
-            
-            return { width: 16, height: 16, letters, letterCount };
+            return letters;
         }
 
+        // ==================== SYMBOL ICON GENERATION ====================
+        function drawSymbolIcon(canvas, symbolKey, color) {
+            const ctx = canvas.getContext('2d');
+            canvas.width = 16;
+            canvas.height = 16;
+            ctx.clearRect(0, 0, 16, 16);
+            drawPixels(ctx, SYMBOLS[symbolKey].pixels, color);
+        }
+
+        // ==================== UI FUNCTIONS ====================
         function updateTheme() {
             const theme = document.querySelector('input[name="theme"]:checked').value;
-            const container = document.getElementById('preview-container');
-            const labelActual = document.getElementById('label-actual');
-            const labelScaled = document.getElementById('label-scaled');
-            
-            container.className = 'preview-container ' + theme;
-            labelActual.className = 'preview-label ' + theme;
-            labelScaled.className = 'preview-label ' + theme;
+            document.getElementById('preview-container').className = 'preview-container ' + theme;
+            document.getElementById('label-actual').className = 'preview-label ' + theme;
+            document.getElementById('label-scaled').className = 'preview-label ' + theme;
         }
 
-        function generateIcon() {
+        function generatePreview() {
             const theme = document.querySelector('input[name="theme"]:checked').value;
             const color = theme === 'light' ? 'black' : 'white';
-            
             const canvasActual = document.getElementById('preview-actual');
             const canvasScaled = document.getElementById('preview-scaled');
-            
-            const { letters, letterCount } = drawIconToCanvas(canvasActual, color);
-            
-            // Scale up for preview (always 16x16 base)
-            canvasScaled.width = 16 * 8;
-            canvasScaled.height = 16 * 8;
+            let specText;
+
+            if (currentTab === 'letters') {
+                const letters = drawLetterIcon(canvasActual, color);
+                const { letterCount } = getLetterParams();
+                specText = `16×16px • ${letterCount} letter${letterCount > 1 ? 's' : ''} • "${letters}"`;
+                document.getElementById('letters').maxLength = letterCount;
+            } else {
+                const symbolKey = SYMBOL_KEYS[selectedSymbol];
+                drawSymbolIcon(canvasActual, symbolKey, color);
+                specText = `16×16px • Symbol • "${SYMBOLS[symbolKey].name}"`;
+            }
+
+            canvasScaled.width = 128;
+            canvasScaled.height = 128;
             const ctxScaled = canvasScaled.getContext('2d');
             ctxScaled.imageSmoothingEnabled = false;
-            ctxScaled.drawImage(canvasActual, 0, 0, 16 * 8, 16 * 8);
+            ctxScaled.drawImage(canvasActual, 0, 0, 128, 128);
             
-            // Update specs
-            document.getElementById('specs').textContent = `16×16px • ${letterCount} letter${letterCount > 1 ? 's' : ''} • "${letters}"`;
-            
-            // Update input maxlength
-            const params = getIconParams();
-            document.getElementById('letters').maxLength = params.letterCount;
-            document.getElementById('letters').placeholder = letterCount === 1 ? 'A' : letterCount === 2 ? 'AB' : 'ABC';
-            
-            // Update theme
+            document.getElementById('specs').textContent = specText;
             updateTheme();
         }
 
         function exportIcons() {
-            const { letters } = getIconParams();
-            
-            // Generate light version
             const canvasLight = document.getElementById('export-light');
-            drawIconToCanvas(canvasLight, 'black');
-            
-            // Generate dark version
             const canvasDark = document.getElementById('export-dark');
-            drawIconToCanvas(canvasDark, 'white');
-            
-            // Download light version
+            let filename;
+
+            if (currentTab === 'letters') {
+                filename = drawLetterIcon(canvasLight, 'black');
+                drawLetterIcon(canvasDark, 'white');
+            } else {
+                const symbolKey = SYMBOL_KEYS[selectedSymbol];
+                filename = symbolKey;
+                drawSymbolIcon(canvasLight, symbolKey, 'black');
+                drawSymbolIcon(canvasDark, symbolKey, 'white');
+            }
+
             const linkLight = document.createElement('a');
-            linkLight.download = `icon_${letters}_light.png`;
+            linkLight.download = `icon_${filename}_light.png`;
             linkLight.href = canvasLight.toDataURL('image/png');
             linkLight.click();
-            
-            // Small delay before downloading dark version
+
             setTimeout(() => {
                 const linkDark = document.createElement('a');
-                linkDark.download = `icon_${letters}_dark.png`;
+                linkDark.download = `icon_${filename}_dark.png`;
                 linkDark.href = canvasDark.toDataURL('image/png');
                 linkDark.click();
             }, 100);
         }
 
-        // Event listeners
-        document.querySelectorAll('input[name="letterCount"]').forEach(radio => {
-            radio.addEventListener('change', generateIcon);
-        });
-        document.querySelectorAll('input[name="theme"]').forEach(radio => {
-            radio.addEventListener('change', generateIcon);
-        });
-        document.getElementById('letters').addEventListener('input', generateIcon);
+        function initSymbolGrid() {
+            const grid = document.getElementById('symbol-grid');
+            grid.innerHTML = '';
+            SYMBOL_KEYS.forEach((key, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'symbol-btn' + (index === 0 ? ' selected' : '');
+                btn.title = SYMBOLS[key].name;
+                const canvas = document.createElement('canvas');
+                canvas.width = 16;
+                canvas.height = 16;
+                drawSymbolIcon(canvas, key, 'black');
+                canvas.style.width = '32px';
+                canvas.style.height = '32px';
+                btn.appendChild(canvas);
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.symbol-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedSymbol = index;
+                    generatePreview();
+                });
+                grid.appendChild(btn);
+            });
+        }
+
+        function switchTab(tabId) {
+            currentTab = tabId;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.toggle('active', content.id === 'tab-' + tabId));
+            generatePreview();
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+        document.querySelectorAll('input[name="letterCount"]').forEach(radio => radio.addEventListener('change', generatePreview));
+        document.querySelectorAll('input[name="theme"]').forEach(radio => radio.addEventListener('change', generatePreview));
+        document.getElementById('letters').addEventListener('input', generatePreview);
         document.getElementById('export-btn').addEventListener('click', exportIcons);
 
-        // Initial generation
-        generateIcon();
+        // ==================== INIT ====================
+        initSymbolGrid();
+        generatePreview();
     </script>
 </body>
 </html>
