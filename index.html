@@ -640,9 +640,9 @@
                 
                 specText = `16×16px • Symbol • "${SYMBOLS[symbolKey].name}"`;
                 
-                // Show reference SVG icon
+                // Show reference image
                 referenceContainer.classList.add('show');
-                referenceIcon.innerHTML = `<svg viewBox="0 0 16 16" style="color: ${color}">${SYMBOLS[symbolKey].svg}</svg>`;
+                referenceIcon.innerHTML = `<img src="references/${symbolKey}.png" alt="${SYMBOLS[symbolKey].name}">`;
                 labelReference.className = 'preview-label ' + theme;
                 showEditorTools(true);
             }
