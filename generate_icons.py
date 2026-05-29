@@ -249,12 +249,13 @@ PIXEL_FONT = {
 
 
 def draw_pill_shape(draw, color):
-    """Draw a pill/stadium shape centered in 16x16 (12px tall pill, offset by 2px)."""
-    # Pill is 12px tall, centered vertically in 16x16 (2px offset top/bottom)
+    """Draw a pill/stadium shape in 16x16 (13px tall pill, starting at y=1)."""
+    # Pill is 13px tall, starting at y=1 (1px top margin, 2px bottom margin)
     pixels = [
-        (3,2),(4,2),(5,2),(6,2),(7,2),(8,2),(9,2),(10,2),(11,2),(12,2),
-        (2,3),(13,3),
-        (1,4),(14,4),
+        (3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1),(10,1),(11,1),(12,1),
+        (2,2),(13,2),
+        (1,3),(14,3),
+        (0,4),(15,4),
         (0,5),(15,5),
         (0,6),(15,6),
         (0,7),(15,7),
@@ -288,13 +289,13 @@ def create_icon(letter1, letter2, output_path):
     
     black = (0, 0, 0, 255)
     
-    # Draw pill shape border (centered in 16x16)
+    # Draw pill shape border (13px tall, starting at y=1)
     draw_pill_shape(draw, black)
     
     # Calculate letter positions for 4x7 font
     # Two letters: 4 + 1 + 4 = 9 pixels wide
     # Letter height: 7 pixels
-    # Pill is 12px tall, centered at y offset 2
+    # Pill is 13px tall starting at y=1, top margin 3px within pill
     
     letter_width = 4
     letter_height = 7
@@ -303,9 +304,8 @@ def create_icon(letter1, letter2, output_path):
     
     # Center horizontally in 16px
     start_x = (16 - total_width) // 2   # = 3
-    # Center vertically within the pill inner area (10px from y=3 to y=12)
-    import math
-    start_y = 3 + math.ceil((10 - letter_height) / 2)  # = 3 + 2 = 5
+    # Pill starts at y=1, 3px top margin within pill
+    start_y = 1 + 3  # = 4
     
     # Draw first letter
     draw_letter(draw, letter1, start_x, start_y, black)
