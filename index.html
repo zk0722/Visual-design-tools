@@ -287,6 +287,7 @@
                 <button class="tool-btn" id="tool-erase" data-tool="erase">Erase</button>
                 <button class="tool-btn save" id="tool-save">Save</button>
                 <button class="tool-btn reset" id="tool-reset">Reset</button>
+                <button class="tool-btn" id="tool-export-json">Export All</button>
             </div>
             <div class="preview-container light" id="preview-container">
                 <div class="preview-row">
@@ -325,36 +326,53 @@
         // Store original symbols for reset
         const ORIGINAL_SYMBOLS = JSON.parse(JSON.stringify(SYMBOLS));
         
-        // Load saved symbols from localStorage
-        function loadSavedSymbols() {
-            const saved = localStorage.getItem('customSymbols');
-            if (saved) {
-                const customSymbols = JSON.parse(saved);
-                for (const key in customSymbols) {
-                    if (SYMBOLS[key]) {
-                        SYMBOLS[key].pixels = customSymbols[key];
+        // Load saved symbols from custom-symbols.json file
+        async function loadSavedSymbols() {
+            try {
+                const response = await fetch('custom-symbols.json?t=' + Date.now());
+                if (response.ok) {
+                    const customSymbols = await response.json();
+                    for (const key in customSymbols) {
+                        if (SYMBOLS[key]) {
+                            SYMBOLS[key].pixels = customSymbols[key];
+                        }
                     }
+                    console.log('Loaded custom symbols from file');
+                    // Refresh the symbol grid with loaded data
+                    initSymbolGrid();
+                    generatePreview();
                 }
+            } catch (e) {
+                console.log('No custom-symbols.json found, using defaults');
             }
         }
         
-        // Save symbol to localStorage
-        function saveSymbolToStorage(symbolKey, pixels) {
-            let customSymbols = JSON.parse(localStorage.getItem('customSymbols') || '{}');
-            customSymbols[symbolKey] = pixels;
-            localStorage.setItem('customSymbols', JSON.stringify(customSymbols));
+        // Get all current symbol pixels as object
+        function getAllSymbolPixels() {
+            const data = {};
+            for (const key of SYMBOL_KEYS) {
+                data[key] = SYMBOLS[key].pixels;
+            }
+            return data;
+        }
+        
+        // Export all symbols to JSON file
+        function exportAllSymbols() {
+            const data = getAllSymbolPixels();
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'custom-symbols.json';
+            a.click();
+            URL.revokeObjectURL(url);
         }
         
         // Reset symbol to original
         function resetSymbolToOriginal(symbolKey) {
-            let customSymbols = JSON.parse(localStorage.getItem('customSymbols') || '{}');
-            delete customSymbols[symbolKey];
-            localStorage.setItem('customSymbols', JSON.stringify(customSymbols));
-            SYMBOLS[symbolKey].pixels = [...ORIGINAL_SYMBOLS[symbolKey].pixels];
+            SYMBOLS[symbolKey].pixels = JSON.parse(JSON.stringify(ORIGINAL_SYMBOLS[symbolKey].pixels));
         }
-        
-        // Load saved symbols on startup
-        loadSavedSymbols();
 
         // ==================== LETTER FONTS ====================
         const FONT_LARGE = {
@@ -701,6 +719,9 @@
             
             // Reset button
             document.getElementById('tool-reset').addEventListener('click', resetCurrentSymbol);
+            
+            // Export All button
+            document.getElementById('tool-export-json').addEventListener('click', exportAllSymbols);
         }
         
         function editPixel(e) {
@@ -765,12 +786,9 @@
                 return [x, y];
             });
             
-            // Update the symbol
+            // Update the symbol in memory
             const symbolKey = SYMBOL_KEYS[selectedSymbol];
             SYMBOLS[symbolKey].pixels = newPixels;
-            
-            // Save to localStorage
-            saveSymbolToStorage(symbolKey, newPixels);
             
             // Update the symbol grid button
             const gridBtns = document.querySelectorAll('.symbol-btn');
@@ -825,6 +843,7 @@
         initSymbolGrid();
         initPixelEditor();
         generatePreview();
+        loadSavedSymbols();  // Load custom symbols from file if available
     </script>
 </body>
 </html>
