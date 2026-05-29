@@ -135,6 +135,36 @@
         .reference-icon svg { width: 100%; height: 100%; }
         #reference-container { display: none; }
         #reference-container.show { display: block; }
+        
+        /* Pixel Editor */
+        .editor-tools {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .editor-tools.hidden { display: none; }
+        .tool-btn {
+            padding: 6px 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .tool-btn:hover { border-color: #999; }
+        .tool-btn.active { border-color: #007aff; background: #f0f7ff; }
+        .tool-btn.save { background: #007aff; color: white; border-color: #007aff; }
+        .tool-btn.save:hover { background: #0056b3; }
+        #preview-scaled { cursor: crosshair; }
+        .editor-hint {
+            font-size: 11px;
+            color: #888;
+            margin-top: 8px;
+        }
+        .editor-hint.hidden { display: none; }
         .hidden-canvas { display: none; }
         
         /* Symbol Grid */
@@ -249,6 +279,11 @@
         
         <div class="preview-section">
             <label>Preview</label>
+            <div class="editor-tools hidden" id="editor-tools">
+                <button class="tool-btn active" id="tool-fill" data-tool="fill">Fill</button>
+                <button class="tool-btn" id="tool-erase" data-tool="erase">Erase</button>
+                <button class="tool-btn save" id="tool-save">Save Changes</button>
+            </div>
             <div class="preview-container light" id="preview-container">
                 <div class="preview-row">
                     <div class="preview-item">
@@ -265,6 +300,7 @@
                     </div>
                 </div>
             </div>
+            <div class="editor-hint hidden" id="editor-hint">Click on the scaled preview to fill or erase pixels</div>
             <div class="specs" id="specs"></div>
         </div>
     </div>
@@ -276,6 +312,11 @@
         // Current mode: 'letters' or 'symbols'
         let currentTab = 'letters';
         let selectedSymbol = 0;
+        
+        // Pixel editor state
+        let currentTool = 'fill';
+        let isDrawing = false;
+        let editedPixels = null;  // Stores edited pixel data for current symbol
 
         // ==================== LETTER FONTS ====================
         const FONT_LARGE = {
@@ -497,22 +538,34 @@
                 specText = `16×16px • ${letterCount} letter${letterCount > 1 ? 's' : ''} • "${letters}"`;
                 document.getElementById('letters').maxLength = letterCount;
                 referenceContainer.classList.remove('show');
+                showEditorTools(false);
+                editedPixels = null;
             } else {
                 const symbolKey = SYMBOL_KEYS[selectedSymbol];
-                drawSymbolIcon(canvasActual, symbolKey, color);
+                
+                // If we have edited pixels for this symbol, use them
+                if (editedPixels) {
+                    redrawFromEditedPixels();
+                } else {
+                    drawSymbolIcon(canvasActual, symbolKey, color);
+                }
+                
                 specText = `16×16px • Symbol • "${SYMBOLS[symbolKey].name}"`;
                 
                 // Show reference SVG icon
                 referenceContainer.classList.add('show');
                 referenceIcon.innerHTML = `<svg viewBox="0 0 16 16" style="color: ${color}">${SYMBOLS[symbolKey].svg}</svg>`;
                 labelReference.className = 'preview-label ' + theme;
+                showEditorTools(true);
             }
 
-            canvasScaled.width = 128;
-            canvasScaled.height = 128;
-            const ctxScaled = canvasScaled.getContext('2d');
-            ctxScaled.imageSmoothingEnabled = false;
-            ctxScaled.drawImage(canvasActual, 0, 0, 128, 128);
+            if (!editedPixels) {
+                canvasScaled.width = 128;
+                canvasScaled.height = 128;
+                const ctxScaled = canvasScaled.getContext('2d');
+                ctxScaled.imageSmoothingEnabled = false;
+                ctxScaled.drawImage(canvasActual, 0, 0, 128, 128);
+            }
             
             document.getElementById('specs').textContent = specText;
             updateTheme();
@@ -564,6 +617,7 @@
                     document.querySelectorAll('.symbol-btn').forEach(b => b.classList.remove('selected'));
                     btn.classList.add('selected');
                     selectedSymbol = index;
+                    editedPixels = null;  // Reset edited pixels when switching symbols
                     generatePreview();
                 });
                 grid.appendChild(btn);
@@ -577,6 +631,123 @@
             generatePreview();
         }
 
+        // ==================== PIXEL EDITOR ====================
+        function initPixelEditor() {
+            const canvasScaled = document.getElementById('preview-scaled');
+            
+            canvasScaled.addEventListener('mousedown', (e) => {
+                if (currentTab !== 'symbols') return;
+                isDrawing = true;
+                editPixel(e);
+            });
+            
+            canvasScaled.addEventListener('mousemove', (e) => {
+                if (!isDrawing || currentTab !== 'symbols') return;
+                editPixel(e);
+            });
+            
+            canvasScaled.addEventListener('mouseup', () => { isDrawing = false; });
+            canvasScaled.addEventListener('mouseleave', () => { isDrawing = false; });
+            
+            // Tool buttons
+            document.querySelectorAll('.tool-btn[data-tool]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentTool = btn.dataset.tool;
+                    document.querySelectorAll('.tool-btn[data-tool]').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+            
+            // Save button
+            document.getElementById('tool-save').addEventListener('click', savePixelChanges);
+        }
+        
+        function editPixel(e) {
+            const canvas = document.getElementById('preview-scaled');
+            const rect = canvas.getBoundingClientRect();
+            const scale = 8;
+            
+            const x = Math.floor((e.clientX - rect.left) / scale);
+            const y = Math.floor((e.clientY - rect.top) / scale);
+            
+            if (x < 0 || x >= 16 || y < 0 || y >= 16) return;
+            
+            // Initialize edited pixels if needed
+            if (!editedPixels) {
+                const symbolKey = SYMBOL_KEYS[selectedSymbol];
+                editedPixels = new Set(SYMBOLS[symbolKey].pixels.map(p => `${p[0]},${p[1]}`));
+            }
+            
+            const key = `${x},${y}`;
+            if (currentTool === 'fill') {
+                editedPixels.add(key);
+            } else {
+                editedPixels.delete(key);
+            }
+            
+            // Redraw
+            redrawFromEditedPixels();
+        }
+        
+        function redrawFromEditedPixels() {
+            const theme = document.querySelector('input[name="theme"]:checked').value;
+            const color = theme === 'light' ? 'black' : 'white';
+            const canvasActual = document.getElementById('preview-actual');
+            const canvasScaled = document.getElementById('preview-scaled');
+            const ctx = canvasActual.getContext('2d');
+            
+            canvasActual.width = 16;
+            canvasActual.height = 16;
+            ctx.clearRect(0, 0, 16, 16);
+            
+            // Draw pixels from edited set
+            ctx.fillStyle = color;
+            editedPixels.forEach(key => {
+                const [x, y] = key.split(',').map(Number);
+                ctx.fillRect(x, y, 1, 1);
+            });
+            
+            // Scale up
+            canvasScaled.width = 128;
+            canvasScaled.height = 128;
+            const ctxScaled = canvasScaled.getContext('2d');
+            ctxScaled.imageSmoothingEnabled = false;
+            ctxScaled.drawImage(canvasActual, 0, 0, 128, 128);
+        }
+        
+        function savePixelChanges() {
+            if (!editedPixels) return;
+            
+            // Convert Set back to array of [x,y] pairs
+            const newPixels = Array.from(editedPixels).map(key => {
+                const [x, y] = key.split(',').map(Number);
+                return [x, y];
+            });
+            
+            // Update the symbol
+            const symbolKey = SYMBOL_KEYS[selectedSymbol];
+            SYMBOLS[symbolKey].pixels = newPixels;
+            
+            // Update the symbol grid button
+            const gridBtns = document.querySelectorAll('.symbol-btn');
+            const canvas = gridBtns[selectedSymbol].querySelector('canvas');
+            drawSymbolIcon(canvas, symbolKey, 'black');
+            
+            // Show confirmation
+            const saveBtn = document.getElementById('tool-save');
+            const originalText = saveBtn.textContent;
+            saveBtn.textContent = 'Saved!';
+            setTimeout(() => { saveBtn.textContent = originalText; }, 1000);
+            
+            // Log the new pixel array for copying
+            console.log(`'${symbolKey}': { name: '${SYMBOLS[symbolKey].name}', pixels: ${JSON.stringify(newPixels)}, svg: '${SYMBOLS[symbolKey].svg}' }`);
+        }
+        
+        function showEditorTools(show) {
+            document.getElementById('editor-tools').classList.toggle('hidden', !show);
+            document.getElementById('editor-hint').classList.toggle('hidden', !show);
+        }
+
         // ==================== EVENT LISTENERS ====================
         document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
         document.querySelectorAll('input[name="letterCount"]').forEach(radio => radio.addEventListener('change', generatePreview));
@@ -586,6 +757,7 @@
 
         // ==================== INIT ====================
         initSymbolGrid();
+        initPixelEditor();
         generatePreview();
     </script>
 </body>
