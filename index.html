@@ -416,19 +416,20 @@
             [5,15],[6,15],[7,15],[8,15],[9,15],[10,15]
         ];
 
+        // Pill pixels offset by 2px vertically to center in 16x16 canvas (12px tall pill)
         const PILL_PIXELS = [
-            [3,0],[4,0],[5,0],[6,0],[7,0],[8,0],[9,0],[10,0],[11,0],[12,0],
-            [2,1],[13,1],
-            [1,2],[14,2],
-            [0,3],[15,3],
-            [0,4],[15,4],
+            [3,2],[4,2],[5,2],[6,2],[7,2],[8,2],[9,2],[10,2],[11,2],[12,2],
+            [2,3],[13,3],
+            [1,4],[14,4],
             [0,5],[15,5],
             [0,6],[15,6],
             [0,7],[15,7],
             [0,8],[15,8],
-            [1,9],[14,9],
-            [2,10],[13,10],
-            [3,11],[4,11],[5,11],[6,11],[7,11],[8,11],[9,11],[10,11],[11,11],[12,11]
+            [0,9],[15,9],
+            [0,10],[15,10],
+            [1,11],[14,11],
+            [2,12],[13,12],
+            [3,13],[4,13],[5,13],[6,13],[7,13],[8,13],[9,13],[10,13],[11,13],[12,13]
         ];
 
         function drawCircle(ctx, color) {
@@ -453,27 +454,23 @@
             const letterCount = parseInt(document.querySelector('input[name="letterCount"]:checked').value);
             const input = document.getElementById('letters').value.toUpperCase().replace(/[^A-Z]/g, '');
             
-            let width, height, letters, font, letterWidth, letterHeight, spacing;
+            // All icons are 16x16, design is centered
+            let width = 16, height = 16;
+            let letters, font, letterWidth, letterHeight, spacing;
             
             if (letterCount === 1) {
-                width = 16;
-                height = 16;
                 letters = input.slice(0, 1) || 'A';
                 font = FONT_LARGE;
                 letterWidth = 6;
                 letterHeight = 9;
                 spacing = 0;
             } else if (letterCount === 2) {
-                width = 16;
-                height = 12;
                 letters = input.slice(0, 2) || 'AB';
                 font = FONT_MEDIUM;
                 letterWidth = 4;
                 letterHeight = 7;
                 spacing = 1;
             } else {
-                width = 16;
-                height = 12;
                 letters = input.slice(0, 3) || 'ABC';
                 font = FONT_SMALL;
                 letterWidth = 3;
@@ -493,9 +490,10 @@
             const { letterCount, width, height, letters, font, letterWidth, letterHeight, spacing } = getIconParams();
             const ctx = canvas.getContext('2d');
             
-            canvas.width = width;
-            canvas.height = height;
-            ctx.clearRect(0, 0, width, height);
+            // Always 16x16 canvas
+            canvas.width = 16;
+            canvas.height = 16;
+            ctx.clearRect(0, 0, 16, 16);
             
             // Draw shape
             if (letterCount === 1) {
@@ -504,10 +502,14 @@
                 drawPill(ctx, color);
             }
             
-            // Calculate letter positions
+            // Calculate letter positions (centered in 16x16 canvas)
             const totalLetterWidth = letterCount * letterWidth + (letterCount - 1) * spacing;
-            const startX = Math.floor((width - totalLetterWidth) / 2);
-            const startY = Math.floor((height - letterHeight) / 2);
+            const startX = Math.floor((16 - totalLetterWidth) / 2);
+            // For pill shapes, center letters within the 12px pill area (which starts at y=2)
+            // For circle, center in full 16x16
+            const startY = letterCount === 1 
+                ? Math.floor((16 - letterHeight) / 2)
+                : 2 + Math.floor((12 - letterHeight) / 2);  // 2px offset for pill + center in 12px
             
             // Draw letters
             for (let i = 0; i < letterCount; i++) {
@@ -515,7 +517,7 @@
                 drawLetter(ctx, letters[i], x, startY, font, color);
             }
             
-            return { width, height, letters, letterCount };
+            return { width: 16, height: 16, letters, letterCount };
         }
 
         function updateTheme() {
@@ -536,20 +538,21 @@
             const canvasActual = document.getElementById('preview-actual');
             const canvasScaled = document.getElementById('preview-scaled');
             
-            const { width, height, letters, letterCount } = drawIconToCanvas(canvasActual, color);
+            const { letters, letterCount } = drawIconToCanvas(canvasActual, color);
             
-            // Scale up for preview
-            canvasScaled.width = width * 8;
-            canvasScaled.height = height * 8;
+            // Scale up for preview (always 16x16 base)
+            canvasScaled.width = 16 * 8;
+            canvasScaled.height = 16 * 8;
             const ctxScaled = canvasScaled.getContext('2d');
             ctxScaled.imageSmoothingEnabled = false;
-            ctxScaled.drawImage(canvasActual, 0, 0, width * 8, height * 8);
+            ctxScaled.drawImage(canvasActual, 0, 0, 16 * 8, 16 * 8);
             
             // Update specs
-            document.getElementById('specs').textContent = `${width}×${height}px • ${letterCount} letter${letterCount > 1 ? 's' : ''} • "${letters}"`;
+            document.getElementById('specs').textContent = `16×16px • ${letterCount} letter${letterCount > 1 ? 's' : ''} • "${letters}"`;
             
             // Update input maxlength
-            document.getElementById('letters').maxLength = letterCount;
+            const params = getIconParams();
+            document.getElementById('letters').maxLength = params.letterCount;
             document.getElementById('letters').placeholder = letterCount === 1 ? 'A' : letterCount === 2 ? 'AB' : 'ABC';
             
             // Update theme

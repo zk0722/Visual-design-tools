@@ -248,35 +248,26 @@ PIXEL_FONT = {
 }
 
 
-def draw_pill_shape(draw, width, height, color):
-    """Draw a pill/stadium shape with half circles on each side (1px outline)."""
-    # For 16x12, half circle radius = height/2 = 6 pixels
-    # Pill shape: semicircle left, straight top/bottom, semicircle right
-    
-    # Draw pixel-perfect semicircles for 12px height (radius ~5-6)
-    # Left arc pixels (for 12px height pill)
-    left_arc = [
-        (3, 0), (4, 0), (5, 0),  # top
-        (2, 1), (1, 2), (0, 3), (0, 4), (0, 5),  # left side going down
-        (0, 6), (0, 7), (0, 8), (1, 9), (2, 10),  # continue down
-        (3, 11), (4, 11), (5, 11),  # bottom
+def draw_pill_shape(draw, color):
+    """Draw a pill/stadium shape centered in 16x16 (12px tall pill, offset by 2px)."""
+    # Pill is 12px tall, centered vertically in 16x16 (2px offset top/bottom)
+    pixels = [
+        (3,2),(4,2),(5,2),(6,2),(7,2),(8,2),(9,2),(10,2),(11,2),(12,2),
+        (2,3),(13,3),
+        (1,4),(14,4),
+        (0,5),(15,5),
+        (0,6),(15,6),
+        (0,7),(15,7),
+        (0,8),(15,8),
+        (0,9),(15,9),
+        (0,10),(15,10),
+        (1,11),(14,11),
+        (2,12),(13,12),
+        (3,13),(4,13),(5,13),(6,13),(7,13),(8,13),(9,13),(10,13),(11,13),(12,13)
     ]
     
-    # Right arc pixels
-    right_arc = [
-        (10, 0), (11, 0), (12, 0),  # top
-        (13, 1), (14, 2), (15, 3), (15, 4), (15, 5),  # right side going down
-        (15, 6), (15, 7), (15, 8), (14, 9), (13, 10),  # continue
-        (10, 11), (11, 11), (12, 11),  # bottom
-    ]
-    
-    # Top and bottom connecting lines
-    top_line = [(x, 0) for x in range(6, 10)]
-    bottom_line = [(x, 11) for x in range(6, 10)]
-    
-    for x, y in left_arc + right_arc + top_line + bottom_line:
-        if 0 <= x < width and 0 <= y < height:
-            draw.point((x, y), fill=color)
+    for x, y in pixels:
+        draw.point((x, y), fill=color)
 
 
 def draw_letter(draw, letter, offset_x, offset_y, color):
@@ -290,30 +281,30 @@ def draw_letter(draw, letter, offset_x, offset_y, color):
 
 
 def create_icon(letter1, letter2, output_path):
-    """Create a 16x12 icon with two letters inside a pill shape."""
-    # Create image with transparent background
-    img = Image.new('RGBA', (16, 12), (255, 255, 255, 0))
+    """Create a 16x16 icon with two letters inside a centered pill shape."""
+    # Create image with transparent background - always 16x16
+    img = Image.new('RGBA', (16, 16), (255, 255, 255, 0))
     draw = ImageDraw.Draw(img)
     
     black = (0, 0, 0, 255)
     
-    # Draw pill shape border
-    draw_pill_shape(draw, 16, 12, black)
+    # Draw pill shape border (centered in 16x16)
+    draw_pill_shape(draw, black)
     
     # Calculate letter positions for 4x7 font
     # Two letters: 4 + 1 + 4 = 9 pixels wide
     # Letter height: 7 pixels
-    # Canvas: 16x12
+    # Pill is 12px tall, centered at y offset 2
     
     letter_width = 4
     letter_height = 7
     spacing = 1
     total_width = letter_width * 2 + spacing  # 9 pixels
     
-    # Center horizontally in 16px: (16 - 9) / 2 = 3.5, use 3
-    # Center vertically in 12px: (12 - 7) / 2 = 2.5, use 2
+    # Center horizontally in 16px
     start_x = (16 - total_width) // 2   # = 3
-    start_y = (12 - letter_height) // 2  # = 2
+    # Center vertically within the pill area (12px starting at y=2)
+    start_y = 2 + (12 - letter_height) // 2  # = 2 + 2 = 4
     
     # Draw first letter
     draw_letter(draw, letter1, start_x, start_y, black)
@@ -361,9 +352,8 @@ def create_preview_grid(icons_dir='icons', output_path='preview_grid.png'):
     # Load all icons
     icon_files = sorted([f for f in os.listdir(icons_dir) if f.endswith('.png')])
     
-    # Icon dimensions
-    icon_width = 16
-    icon_height = 12
+    # Icon dimensions - always 16x16
+    icon_size = 16
     
     # Create grid: 13 icons per row (2 rows for 26 icons)
     cols = 13
@@ -371,8 +361,8 @@ def create_preview_grid(icons_dir='icons', output_path='preview_grid.png'):
     scale = 8  # Scale factor for preview
     padding = 4
     
-    grid_width = cols * (icon_width * scale + padding) + padding
-    grid_height = rows * (icon_height * scale + padding) + padding
+    grid_width = cols * (icon_size * scale + padding) + padding
+    grid_height = rows * (icon_size * scale + padding) + padding
     
     grid = Image.new('RGBA', (grid_width, grid_height), (240, 240, 240, 255))
     
@@ -382,10 +372,10 @@ def create_preview_grid(icons_dir='icons', output_path='preview_grid.png'):
         
         icon = Image.open(os.path.join(icons_dir, icon_file))
         # Scale up using nearest neighbor for crisp pixels
-        scaled = icon.resize((icon_width * scale, icon_height * scale), Image.NEAREST)
+        scaled = icon.resize((icon_size * scale, icon_size * scale), Image.NEAREST)
         
-        x = padding + col * (icon_width * scale + padding)
-        y = padding + row * (icon_height * scale + padding)
+        x = padding + col * (icon_size * scale + padding)
+        y = padding + row * (icon_size * scale + padding)
         
         grid.paste(scaled, (x, y), scaled)
     
