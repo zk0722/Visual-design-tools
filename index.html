@@ -354,7 +354,38 @@
             return data;
         }
         
-        // Export all symbols to JSON file
+        // Save symbols to server (or download as fallback)
+        async function saveSymbolsToFile() {
+            const data = getAllSymbolPixels();
+            
+            try {
+                // Try to save to local server
+                const response = await fetch('/save-symbols', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    return true;
+                }
+            } catch (e) {
+                // Server not available, fall through to download
+            }
+            
+            // Fallback: download file
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'custom-symbols.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            return false;
+        }
+        
+        // Export all symbols to JSON file (manual download)
         function exportAllSymbols() {
             const data = getAllSymbolPixels();
             const json = JSON.stringify(data, null, 2);
@@ -778,7 +809,7 @@
             ctxScaled.drawImage(canvasActual, 0, 0, 128, 128);
         }
         
-        function savePixelChanges() {
+        async function savePixelChanges() {
             if (!editedPixels) return;
             
             // Convert Set back to array of [x,y] pairs
@@ -796,11 +827,16 @@
             const canvas = gridBtns[selectedSymbol].querySelector('canvas');
             drawSymbolIcon(canvas, symbolKey, 'black');
             
-            // Show confirmation
+            // Save to file
             const saveBtn = document.getElementById('tool-save');
             const originalText = saveBtn.textContent;
-            saveBtn.textContent = 'Saved!';
-            setTimeout(() => { saveBtn.textContent = originalText; }, 1000);
+            saveBtn.textContent = 'Saving...';
+            
+            const savedToServer = await saveSymbolsToFile();
+            
+            // Show confirmation
+            saveBtn.textContent = savedToServer ? 'Saved!' : 'Downloaded!';
+            setTimeout(() => { saveBtn.textContent = originalText; }, 1500);
             
             // Log the new pixel array for copying
             console.log(`'${symbolKey}': { name: '${SYMBOLS[symbolKey].name}', pixels: ${JSON.stringify(newPixels)}, svg: '${SYMBOLS[symbolKey].svg}' }`);
