@@ -303,8 +303,9 @@ def create_icon(letter1, letter2, output_path):
     
     # Center horizontally in 16px
     start_x = (16 - total_width) // 2   # = 3
-    # Center vertically within the pill area (12px starting at y=2)
-    start_y = 2 + (12 - letter_height) // 2  # = 2 + 2 = 4
+    # Center vertically within the pill inner area (10px from y=3 to y=12)
+    import math
+    start_y = 3 + math.ceil((10 - letter_height) / 2)  # = 3 + 2 = 5
     
     # Draw first letter
     draw_letter(draw, letter1, start_x, start_y, black)

@@ -505,11 +505,11 @@
             // Calculate letter positions (centered in 16x16 canvas)
             const totalLetterWidth = letterCount * letterWidth + (letterCount - 1) * spacing;
             const startX = Math.floor((16 - totalLetterWidth) / 2);
-            // For pill shapes, center letters within the 12px pill area (which starts at y=2)
+            // For pill shapes, center letters within the 10px inner area (pill outline at y=2 and y=13, inner y=3 to y=12)
             // For circle, center in full 16x16
             const startY = letterCount === 1 
                 ? Math.floor((16 - letterHeight) / 2)
-                : 2 + Math.floor((12 - letterHeight) / 2);  // 2px offset for pill + center in 12px
+                : 3 + Math.ceil((10 - letterHeight) / 2);  // 3px offset (inner starts at y=3) + center in 10px inner
             
             // Draw letters
             for (let i = 0; i < letterCount; i++) {
