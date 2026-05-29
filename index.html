@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Icon Generator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .export-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: #007aff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .export-btn:hover {
+            background: #0056b3;
+        }
+        .export-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #444;
+        }
+        .radio-group {
+            display: flex;
+            gap: 12px;
+        }
+        .radio-option {
+            flex: 1;
+            position: relative;
+        }
+        .radio-option input {
+            position: absolute;
+            opacity: 0;
+        }
+        .radio-option label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .radio-option input:checked + label {
+            border-color: #007aff;
+            background: #f0f7ff;
+        }
+        .radio-option label:hover {
+            border-color: #999;
+        }
+        .radio-option .icon-preview {
+            width: 48px;
+            height: 36px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .radio-option .icon-preview svg {
+            width: 100%;
+            height: 100%;
+        }
+        .theme-group {
+            display: flex;
+            gap: 8px;
+        }
+        .theme-option {
+            flex: 1;
+            position: relative;
+        }
+        .theme-option input {
+            position: absolute;
+            opacity: 0;
+        }
+        .theme-option label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .theme-option input:checked + label {
+            border-color: #007aff;
+            background: #f0f7ff;
+        }
+        .theme-option label:hover {
+            border-color: #999;
+        }
+        .theme-swatch {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .theme-swatch.light {
+            background: #fefefe;
+        }
+        .theme-swatch.dark {
+            background: #3b4453;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-align: center;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #007aff;
+        }
+        .preview-section {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #eee;
+        }
+        .preview-container {
+            display: inline-block;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            transition: background 0.2s;
+        }
+        .preview-container.light {
+            background: #fefefe;
+            border: 1px solid #e0e0e0;
+        }
+        .preview-container.dark {
+            background: #3b4453;
+        }
+        .preview-label {
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        .preview-label.light {
+            color: #888;
+        }
+        .preview-label.dark {
+            color: #aaa;
+        }
+        #preview-actual {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        #preview-scaled {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        .preview-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            align-items: flex-end;
+        }
+        .preview-item {
+            text-align: center;
+        }
+        .specs {
+            font-size: 12px;
+            color: #666;
+            margin-top: 16px;
+        }
+        .hidden-canvas {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pixel Icon Generator</h1>
+    
+    <div class="card">
+        <button class="export-btn" id="export-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Export
+        </button>
+        <div class="form-group">
+            <label>Number of Letters</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" name="letterCount" id="opt1" value="1">
+                    <label for="opt1">
+                        <div class="icon-preview">
+                            <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="none" stroke="black" stroke-width="1"/><text x="8" y="11" text-anchor="middle" font-size="8" font-family="monospace">A</text></svg>
+                        </div>
+                        1 Letter
+                    </label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" name="letterCount" id="opt2" value="2" checked>
+                    <label for="opt2">
+                        <div class="icon-preview">
+                            <svg viewBox="0 0 16 12"><rect x="0.5" y="0.5" width="15" height="11" rx="5" fill="none" stroke="black" stroke-width="1"/><text x="8" y="9" text-anchor="middle" font-size="6" font-family="monospace">AB</text></svg>
+                        </div>
+                        2 Letters
+                    </label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" name="letterCount" id="opt3" value="3">
+                    <label for="opt3">
+                        <div class="icon-preview">
+                            <svg viewBox="0 0 16 12"><rect x="0.5" y="0.5" width="15" height="11" rx="5" fill="none" stroke="black" stroke-width="1"/><text x="8" y="9" text-anchor="middle" font-size="5" font-family="monospace">ABC</text></svg>
+                        </div>
+                        3 Letters
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="letters">Enter Letters (A-Z)</label>
+            <input type="text" id="letters" maxlength="3" placeholder="AB" value="AB">
+        </div>
+        
+        <div class="form-group">
+            <label>Theme (Preview)</label>
+            <div class="theme-group">
+                <div class="theme-option">
+                    <input type="radio" name="theme" id="theme-light" value="light" checked>
+                    <label for="theme-light">
+                        <span class="theme-swatch light"></span>
+                        Light
+                    </label>
+                </div>
+                <div class="theme-option">
+                    <input type="radio" name="theme" id="theme-dark" value="dark">
+                    <label for="theme-dark">
+                        <span class="theme-swatch dark"></span>
+                        Dark
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="preview-section">
+            <label>Preview</label>
+            <div class="preview-container light" id="preview-container">
+                <div class="preview-row">
+                    <div class="preview-item">
+                        <div class="preview-label light" id="label-actual">Actual Size</div>
+                        <canvas id="preview-actual"></canvas>
+                    </div>
+                    <div class="preview-item">
+                        <div class="preview-label light" id="label-scaled">8× Scaled</div>
+                        <canvas id="preview-scaled"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="specs" id="specs"></div>
+        </div>
+    </div>
+    
+    <!-- Hidden canvases for export -->
+    <canvas id="export-light" class="hidden-canvas"></canvas>
+    <canvas id="export-dark" class="hidden-canvas"></canvas>
+
+    <script>
+        // Pixel fonts for different sizes
+        
+        // Large font for single letter (6x9 pixels) - fits in 16x16 circle
+        const FONT_LARGE = {
+            'A': [[2,0],[3,0],[1,1],[4,1],[0,2],[5,2],[0,3],[5,3],[0,4],[1,4],[2,4],[3,4],[4,4],[5,4],[0,5],[5,5],[0,6],[5,6],[0,7],[5,7],[0,8],[5,8]],
+            'B': [[0,0],[1,0],[2,0],[3,0],[4,0],[0,1],[5,1],[0,2],[5,2],[0,3],[1,3],[2,3],[3,3],[4,3],[0,4],[5,4],[0,5],[5,5],[0,6],[5,6],[0,7],[5,7],[0,8],[1,8],[2,8],[3,8],[4,8]],
+            'C': [[1,0],[2,0],[3,0],[4,0],[0,1],[5,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[5,7],[1,8],[2,8],[3,8],[4,8]],
+            'D': [[0,0],[1,0],[2,0],[3,0],[4,0],[0,1],[5,1],[0,2],[5,2],[0,3],[5,3],[0,4],[5,4],[0,5],[5,5],[0,6],[5,6],[0,7],[5,7],[0,8],[1,8],[2,8],[3,8],[4,8]],
+            'E': [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[0,1],[0,2],[0,3],[0,4],[1,4],[2,4],[3,4],[4,4],[0,5],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8]],
+            'F': [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[0,1],[0,2],[0,3],[0,4],[1,4],[2,4],[3,4],[4,4],[0,5],[0,6],[0,7],[0,8]],
+            'G': [[1,0],[2,0],[3,0],[4,0],[0,1],[5,1],[0,2],[0,3],[0,4],[3,4],[4,4],[5,4],[0,5],[5,5],[0,6],[5,6],[0,7],[5,7],[1,8],[2,8],[3,8],[4,8]],
+            'H': [[0,0],[5,0],[0,1],[5,1],[0,2],[5,2],[0,3],[5,3],[0,4],[1,4],[2,4],[3,4],[4,4],[5,4],[0,5],[5,5],[0,6],[5,6],[0,7],[5,7],[0,8],[5,8]],
+            'I': [[0,0],[1,0],[2,0],[3,0],[4,0],[2,1],[2,2],[2,3],[2,4],[2,5],[2,6],[2,7],[0,8],[1,8],[2,8],[3,8],[4,8]],
+            'J': [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[3,1],[3,2],[3,3],[3,4],[3,5],[0,6],[3,6],[0,7],[3,7],[1,8],[2,8]],
+            'K': [[0,0],[5,0],[0,1],[4,1],[0,2],[3,2],[0,3],[2,3],[0,4],[1,4],[0,5],[2,5],[0,6],[3,6],[0,7],[4,7],[0,8],[5,8]],
+            'L': [[0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8]],
+            'M': [[0,0],[5,0],[0,1],[1,1],[4,1],[5,1],[0,2],[2,2],[3,2],[5,2],[0,3],[2,3],[3,3],[5,3],[0,4],[5,4],[0,5],[5,5],[0,6],[5,6],[0,7],[5,7],[0,8],[5,8]],
+            'N': [[0,0],[5,0],[0,1],[1,1],[5,1],[0,2],[2,2],[5,2],[0,3],[2,3],[5,3],[0,4],[3,4],[5,4],[0,5],[3,5],[5,5],[0,6],[4,6],[5,6],[0,7],[4,7],[5,7],[0,8],[5,8]],
+            'O': [[1,0],[2,0],[3,0],[4,0],[0,1],[5,1],[0,2],[5,2],[0,3],[5,3],[0,4],[5,4],[0,5],[5,5],[0,6],[5,6],[0,7],[5,7],[1,8],[2,8],[3,8],[4,8]],
+            'P': [[0,0],[1,0],[2,0],[3,0],[4,0],[0,1],[5,1],[0,2],[5,2],[0,3],[5,3],[0,4],[1,4],[2,4],[3,4],[4,4],[0,5],[0,6],[0,7],[0,8]],
+            'Q': [[1,0],[2,0],[3,0],[4,0],[0,1],[5,1],[0,2],[5,2],[0,3],[5,3],[0,4],[5,4],[0,5],[5,5],[0,6],[3,6],[5,6],[0,7],[4,7],[1,8],[2,8],[3,8],[5,8]],
+            'R': [[0,0],[1,0],[2,0],[3,0],[4,0],[0,1],[5,1],[0,2],[5,2],[0,3],[5,3],[0,4],[1,4],[2,4],[3,4],[4,4],[0,5],[3,5],[0,6],[4,6],[0,7],[5,7],[0,8],[5,8]],
+            'S': [[1,0],[2,0],[3,0],[4,0],[0,1],[5,1],[0,2],[1,3],[2,3],[3,3],[4,3],[5,4],[5,5],[0,6],[5,6],[0,7],[5,7],[1,8],[2,8],[3,8],[4,8]],
+            'T': [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[2,1],[3,1],[2,2],[3,2],[2,3],[3,3],[2,4],[3,4],[2,5],[3,5],[2,6],[3,6],[2,7],[3,7],[2,8],[3,8]],
+            'U': [[0,0],[5,0],[0,1],[5,1],[0,2],[5,2],[0,3],[5,3],[0,4],[5,4],[0,5],[5,5],[0,6],[5,6],[0,7],[5,7],[1,8],[2,8],[3,8],[4,8]],
+            'V': [[0,0],[5,0],[0,1],[5,1],[0,2],[5,2],[0,3],[5,3],[1,4],[4,4],[1,5],[4,5],[2,6],[3,6],[2,7],[3,7],[2,8],[3,8]],
+            'W': [[0,0],[5,0],[0,1],[5,1],[0,2],[5,2],[0,3],[5,3],[0,4],[5,4],[0,5],[2,5],[3,5],[5,5],[0,6],[2,6],[3,6],[5,6],[0,7],[1,7],[4,7],[5,7],[0,8],[5,8]],
+            'X': [[0,0],[5,0],[0,1],[5,1],[1,2],[4,2],[2,3],[3,3],[2,4],[3,4],[2,5],[3,5],[1,6],[4,6],[0,7],[5,7],[0,8],[5,8]],
+            'Y': [[0,0],[5,0],[0,1],[5,1],[1,2],[4,2],[2,3],[3,3],[2,4],[3,4],[2,5],[3,5],[2,6],[3,6],[2,7],[3,7],[2,8],[3,8]],
+            'Z': [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[5,1],[4,2],[3,3],[2,4],[3,4],[1,5],[2,5],[0,6],[1,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8]]
+        };
+
+        // Medium font for two letters (4x7 pixels) - fits in 16x12 pill
+        const FONT_MEDIUM = {
+            'A': [[1,0],[2,0],[0,1],[3,1],[0,2],[3,2],[0,3],[1,3],[2,3],[3,3],[0,4],[3,4],[0,5],[3,5],[0,6],[3,6]],
+            'B': [[0,0],[1,0],[2,0],[0,1],[3,1],[0,2],[3,2],[0,3],[1,3],[2,3],[0,4],[3,4],[0,5],[3,5],[0,6],[1,6],[2,6]],
+            'C': [[1,0],[2,0],[3,0],[0,1],[0,2],[0,3],[0,4],[0,5],[1,6],[2,6],[3,6]],
+            'D': [[0,0],[1,0],[2,0],[0,1],[3,1],[0,2],[3,2],[0,3],[3,3],[0,4],[3,4],[0,5],[3,5],[0,6],[1,6],[2,6]],
+            'E': [[0,0],[1,0],[2,0],[3,0],[0,1],[0,2],[0,3],[1,3],[2,3],[0,4],[0,5],[0,6],[1,6],[2,6],[3,6]],
+            'F': [[0,0],[1,0],[2,0],[3,0],[0,1],[0,2],[0,3],[1,3],[2,3],[0,4],[0,5],[0,6]],
+            'G': [[1,0],[2,0],[3,0],[0,1],[0,2],[0,3],[2,3],[3,3],[0,4],[3,4],[0,5],[3,5],[1,6],[2,6],[3,6]],
+            'H': [[0,0],[3,0],[0,1],[3,1],[0,2],[3,2],[0,3],[1,3],[2,3],[3,3],[0,4],[3,4],[0,5],[3,5],[0,6],[3,6]],
+            'I': [[0,0],[1,0],[2,0],[1,1],[1,2],[1,3],[1,4],[1,5],[0,6],[1,6],[2,6]],
+            'J': [[0,0],[1,0],[2,0],[3,0],[2,1],[2,2],[2,3],[2,4],[0,5],[2,5],[1,6]],
+            'K': [[0,0],[3,0],[0,1],[2,1],[0,2],[1,2],[0,3],[1,3],[0,4],[2,4],[0,5],[3,5],[0,6],[3,6]],
+            'L': [[0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[1,6],[2,6],[3,6]],
+            'M': [[0,0],[3,0],[0,1],[1,1],[2,1],[3,1],[0,2],[1,2],[2,2],[3,2],[0,3],[3,3],[0,4],[3,4],[0,5],[3,5],[0,6],[3,6]],
+            'N': [[0,0],[3,0],[0,1],[1,1],[3,1],[0,2],[1,2],[3,2],[0,3],[2,3],[3,3],[0,4],[2,4],[3,4],[0,5],[3,5],[0,6],[3,6]],
+            'O': [[1,0],[2,0],[0,1],[3,1],[0,2],[3,2],[0,3],[3,3],[0,4],[3,4],[0,5],[3,5],[1,6],[2,6]],
+            'P': [[0,0],[1,0],[2,0],[0,1],[3,1],[0,2],[3,2],[0,3],[1,3],[2,3],[0,4],[0,5],[0,6]],
+            'Q': [[1,0],[2,0],[0,1],[3,1],[0,2],[3,2],[0,3],[3,3],[0,4],[2,4],[3,4],[0,5],[3,5],[1,6],[2,6],[3,6]],
+            'R': [[0,0],[1,0],[2,0],[0,1],[3,1],[0,2],[3,2],[0,3],[1,3],[2,3],[0,4],[2,4],[0,5],[3,5],[0,6],[3,6]],
+            'S': [[1,0],[2,0],[3,0],[0,1],[0,2],[1,3],[2,3],[3,4],[3,5],[0,6],[1,6],[2,6]],
+            'T': [[0,0],[1,0],[2,0],[3,0],[1,1],[2,1],[1,2],[2,2],[1,3],[2,3],[1,4],[2,4],[1,5],[2,5],[1,6],[2,6]],
+            'U': [[0,0],[3,0],[0,1],[3,1],[0,2],[3,2],[0,3],[3,3],[0,4],[3,4],[0,5],[3,5],[1,6],[2,6]],
+            'V': [[0,0],[3,0],[0,1],[3,1],[0,2],[3,2],[0,3],[3,3],[1,4],[2,4],[1,5],[2,5],[1,6],[2,6]],
+            'W': [[0,0],[3,0],[0,1],[3,1],[0,2],[3,2],[0,3],[3,3],[0,4],[1,4],[2,4],[3,4],[0,5],[1,5],[2,5],[3,5],[0,6],[3,6]],
+            'X': [[0,0],[3,0],[0,1],[3,1],[1,2],[2,2],[1,3],[2,3],[1,4],[2,4],[0,5],[3,5],[0,6],[3,6]],
+            'Y': [[0,0],[3,0],[0,1],[3,1],[1,2],[2,2],[1,3],[2,3],[1,4],[2,4],[1,5],[2,5],[1,6],[2,6]],
+            'Z': [[0,0],[1,0],[2,0],[3,0],[3,1],[2,2],[1,3],[2,3],[1,4],[0,5],[0,6],[1,6],[2,6],[3,6]]
+        };
+
+        // Small font for three letters (3x5 pixels) - fits in 16x12 pill
+        const FONT_SMALL = {
+            'A': [[1,0],[0,1],[2,1],[0,2],[1,2],[2,2],[0,3],[2,3],[0,4],[2,4]],
+            'B': [[0,0],[1,0],[0,1],[2,1],[0,2],[1,2],[0,3],[2,3],[0,4],[1,4]],
+            'C': [[1,0],[2,0],[0,1],[0,2],[0,3],[1,4],[2,4]],
+            'D': [[0,0],[1,0],[0,1],[2,1],[0,2],[2,2],[0,3],[2,3],[0,4],[1,4]],
+            'E': [[0,0],[1,0],[2,0],[0,1],[0,2],[1,2],[0,3],[0,4],[1,4],[2,4]],
+            'F': [[0,0],[1,0],[2,0],[0,1],[0,2],[1,2],[0,3],[0,4]],
+            'G': [[1,0],[2,0],[0,1],[0,2],[1,2],[2,2],[0,3],[2,3],[1,4],[2,4]],
+            'H': [[0,0],[2,0],[0,1],[2,1],[0,2],[1,2],[2,2],[0,3],[2,3],[0,4],[2,4]],
+            'I': [[0,0],[1,0],[2,0],[1,1],[1,2],[1,3],[0,4],[1,4],[2,4]],
+            'J': [[0,0],[1,0],[2,0],[2,1],[2,2],[0,3],[2,3],[1,4]],
+            'K': [[0,0],[2,0],[0,1],[1,1],[0,2],[0,3],[1,3],[0,4],[2,4]],
+            'L': [[0,0],[0,1],[0,2],[0,3],[0,4],[1,4],[2,4]],
+            'M': [[0,0],[2,0],[0,1],[1,1],[2,1],[0,2],[1,2],[2,2],[0,3],[2,3],[0,4],[2,4]],
+            'N': [[0,0],[2,0],[0,1],[1,1],[2,1],[0,2],[1,2],[2,2],[0,3],[2,3],[0,4],[2,4]],
+            'O': [[1,0],[0,1],[2,1],[0,2],[2,2],[0,3],[2,3],[1,4]],
+            'P': [[0,0],[1,0],[0,1],[2,1],[0,2],[1,2],[0,3],[0,4]],
+            'Q': [[1,0],[0,1],[2,1],[0,2],[2,2],[0,3],[1,3],[1,4],[2,4]],
+            'R': [[0,0],[1,0],[0,1],[2,1],[0,2],[1,2],[0,3],[1,3],[0,4],[2,4]],
+            'S': [[1,0],[2,0],[0,1],[1,2],[2,3],[0,4],[1,4]],
+            'T': [[0,0],[1,0],[2,0],[1,1],[1,2],[1,3],[1,4]],
+            'U': [[0,0],[2,0],[0,1],[2,1],[0,2],[2,2],[0,3],[2,3],[1,4]],
+            'V': [[0,0],[2,0],[0,1],[2,1],[0,2],[2,2],[0,3],[2,3],[1,4]],
+            'W': [[0,0],[2,0],[0,1],[2,1],[0,2],[1,2],[2,2],[0,3],[1,3],[2,3],[0,4],[2,4]],
+            'X': [[0,0],[2,0],[0,1],[2,1],[1,2],[0,3],[2,3],[0,4],[2,4]],
+            'Y': [[0,0],[2,0],[0,1],[2,1],[1,2],[1,3],[1,4]],
+            'Z': [[0,0],[1,0],[2,0],[2,1],[1,2],[0,3],[0,4],[1,4],[2,4]]
+        };
+
+        // Drawing functions
+        const CIRCLE_PIXELS = [
+            [5,0],[6,0],[7,0],[8,0],[9,0],[10,0],
+            [3,1],[4,1],[11,1],[12,1],
+            [2,2],[13,2],
+            [1,3],[14,3],
+            [1,4],[14,4],
+            [0,5],[15,5],
+            [0,6],[15,6],
+            [0,7],[15,7],
+            [0,8],[15,8],
+            [0,9],[15,9],
+            [0,10],[15,10],
+            [1,11],[14,11],
+            [1,12],[14,12],
+            [2,13],[13,13],
+            [3,14],[4,14],[11,14],[12,14],
+            [5,15],[6,15],[7,15],[8,15],[9,15],[10,15]
+        ];
+
+        const PILL_PIXELS = [
+            [3,0],[4,0],[5,0],[6,0],[7,0],[8,0],[9,0],[10,0],[11,0],[12,0],
+            [2,1],[13,1],
+            [1,2],[14,2],
+            [0,3],[15,3],
+            [0,4],[15,4],
+            [0,5],[15,5],
+            [0,6],[15,6],
+            [0,7],[15,7],
+            [0,8],[15,8],
+            [1,9],[14,9],
+            [2,10],[13,10],
+            [3,11],[4,11],[5,11],[6,11],[7,11],[8,11],[9,11],[10,11],[11,11],[12,11]
+        ];
+
+        function drawCircle(ctx, color) {
+            ctx.fillStyle = color;
+            CIRCLE_PIXELS.forEach(([x, y]) => ctx.fillRect(x, y, 1, 1));
+        }
+
+        function drawPill(ctx, color) {
+            ctx.fillStyle = color;
+            PILL_PIXELS.forEach(([x, y]) => ctx.fillRect(x, y, 1, 1));
+        }
+
+        function drawLetter(ctx, letter, offsetX, offsetY, font, color) {
+            if (!font[letter]) return;
+            ctx.fillStyle = color;
+            font[letter].forEach(([x, y]) => {
+                ctx.fillRect(offsetX + x, offsetY + y, 1, 1);
+            });
+        }
+
+        function getIconParams() {
+            const letterCount = parseInt(document.querySelector('input[name="letterCount"]:checked').value);
+            const input = document.getElementById('letters').value.toUpperCase().replace(/[^A-Z]/g, '');
+            
+            let width, height, letters, font, letterWidth, letterHeight, spacing;
+            
+            if (letterCount === 1) {
+                width = 16;
+                height = 16;
+                letters = input.slice(0, 1) || 'A';
+                font = FONT_LARGE;
+                letterWidth = 6;
+                letterHeight = 9;
+                spacing = 0;
+            } else if (letterCount === 2) {
+                width = 16;
+                height = 12;
+                letters = input.slice(0, 2) || 'AB';
+                font = FONT_MEDIUM;
+                letterWidth = 4;
+                letterHeight = 7;
+                spacing = 1;
+            } else {
+                width = 16;
+                height = 12;
+                letters = input.slice(0, 3) || 'ABC';
+                font = FONT_SMALL;
+                letterWidth = 3;
+                letterHeight = 5;
+                spacing = 1;
+            }
+            
+            // Pad letters if needed
+            while (letters.length < letterCount) {
+                letters += 'A';
+            }
+            
+            return { letterCount, width, height, letters, font, letterWidth, letterHeight, spacing };
+        }
+
+        function drawIconToCanvas(canvas, color) {
+            const { letterCount, width, height, letters, font, letterWidth, letterHeight, spacing } = getIconParams();
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = width;
+            canvas.height = height;
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw shape
+            if (letterCount === 1) {
+                drawCircle(ctx, color);
+            } else {
+                drawPill(ctx, color);
+            }
+            
+            // Calculate letter positions
+            const totalLetterWidth = letterCount * letterWidth + (letterCount - 1) * spacing;
+            const startX = Math.floor((width - totalLetterWidth) / 2);
+            const startY = Math.floor((height - letterHeight) / 2);
+            
+            // Draw letters
+            for (let i = 0; i < letterCount; i++) {
+                const x = startX + i * (letterWidth + spacing);
+                drawLetter(ctx, letters[i], x, startY, font, color);
+            }
+            
+            return { width, height, letters, letterCount };
+        }
+
+        function updateTheme() {
+            const theme = document.querySelector('input[name="theme"]:checked').value;
+            const container = document.getElementById('preview-container');
+            const labelActual = document.getElementById('label-actual');
+            const labelScaled = document.getElementById('label-scaled');
+            
+            container.className = 'preview-container ' + theme;
+            labelActual.className = 'preview-label ' + theme;
+            labelScaled.className = 'preview-label ' + theme;
+        }
+
+        function generateIcon() {
+            const theme = document.querySelector('input[name="theme"]:checked').value;
+            const color = theme === 'light' ? 'black' : 'white';
+            
+            const canvasActual = document.getElementById('preview-actual');
+            const canvasScaled = document.getElementById('preview-scaled');
+            
+            const { width, height, letters, letterCount } = drawIconToCanvas(canvasActual, color);
+            
+            // Scale up for preview
+            canvasScaled.width = width * 8;
+            canvasScaled.height = height * 8;
+            const ctxScaled = canvasScaled.getContext('2d');
+            ctxScaled.imageSmoothingEnabled = false;
+            ctxScaled.drawImage(canvasActual, 0, 0, width * 8, height * 8);
+            
+            // Update specs
+            document.getElementById('specs').textContent = `${width}×${height}px • ${letterCount} letter${letterCount > 1 ? 's' : ''} • "${letters}"`;
+            
+            // Update input maxlength
+            document.getElementById('letters').maxLength = letterCount;
+            document.getElementById('letters').placeholder = letterCount === 1 ? 'A' : letterCount === 2 ? 'AB' : 'ABC';
+            
+            // Update theme
+            updateTheme();
+        }
+
+        function exportIcons() {
+            const { letters } = getIconParams();
+            
+            // Generate light version
+            const canvasLight = document.getElementById('export-light');
+            drawIconToCanvas(canvasLight, 'black');
+            
+            // Generate dark version
+            const canvasDark = document.getElementById('export-dark');
+            drawIconToCanvas(canvasDark, 'white');
+            
+            // Download light version
+            const linkLight = document.createElement('a');
+            linkLight.download = `icon_${letters}_light.png`;
+            linkLight.href = canvasLight.toDataURL('image/png');
+            linkLight.click();
+            
+            // Small delay before downloading dark version
+            setTimeout(() => {
+                const linkDark = document.createElement('a');
+                linkDark.download = `icon_${letters}_dark.png`;
+                linkDark.href = canvasDark.toDataURL('image/png');
+                linkDark.click();
+            }, 100);
+        }
+
+        // Event listeners
+        document.querySelectorAll('input[name="letterCount"]').forEach(radio => {
+            radio.addEventListener('change', generateIcon);
+        });
+        document.querySelectorAll('input[name="theme"]').forEach(radio => {
+            radio.addEventListener('change', generateIcon);
+        });
+        document.getElementById('letters').addEventListener('input', generateIcon);
+        document.getElementById('export-btn').addEventListener('click', exportIcons);
+
+        // Initial generation
+        generateIcon();
+    </script>
+</body>
+</html>
