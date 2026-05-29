@@ -159,6 +159,8 @@
         .tool-btn.active { border-color: #007aff; background: #f0f7ff; }
         .tool-btn.save { background: #007aff; color: white; border-color: #007aff; }
         .tool-btn.save:hover { background: #0056b3; }
+        .tool-btn.reset { background: #ff3b30; color: white; border-color: #ff3b30; }
+        .tool-btn.reset:hover { background: #d63029; }
         #preview-scaled { cursor: crosshair; outline: 1px solid rgba(128, 128, 128, 0.3); }
         .editor-hint {
             font-size: 11px;
@@ -283,7 +285,8 @@
             <div class="editor-tools hidden" id="editor-tools">
                 <button class="tool-btn active" id="tool-fill" data-tool="fill">Fill</button>
                 <button class="tool-btn" id="tool-erase" data-tool="erase">Erase</button>
-                <button class="tool-btn save" id="tool-save">Save Changes</button>
+                <button class="tool-btn save" id="tool-save">Save</button>
+                <button class="tool-btn reset" id="tool-reset">Reset</button>
             </div>
             <div class="preview-container light" id="preview-container">
                 <div class="preview-row">
@@ -318,6 +321,40 @@
         let currentTool = 'fill';
         let isDrawing = false;
         let editedPixels = null;  // Stores edited pixel data for current symbol
+        
+        // Store original symbols for reset
+        const ORIGINAL_SYMBOLS = JSON.parse(JSON.stringify(SYMBOLS));
+        
+        // Load saved symbols from localStorage
+        function loadSavedSymbols() {
+            const saved = localStorage.getItem('customSymbols');
+            if (saved) {
+                const customSymbols = JSON.parse(saved);
+                for (const key in customSymbols) {
+                    if (SYMBOLS[key]) {
+                        SYMBOLS[key].pixels = customSymbols[key];
+                    }
+                }
+            }
+        }
+        
+        // Save symbol to localStorage
+        function saveSymbolToStorage(symbolKey, pixels) {
+            let customSymbols = JSON.parse(localStorage.getItem('customSymbols') || '{}');
+            customSymbols[symbolKey] = pixels;
+            localStorage.setItem('customSymbols', JSON.stringify(customSymbols));
+        }
+        
+        // Reset symbol to original
+        function resetSymbolToOriginal(symbolKey) {
+            let customSymbols = JSON.parse(localStorage.getItem('customSymbols') || '{}');
+            delete customSymbols[symbolKey];
+            localStorage.setItem('customSymbols', JSON.stringify(customSymbols));
+            SYMBOLS[symbolKey].pixels = [...ORIGINAL_SYMBOLS[symbolKey].pixels];
+        }
+        
+        // Load saved symbols on startup
+        loadSavedSymbols();
 
         // ==================== LETTER FONTS ====================
         const FONT_LARGE = {
@@ -661,6 +698,9 @@
             
             // Save button
             document.getElementById('tool-save').addEventListener('click', savePixelChanges);
+            
+            // Reset button
+            document.getElementById('tool-reset').addEventListener('click', resetCurrentSymbol);
         }
         
         function editPixel(e) {
@@ -729,6 +769,9 @@
             const symbolKey = SYMBOL_KEYS[selectedSymbol];
             SYMBOLS[symbolKey].pixels = newPixels;
             
+            // Save to localStorage
+            saveSymbolToStorage(symbolKey, newPixels);
+            
             // Update the symbol grid button
             const gridBtns = document.querySelectorAll('.symbol-btn');
             const canvas = gridBtns[selectedSymbol].querySelector('canvas');
@@ -742,6 +785,28 @@
             
             // Log the new pixel array for copying
             console.log(`'${symbolKey}': { name: '${SYMBOLS[symbolKey].name}', pixels: ${JSON.stringify(newPixels)}, svg: '${SYMBOLS[symbolKey].svg}' }`);
+        }
+        
+        function resetCurrentSymbol() {
+            const symbolKey = SYMBOL_KEYS[selectedSymbol];
+            
+            // Reset to original
+            resetSymbolToOriginal(symbolKey);
+            editedPixels = null;
+            
+            // Update the symbol grid button
+            const gridBtns = document.querySelectorAll('.symbol-btn');
+            const canvas = gridBtns[selectedSymbol].querySelector('canvas');
+            drawSymbolIcon(canvas, symbolKey, 'black');
+            
+            // Regenerate preview
+            generatePreview();
+            
+            // Show confirmation
+            const resetBtn = document.getElementById('tool-reset');
+            const originalText = resetBtn.textContent;
+            resetBtn.textContent = 'Reset!';
+            setTimeout(() => { resetBtn.textContent = originalText; }, 1000);
         }
         
         function showEditorTools(show) {
