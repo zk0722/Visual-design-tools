@@ -13,6 +13,7 @@
             padding: 40px 20px;
             background: #f5f5f5;
         }
+        body.symbols-mode { max-width: 960px; }
         h1 { text-align: center; color: #333; margin-bottom: 30px; }
         .card {
             background: white;
@@ -121,6 +122,32 @@
         input[type="text"]:focus { outline: none; border-color: #007aff; }
         
         .preview-section { text-align: center; margin-top: 24px; padding-top: 24px; border-top: 1px solid #eee; }
+        .workspace { display: flex; flex-direction: column; }
+        .workspace.symbols-mode {
+            flex-direction: row;
+            gap: 24px;
+            align-items: flex-start;
+        }
+        .workspace-main { flex: 1; min-width: 0; }
+        .workspace-aside { flex-shrink: 0; }
+        .workspace.symbols-mode .workspace-main { flex: 1; }
+        .workspace.symbols-mode .workspace-aside {
+            width: 340px;
+            position: sticky;
+            top: 20px;
+        }
+        .workspace.symbols-mode .preview-section {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+        .workspace.symbols-mode .editor-tools { flex-wrap: wrap; }
+        .workspace.symbols-mode .preview-row {
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+        .workspace.symbols-mode .symbol-table { margin-bottom: 0; max-height: calc(100vh - 140px); overflow-y: auto; }
         .preview-container { display: inline-block; padding: 20px; border-radius: 8px; margin-bottom: 16px; transition: background 0.2s; }
         .preview-container.light { background: #fefefe; border: 1px solid #e0e0e0; }
         .preview-container.dark { background: #3b4453; }
@@ -130,6 +157,12 @@
         .preview-actual, .preview-scaled { image-rendering: pixelated; image-rendering: crisp-edges; }
         .preview-row { display: flex; justify-content: center; gap: 30px; align-items: flex-end; }
         .preview-item { text-align: center; }
+        .preview-scaled-wrap {
+            position: relative;
+            display: inline-block;
+            line-height: 0;
+        }
+        .preview-scaled-wrap .preview-scaled { display: block; }
         .specs { font-size: 12px; color: #666; margin-top: 16px; }
         
         /* Pixel Editor */
@@ -165,28 +198,52 @@
         .editor-hint.hidden { display: none; }
         .hidden-canvas { display: none; }
         
-        /* Symbol Grid */
-        .symbol-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 8px;
+        /* Symbol Table */
+        .symbol-table {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
             margin-bottom: 20px;
         }
-        .symbol-btn {
-            aspect-ratio: 1;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            background: white;
+        .symbol-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .symbol-row {
             cursor: pointer;
-            padding: 4px;
-            transition: all 0.2s;
+            transition: background 0.15s;
+        }
+        .symbol-row:hover { background: #fafafa; }
+        .symbol-row.selected { background: #f0f7ff; }
+        .symbol-row td {
+            border-bottom: 1px solid #eee;
+            padding: 0;
+            vertical-align: middle;
+        }
+        .symbol-row:last-child td { border-bottom: none; }
+        .symbol-cell {
+            width: 72px;
+            padding: 8px 12px !important;
+        }
+        .symbol-icon {
+            width: 48px;
+            height: 48px;
+            background: #e8e8e8;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .symbol-btn:hover { border-color: #999; }
-        .symbol-btn.selected { border-color: #007aff; background: #f0f7ff; }
-        .symbol-btn canvas { image-rendering: pixelated; image-rendering: crisp-edges; }
+        .symbol-icon canvas {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        .symbol-label {
+            padding: 12px 16px !important;
+            font-size: 14px;
+            color: #333;
+        }
+        .symbol-row.selected .symbol-label { color: #007aff; font-weight: 500; }
     </style>
 </head>
 <body>
@@ -206,98 +263,106 @@
         </div>
         
         <!-- Letters Tab -->
-        <div class="tab-content active" id="tab-letters">
-            <div class="form-group">
-                <label>Number of Letters</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" name="letterCount" id="opt1" value="1">
-                        <label for="opt1">
-                            <div class="icon-preview">
-                                <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="none" stroke="black" stroke-width="1"/><text x="8" y="11" text-anchor="middle" font-size="8" font-family="monospace">A</text></svg>
+        <div class="workspace" id="workspace">
+            <div class="workspace-main">
+                <div class="tab-content active" id="tab-letters">
+                    <div class="form-group">
+                        <label>Number of Letters</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" name="letterCount" id="opt1" value="1">
+                                <label for="opt1">
+                                    <div class="icon-preview">
+                                        <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="none" stroke="black" stroke-width="1"/><text x="8" y="11" text-anchor="middle" font-size="8" font-family="monospace">A</text></svg>
+                                    </div>
+                                    1 Letter
+                                </label>
                             </div>
-                            1 Letter
-                        </label>
+                            <div class="radio-option">
+                                <input type="radio" name="letterCount" id="opt2" value="2" checked>
+                                <label for="opt2">
+                                    <div class="icon-preview">
+                                        <svg viewBox="0 0 16 12"><rect x="0.5" y="0.5" width="15" height="11" rx="5" fill="none" stroke="black" stroke-width="1"/><text x="8" y="9" text-anchor="middle" font-size="6" font-family="monospace">AB</text></svg>
+                                    </div>
+                                    2 Letters
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" name="letterCount" id="opt3" value="3">
+                                <label for="opt3">
+                                    <div class="icon-preview">
+                                        <svg viewBox="0 0 16 12"><rect x="0.5" y="0.5" width="15" height="11" rx="5" fill="none" stroke="black" stroke-width="1"/><text x="8" y="9" text-anchor="middle" font-size="5" font-family="monospace">ABC</text></svg>
+                                    </div>
+                                    3 Letters
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" name="letterCount" id="opt2" value="2" checked>
-                        <label for="opt2">
-                            <div class="icon-preview">
-                                <svg viewBox="0 0 16 12"><rect x="0.5" y="0.5" width="15" height="11" rx="5" fill="none" stroke="black" stroke-width="1"/><text x="8" y="9" text-anchor="middle" font-size="6" font-family="monospace">AB</text></svg>
-                            </div>
-                            2 Letters
-                        </label>
+                    
+                    <div class="form-group">
+                        <label for="letters">Enter Letters (A-Z)</label>
+                        <input type="text" id="letters" maxlength="3" placeholder="AB" value="AB">
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" name="letterCount" id="opt3" value="3">
-                        <label for="opt3">
-                            <div class="icon-preview">
-                                <svg viewBox="0 0 16 12"><rect x="0.5" y="0.5" width="15" height="11" rx="5" fill="none" stroke="black" stroke-width="1"/><text x="8" y="9" text-anchor="middle" font-size="5" font-family="monospace">ABC</text></svg>
-                            </div>
-                            3 Letters
-                        </label>
+                </div>
+                
+                <!-- Symbols Tab -->
+                <div class="tab-content" id="tab-symbols">
+                    <div class="form-group">
+                        <label>Symbols</label>
+                        <div class="symbol-table" id="symbol-grid"></div>
                     </div>
                 </div>
             </div>
             
-            <div class="form-group">
-                <label for="letters">Enter Letters (A-Z)</label>
-                <input type="text" id="letters" maxlength="3" placeholder="AB" value="AB">
-            </div>
-        </div>
-        
-        <!-- Symbols Tab -->
-        <div class="tab-content" id="tab-symbols">
-            <div class="form-group">
-                <label>Select Symbol (29 icons)</label>
-                <div class="symbol-grid" id="symbol-grid"></div>
-            </div>
-        </div>
-        
-        <!-- Shared Theme Selector -->
-        <div class="form-group">
-            <label>Theme (Preview)</label>
-            <div class="theme-group">
-                <div class="theme-option">
-                    <input type="radio" name="theme" id="theme-light" value="light" checked>
-                    <label for="theme-light">
-                        <span class="theme-swatch light"></span>
-                        Light
-                    </label>
-                </div>
-                <div class="theme-option">
-                    <input type="radio" name="theme" id="theme-dark" value="dark">
-                    <label for="theme-dark">
-                        <span class="theme-swatch dark"></span>
-                        Dark
-                    </label>
-                </div>
-            </div>
-        </div>
-        
-        <div class="preview-section">
-            <label>Preview</label>
-            <div class="editor-tools hidden" id="editor-tools">
-                <button class="tool-btn active" id="tool-fill" data-tool="fill">Fill</button>
-                <button class="tool-btn" id="tool-erase" data-tool="erase">Erase</button>
-                <button class="tool-btn save" id="tool-save">Save</button>
-                <button class="tool-btn reset" id="tool-reset">Reset</button>
-                <button class="tool-btn" id="tool-export-json">Export All</button>
-            </div>
-            <div class="preview-container light" id="preview-container">
-                <div class="preview-row">
-                    <div class="preview-item">
-                        <div class="preview-label light" id="label-actual">Actual Size</div>
-                        <canvas id="preview-actual" class="preview-actual"></canvas>
-                    </div>
-                    <div class="preview-item">
-                        <div class="preview-label light" id="label-scaled">8× Scaled</div>
-                        <canvas id="preview-scaled" class="preview-scaled"></canvas>
+            <div class="workspace-aside">
+                <!-- Shared Theme Selector -->
+                <div class="form-group">
+                    <label>Theme (Preview)</label>
+                    <div class="theme-group">
+                        <div class="theme-option">
+                            <input type="radio" name="theme" id="theme-light" value="light" checked>
+                            <label for="theme-light">
+                                <span class="theme-swatch light"></span>
+                                Light
+                            </label>
+                        </div>
+                        <div class="theme-option">
+                            <input type="radio" name="theme" id="theme-dark" value="dark">
+                            <label for="theme-dark">
+                                <span class="theme-swatch dark"></span>
+                                Dark
+                            </label>
+                        </div>
                     </div>
                 </div>
+                
+                <div class="preview-section">
+                    <label>Preview</label>
+                    <div class="editor-tools hidden" id="editor-tools">
+                        <button class="tool-btn active" id="tool-fill" data-tool="fill">Fill</button>
+                        <button class="tool-btn" id="tool-erase" data-tool="erase">Erase</button>
+                        <button class="tool-btn save" id="tool-save">Save</button>
+                        <button class="tool-btn reset" id="tool-reset">Reset</button>
+                        <button class="tool-btn" id="tool-export-json">Export All</button>
+                    </div>
+                    <div class="preview-container light" id="preview-container">
+                        <div class="preview-row">
+                            <div class="preview-item">
+                                <div class="preview-label light" id="label-actual">Actual Size</div>
+                                <canvas id="preview-actual" class="preview-actual"></canvas>
+                            </div>
+                            <div class="preview-item">
+                                <div class="preview-label light" id="label-scaled">8× Scaled</div>
+                                <div class="preview-scaled-wrap" id="preview-scaled-wrap">
+                                    <canvas id="preview-scaled" class="preview-scaled"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="editor-hint hidden" id="editor-hint">Click on the scaled preview to fill or erase pixels</div>
+                    <div class="specs" id="specs"></div>
+                </div>
             </div>
-            <div class="editor-hint hidden" id="editor-hint">Click on the scaled preview to fill or erase pixels</div>
-            <div class="specs" id="specs"></div>
         </div>
     </div>
     
@@ -484,36 +549,36 @@
 
         // ==================== SPECIAL SYMBOLS (29 icons) ====================
         const SYMBOLS = {
-            // GD&T Symbols with proper names and SVG references
-            'straightness': { name: 'Straightness', pixels: [[2,7],[3,7],[4,7],[5,7],[6,7],[7,7],[8,7],[9,7],[10,7],[11,7],[12,7],[13,7]], svg: '<line x1="1" y1="8" x2="15" y2="8" stroke="currentColor" stroke-width="1"/>' },
-            'flatness': { name: 'Flatness', pixels: [[4,3],[5,3],[6,3],[7,3],[8,3],[9,3],[10,3],[11,3],[12,3],[3,4],[3,5],[3,6],[3,7],[3,8],[3,9],[3,10],[3,11],[12,4],[12,5],[12,6],[12,7],[12,8],[12,9],[12,10],[12,11],[3,12],[4,12],[5,12],[6,12],[7,12],[8,12],[9,12],[10,12],[11,12],[12,12]], svg: '<path d="M4 3 L12 3 L12 13 L4 13 Z" fill="none" stroke="currentColor" stroke-width="1" transform="skewX(-10)"/>' },
-            'roundness': { name: 'Roundness', pixels: [[6,2],[7,2],[8,2],[9,2],[4,3],[5,3],[10,3],[11,3],[3,4],[12,4],[3,5],[12,5],[2,6],[13,6],[2,7],[13,7],[2,8],[13,8],[2,9],[13,9],[3,10],[12,10],[3,11],[12,11],[4,12],[5,12],[10,12],[11,12],[6,13],[7,13],[8,13],[9,13]], svg: '<circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1"/>' },
-            'cylindricity': { name: 'Cylindricity', pixels: [[6,4],[7,4],[8,4],[9,4],[5,5],[10,5],[4,6],[11,6],[4,7],[11,7],[4,8],[11,8],[4,9],[11,9],[5,10],[10,10],[6,11],[7,11],[8,11],[9,11],[1,4],[1,5],[1,6],[1,7],[1,8],[1,9],[1,10],[1,11],[14,4],[14,5],[14,6],[14,7],[14,8],[14,9],[14,10],[14,11]], svg: '<circle cx="8" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1"/><line x1="2" y1="4" x2="2" y2="12" stroke="currentColor" stroke-width="1"/><line x1="14" y1="4" x2="14" y2="12" stroke="currentColor" stroke-width="1"/>' },
-            'lineProfile': { name: 'Line Profile', pixels: [[7,5],[8,5],[5,6],[6,6],[9,6],[10,6],[4,7],[11,7],[3,8],[12,8],[2,9],[13,9],[2,10],[13,10]], svg: '<path d="M2 11 Q8 3 14 11" fill="none" stroke="currentColor" stroke-width="1"/>' },
-            'surfaceProfile': { name: 'Surface Profile', pixels: [[7,5],[8,5],[5,6],[6,6],[9,6],[10,6],[4,7],[11,7],[3,8],[12,8],[2,9],[13,9],[2,10],[13,10]], svg: '<path d="M2 11 Q8 3 14 11" fill="none" stroke="currentColor" stroke-width="1"/>' },
-            'angularity': { name: 'Angularity', pixels: [[12,3],[11,4],[10,5],[9,6],[8,7],[7,8],[6,9],[5,10],[4,11],[3,12],[4,12],[5,12],[6,12],[7,12],[8,12],[9,12],[10,12],[11,12],[12,12]], svg: '<line x1="3" y1="13" x2="13" y2="3" stroke="currentColor" stroke-width="1"/><line x1="3" y1="13" x2="13" y2="13" stroke="currentColor" stroke-width="1"/>' },
-            'perpendicularity': { name: 'Perpendicularity', pixels: [[7,3],[7,4],[7,5],[7,6],[7,7],[7,8],[7,9],[7,10],[7,11],[3,11],[4,11],[5,11],[6,11],[8,11],[9,11],[10,11],[11,11],[12,11]], svg: '<line x1="7" y1="3" x2="7" y2="12" stroke="currentColor" stroke-width="1"/><line x1="3" y1="12" x2="12" y2="12" stroke="currentColor" stroke-width="1"/>' },
-            'parallelism': { name: 'Parallelism', pixels: [[5,3],[5,4],[5,5],[5,6],[5,7],[5,8],[5,9],[5,10],[5,11],[5,12],[10,3],[10,4],[10,5],[10,6],[10,7],[10,8],[10,9],[10,10],[10,11],[10,12]], svg: '<line x1="5" y1="3" x2="5" y2="13" stroke="currentColor" stroke-width="1"/><line x1="10" y1="3" x2="10" y2="13" stroke="currentColor" stroke-width="1"/>' },
-            'position': { name: 'Position', pixels: [[6,2],[7,2],[8,2],[9,2],[4,3],[5,3],[10,3],[11,3],[3,4],[12,4],[3,5],[12,5],[2,6],[13,6],[2,7],[13,7],[2,8],[13,8],[2,9],[13,9],[3,10],[12,10],[3,11],[12,11],[4,12],[5,12],[10,12],[11,12],[6,13],[7,13],[8,13],[9,13],[7,0],[7,1],[7,2],[7,3],[7,4],[7,5],[7,6],[7,8],[7,9],[7,10],[7,11],[7,12],[7,13],[7,14],[7,15],[0,7],[1,7],[2,7],[3,7],[4,7],[5,7],[6,7],[8,7],[9,7],[10,7],[11,7],[12,7],[13,7],[14,7],[15,7]], svg: '<circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1"/><line x1="8" y1="0" x2="8" y2="16" stroke="currentColor" stroke-width="1"/><line x1="0" y1="8" x2="16" y2="8" stroke="currentColor" stroke-width="1"/>' },
-            'concentricity': { name: 'Concentricity', pixels: [[6,2],[7,2],[8,2],[9,2],[4,3],[5,3],[10,3],[11,3],[3,4],[12,4],[3,5],[12,5],[2,6],[13,6],[2,7],[13,7],[2,8],[13,8],[2,9],[13,9],[3,10],[12,10],[3,11],[12,11],[4,12],[5,12],[10,12],[11,12],[6,13],[7,13],[8,13],[9,13],[7,6],[8,6],[6,7],[9,7],[6,8],[9,8],[7,9],[8,9]], svg: '<circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="8" cy="8" r="2" fill="none" stroke="currentColor" stroke-width="1"/>' },
-            'symmetry': { name: 'Symmetry', pixels: [[3,4],[4,4],[5,4],[6,4],[7,4],[8,4],[9,4],[10,4],[11,4],[12,4],[3,7],[4,7],[5,7],[6,7],[7,7],[8,7],[9,7],[10,7],[11,7],[12,7],[3,10],[4,10],[5,10],[6,10],[7,10],[8,10],[9,10],[10,10],[11,10],[12,10]], svg: '<line x1="2" y1="4" x2="14" y2="4" stroke="currentColor" stroke-width="1"/><line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1"/><line x1="2" y1="12" x2="14" y2="12" stroke="currentColor" stroke-width="1"/>' },
-            'circularRunout': { name: 'Circular Runout', pixels: [[9,3],[10,3],[11,3],[12,3],[11,4],[12,4],[10,5],[12,5],[9,6],[12,6],[8,7],[7,8],[6,9],[5,10],[4,11],[3,12]], svg: '<line x1="3" y1="13" x2="12" y2="4" stroke="currentColor" stroke-width="1"/><path d="M9 3 L13 3 L13 7" fill="none" stroke="currentColor" stroke-width="1"/>' },
-            'totalRunout': { name: 'Total Runout', pixels: [[5,4],[6,4],[7,4],[6,5],[7,5],[5,6],[7,6],[4,7],[3,8],[10,5],[11,5],[12,5],[11,6],[12,6],[10,7],[12,7],[9,8],[8,9],[7,10]], svg: '<line x1="3" y1="10" x2="7" y2="4" stroke="currentColor" stroke-width="1"/><path d="M4 3 L8 3 L8 6" fill="none" stroke="currentColor" stroke-width="1"/><line x1="8" y1="10" x2="12" y2="4" stroke="currentColor" stroke-width="1"/><path d="M9 3 L13 3 L13 6" fill="none" stroke="currentColor" stroke-width="1"/>' },
-            'diameter': { name: 'Diameter', pixels: [[6,2],[7,2],[8,2],[9,2],[4,3],[5,3],[10,3],[11,3],[3,4],[12,4],[3,5],[12,5],[2,6],[13,6],[2,7],[13,7],[2,8],[13,8],[2,9],[13,9],[3,10],[12,10],[3,11],[12,11],[4,12],[5,12],[10,12],[11,12],[6,13],[7,13],[8,13],[9,13],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8],[9,9],[10,10],[11,11],[12,12]], svg: '<circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1"/><line x1="3" y1="3" x2="13" y2="13" stroke="currentColor" stroke-width="1"/>' },
-            'plusMinus': { name: 'Plus/Minus', pixels: [[7,3],[7,4],[4,5],[5,5],[6,5],[7,5],[8,5],[9,5],[10,5],[11,5],[7,6],[7,7],[4,11],[5,11],[6,11],[7,11],[8,11],[9,11],[10,11],[11,11]], svg: '<line x1="7" y1="3" x2="7" y2="8" stroke="currentColor" stroke-width="1"/><line x1="4" y1="5.5" x2="11" y2="5.5" stroke="currentColor" stroke-width="1"/><line x1="4" y1="11" x2="11" y2="11" stroke="currentColor" stroke-width="1"/>' },
-            'degree': { name: 'Degree', pixels: [[6,4],[7,4],[8,4],[5,5],[9,5],[5,6],[9,6],[6,7],[7,7],[8,7]], svg: '<circle cx="7" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="1"/>' },
-            'square': { name: 'Square', pixels: [[3,3],[4,3],[5,3],[6,3],[7,3],[8,3],[9,3],[10,3],[11,3],[12,3],[3,4],[12,4],[3,5],[12,5],[3,6],[12,6],[3,7],[12,7],[3,8],[12,8],[3,9],[12,9],[3,10],[12,10],[3,11],[12,11],[3,12],[4,12],[5,12],[6,12],[7,12],[8,12],[9,12],[10,12],[11,12],[12,12]], svg: '<rect x="3" y="3" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1"/>' },
-            'taper': { name: 'Taper', pixels: [[2,5],[3,5],[4,5],[5,5],[6,5],[7,5],[8,5],[9,5],[10,5],[11,5],[12,5],[13,5],[2,6],[13,6],[2,7],[5,7],[6,7],[7,7],[8,7],[9,7],[10,7],[13,7],[2,8],[7,8],[8,8],[13,8],[2,9],[13,9],[2,10],[3,10],[4,10],[5,10],[6,10],[7,10],[8,10],[9,10],[10,10],[11,10],[12,10],[13,10]], svg: '<rect x="2" y="5" width="12" height="6" fill="none" stroke="currentColor" stroke-width="1"/><line x1="3" y1="5" x2="8" y2="8" stroke="currentColor" stroke-width="0.5"/><line x1="3" y1="11" x2="8" y2="8" stroke="currentColor" stroke-width="0.5"/>' },
-            'slope': { name: 'Slope', pixels: [[2,12],[3,12],[4,12],[5,12],[6,12],[7,12],[8,12],[9,12],[10,12],[11,12],[12,12],[13,12],[3,11],[4,10],[5,9],[6,8],[7,7],[8,6],[9,5],[10,4],[11,3]], svg: '<line x1="2" y1="13" x2="14" y2="13" stroke="currentColor" stroke-width="1"/><line x1="2" y1="13" x2="12" y2="3" stroke="currentColor" stroke-width="1"/>' },
-            'counterbore': { name: 'Counterbore', pixels: [[3,3],[3,4],[3,5],[3,6],[3,7],[3,8],[3,9],[3,10],[3,11],[3,12],[4,12],[5,12],[6,12],[7,12],[8,12],[9,12],[10,12],[11,12],[12,12]], svg: '<path d="M3 3 L3 13 L13 13" fill="none" stroke="currentColor" stroke-width="1"/>' },
-            'countersink': { name: 'Countersink', pixels: [[2,5],[3,6],[4,7],[5,8],[6,9],[7,10],[8,10],[9,9],[10,8],[11,7],[12,6],[13,5]], svg: '<path d="M2 5 L7.5 11 L13 5" fill="none" stroke="currentColor" stroke-width="1"/>' },
-            'depth': { name: 'Depth', pixels: [[7,2],[7,3],[7,4],[7,5],[7,6],[7,7],[7,8],[7,9],[7,10],[7,11],[7,12],[3,6],[4,6],[5,6],[6,6],[8,6],[9,6],[10,6],[11,6],[12,6],[5,10],[6,11],[8,11],[9,10]], svg: '<line x1="7" y1="2" x2="7" y2="13" stroke="currentColor" stroke-width="1"/><line x1="3" y1="6" x2="12" y2="6" stroke="currentColor" stroke-width="1"/><path d="M5 10 L7 13 L9 10" fill="none" stroke="currentColor" stroke-width="1"/>' },
-            'centerline': { name: 'Centerline', pixels: [[10,2],[10,3],[10,4],[10,5],[10,6],[10,7],[10,8],[10,9],[10,10],[10,11],[10,12],[10,13],[6,5],[7,5],[8,5],[9,5],[6,9],[7,9],[8,9],[9,9],[3,6],[4,6],[3,7],[5,7],[3,8],[4,8]], svg: '<line x1="10" y1="2" x2="10" y2="14" stroke="currentColor" stroke-width="1"/><line x1="6" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1"/><line x1="6" y1="9" x2="9" y2="9" stroke="currentColor" stroke-width="1"/><text x="2" y="10" font-size="7" font-family="sans-serif" fill="currentColor">C</text>' },
-            'circularProjection': { name: 'Circular Projection', pixels: [[6,2],[7,2],[8,2],[9,2],[4,3],[5,3],[10,3],[11,3],[3,4],[12,4],[3,5],[12,5],[2,6],[13,6],[2,7],[13,7],[2,8],[13,8],[2,9],[13,9],[3,10],[12,10],[3,11],[12,11],[4,12],[5,12],[10,12],[11,12],[6,13],[7,13],[8,13],[9,13],[14,7],[15,7],[14,6],[14,8]], svg: '<circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1"/><line x1="13" y1="8" x2="15" y2="8" stroke="currentColor" stroke-width="1"/><path d="M14 6 L15 8 L14 10" fill="none" stroke="currentColor" stroke-width="1"/>' },
-            'section': { name: 'Section', pixels: [[6,2],[7,2],[8,2],[9,2],[5,3],[10,3],[5,4],[6,5],[7,5],[8,5],[5,6],[9,6],[6,7],[7,7],[8,7],[9,7],[6,8],[10,8],[7,9],[8,9],[9,9],[5,10],[10,10],[5,11],[6,12],[7,12],[8,12],[9,12]], svg: '<text x="4" y="14" font-size="14" font-family="serif" fill="currentColor">§</text>' },
-            'between': { name: 'Between', pixels: [[3,7],[4,7],[5,7],[6,7],[7,7],[8,7],[9,7],[10,7],[11,7],[12,7],[4,6],[11,6],[5,5],[10,5],[4,8],[11,8],[5,9],[10,9]], svg: '<line x1="3" y1="8" x2="13" y2="8" stroke="currentColor" stroke-width="1"/><path d="M5 5 L3 8 L5 11" fill="none" stroke="currentColor" stroke-width="1"/><path d="M11 5 L13 8 L11 11" fill="none" stroke="currentColor" stroke-width="1"/>' },
-            'integral': { name: 'Integral', pixels: [[7,1],[8,1],[7,2],[8,2],[7,3],[8,3],[4,4],[5,4],[6,4],[7,4],[8,4],[9,4],[10,4],[11,4],[7,5],[8,5],[7,6],[8,6],[7,7],[8,7],[7,8],[8,8],[7,9],[8,9],[7,10],[8,10],[7,11],[8,11],[7,12],[8,12],[7,13],[8,13]], svg: '<text x="4" y="14" font-size="14" font-family="serif" fill="currentColor">†</text>' },
-            'coaxiality': { name: 'Coaxiality', pixels: [[6,2],[7,2],[8,2],[9,2],[4,3],[5,3],[10,3],[11,3],[3,4],[12,4],[3,5],[12,5],[2,6],[13,6],[2,7],[13,7],[2,8],[13,8],[2,9],[13,9],[3,10],[12,10],[3,11],[12,11],[4,12],[5,12],[10,12],[11,12],[6,13],[7,13],[8,13],[9,13],[6,5],[7,5],[8,5],[9,5],[5,6],[10,6],[5,7],[10,7],[5,8],[10,8],[5,9],[10,9],[6,10],[7,10],[8,10],[9,10]], svg: '<circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1"/>' }
+            // GD&T Symbols redrawn from AutoCAD annotation reference images
+            'straightness': { name: 'Straightness', pixels: [[2,8],[3,8],[4,8],[5,8],[6,8],[7,8],[8,8],[9,8],[10,8],[11,8],[12,8],[13,8]], svg: '<line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1"/>' },
+            'flatness': { name: 'Flatness', pixels: [[6,4],[7,4],[8,4],[9,4],[10,4],[11,4],[12,4],[3,11],[4,11],[5,11],[6,11],[7,11],[8,11],[9,11],[6,5],[5,6],[5,7],[4,8],[4,9],[3,10],[12,5],[11,6],[11,7],[10,8],[10,9],[9,10]], svg: '<path d="M6 4 L12 4 L9 11 L3 11 Z" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'roundness': { name: 'Roundness', pixels: [[6,3],[7,3],[8,3],[9,3],[5,4],[10,4],[4,5],[11,5],[3,6],[12,6],[3,7],[12,7],[3,8],[12,8],[3,9],[12,9],[4,10],[11,10],[5,11],[10,11],[6,12],[7,12],[8,12],[9,12]], svg: '<circle cx="7.5" cy="7.5" r="5" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'cylindricity': { name: 'Cylindricity', pixels: [[7,6],[8,6],[6,7],[9,7],[6,8],[9,8],[7,9],[8,9],[2,11],[2,10],[3,9],[3,8],[4,7],[4,6],[5,5],[5,4],[10,11],[10,10],[11,9],[11,8],[12,7],[12,6],[13,5],[13,4]], svg: '<circle cx="7.5" cy="7.5" r="2" fill="none" stroke="currentColor" stroke-width="1"/><line x1="5" y1="4" x2="2" y2="11" stroke="currentColor" stroke-width="1"/><line x1="13" y1="4" x2="10" y2="11" stroke="currentColor" stroke-width="1"/>' },
+            'lineProfile': { name: 'Line Profile', pixels: [[7,4],[8,4],[5,5],[6,5],[9,5],[10,5],[4,6],[11,6],[3,7],[12,7],[2,8],[13,8],[2,9],[13,9]], svg: '<path d="M2 9 Q7.5 3 13 9" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'surfaceProfile': { name: 'Surface Profile', pixels: [[7,4],[8,4],[5,5],[6,5],[9,5],[10,5],[4,6],[11,6],[3,7],[12,7],[2,8],[13,8],[2,9],[3,9],[4,9],[5,9],[6,9],[7,9],[8,9],[9,9],[10,9],[11,9],[12,9],[13,9]], svg: '<path d="M2 9 Q7.5 3 13 9 Z" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'angularity': { name: 'Angularity', pixels: [[3,12],[4,12],[5,12],[6,12],[7,12],[8,12],[9,12],[10,12],[11,12],[12,12],[4,11],[5,10],[6,9],[7,8],[8,7],[9,6],[10,5],[11,4],[12,3]], svg: '<line x1="3" y1="12" x2="12" y2="12" stroke="currentColor" stroke-width="1"/><line x1="3" y1="12" x2="12" y2="3" stroke="currentColor" stroke-width="1"/>' },
+            'perpendicularity': { name: 'Perpendicularity', pixels: [[7,3],[7,4],[7,5],[7,6],[7,7],[7,8],[7,9],[7,10],[7,11],[7,12],[2,12],[3,12],[4,12],[5,12],[6,12],[8,12],[9,12],[10,12],[11,12],[12,12]], svg: '<line x1="7" y1="3" x2="7" y2="12" stroke="currentColor" stroke-width="1"/><line x1="2" y1="12" x2="12" y2="12" stroke="currentColor" stroke-width="1"/>' },
+            'parallelism': { name: 'Parallelism', pixels: [[4,11],[4,10],[5,9],[5,8],[6,7],[6,6],[7,5],[7,4],[8,11],[8,10],[9,9],[9,8],[10,7],[10,6],[11,5],[11,4]], svg: '<line x1="7" y1="4" x2="4" y2="11" stroke="currentColor" stroke-width="1"/><line x1="11" y1="4" x2="8" y2="11" stroke="currentColor" stroke-width="1"/>' },
+            'position': { name: 'Position', pixels: [[6,2],[7,2],[8,2],[9,2],[4,3],[5,3],[10,3],[11,3],[3,4],[12,4],[3,5],[12,5],[2,6],[13,6],[2,7],[13,7],[2,8],[13,8],[2,9],[13,9],[3,10],[12,10],[3,11],[12,11],[4,12],[5,12],[10,12],[11,12],[6,13],[7,13],[8,13],[9,13],[7,0],[7,1],[7,3],[7,4],[7,5],[7,6],[7,7],[7,8],[7,9],[7,10],[7,11],[7,12],[7,14],[7,15],[0,7],[1,7],[3,7],[4,7],[5,7],[6,7],[8,7],[9,7],[10,7],[11,7],[12,7],[14,7],[15,7]], svg: '<circle cx="7.5" cy="7.5" r="6" fill="none" stroke="currentColor" stroke-width="1"/><line x1="7.5" y1="0" x2="7.5" y2="15" stroke="currentColor" stroke-width="1"/><line x1="0" y1="7.5" x2="15" y2="7.5" stroke="currentColor" stroke-width="1"/>' },
+            'concentricity': { name: 'Concentricity', pixels: [[6,2],[7,2],[8,2],[9,2],[4,3],[5,3],[10,3],[11,3],[3,4],[12,4],[3,5],[12,5],[2,6],[13,6],[2,7],[13,7],[2,8],[13,8],[2,9],[13,9],[3,10],[12,10],[3,11],[12,11],[4,12],[5,12],[10,12],[11,12],[6,13],[7,13],[8,13],[9,13],[6,6],[7,6],[8,6],[9,6],[6,7],[9,7],[6,8],[9,8],[6,9],[7,9],[8,9],[9,9]], svg: '<circle cx="7.5" cy="7.5" r="6" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="7.5" cy="7.5" r="2" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'symmetry': { name: 'Symmetry', pixels: [[4,5],[5,5],[6,5],[7,5],[8,5],[9,5],[10,5],[11,5],[2,8],[3,8],[4,8],[5,8],[6,8],[7,8],[8,8],[9,8],[10,8],[11,8],[12,8],[13,8],[4,11],[5,11],[6,11],[7,11],[8,11],[9,11],[10,11],[11,11]], svg: '<line x1="4" y1="5" x2="11" y2="5" stroke="currentColor" stroke-width="1"/><line x1="2" y1="8" x2="13" y2="8" stroke="currentColor" stroke-width="1"/><line x1="4" y1="11" x2="11" y2="11" stroke="currentColor" stroke-width="1"/>' },
+            'circularRunout': { name: 'Circular Runout', pixels: [[3,12],[4,11],[5,10],[6,9],[7,8],[8,7],[9,6],[10,5],[11,4],[8,4],[9,4],[10,4],[11,5],[11,6],[11,7]], svg: '<line x1="3" y1="12" x2="11" y2="4" stroke="currentColor" stroke-width="1"/><path d="M8 4 L11 4 L11 7" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'totalRunout': { name: 'Total Runout', pixels: [[2,11],[3,10],[4,9],[5,8],[6,7],[4,7],[5,7],[6,8],[6,9],[7,11],[8,10],[9,9],[10,8],[11,7],[9,7],[10,7],[11,8],[11,9],[3,11],[4,11],[5,11],[6,11]], svg: '<line x1="2" y1="11" x2="6" y2="7" stroke="currentColor" stroke-width="1"/><line x1="7" y1="11" x2="11" y2="7" stroke="currentColor" stroke-width="1"/>' },
+            'diameter': { name: 'Diameter', pixels: [[6,2],[7,2],[8,2],[9,2],[4,3],[5,3],[10,3],[11,3],[3,4],[12,4],[3,5],[12,5],[2,6],[13,6],[2,7],[13,7],[2,8],[13,8],[2,9],[13,9],[3,10],[12,10],[3,11],[12,11],[4,12],[5,12],[10,12],[11,12],[6,13],[7,13],[8,13],[9,13],[2,13],[3,12],[4,11],[5,10],[6,9],[7,8],[8,7],[9,6],[10,5],[11,4],[12,3],[13,2]], svg: '<circle cx="7.5" cy="7.5" r="6" fill="none" stroke="currentColor" stroke-width="1"/><line x1="2" y1="13" x2="13" y2="2" stroke="currentColor" stroke-width="1"/>' },
+            'plusMinus': { name: 'Plus/Minus', pixels: [[7,3],[7,4],[7,5],[7,6],[7,7],[4,5],[5,5],[6,5],[8,5],[9,5],[10,5],[4,10],[5,10],[6,10],[7,10],[8,10],[9,10],[10,10]], svg: '<line x1="7" y1="3" x2="7" y2="7" stroke="currentColor" stroke-width="1"/><line x1="4" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="1"/><line x1="4" y1="10" x2="10" y2="10" stroke="currentColor" stroke-width="1"/>' },
+            'degree': { name: 'Degree', pixels: [[7,4],[8,4],[6,5],[9,5],[6,6],[9,6],[7,7],[8,7]], svg: '<circle cx="7.5" cy="5.5" r="2" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'square': { name: 'Square', pixels: [[3,3],[4,3],[5,3],[6,3],[7,3],[8,3],[9,3],[10,3],[11,3],[12,3],[3,4],[3,5],[3,6],[3,7],[3,8],[3,9],[3,10],[3,11],[12,4],[12,5],[12,6],[12,7],[12,8],[12,9],[12,10],[12,11],[3,12],[4,12],[5,12],[6,12],[7,12],[8,12],[9,12],[10,12],[11,12],[12,12]], svg: '<rect x="3" y="3" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'taper': { name: 'Taper', pixels: [[3,5],[4,5],[5,5],[6,5],[7,5],[8,5],[9,5],[10,5],[11,5],[12,5],[3,6],[3,7],[3,8],[3,9],[4,9],[5,8],[6,8],[7,7],[8,7],[9,6],[10,6]], svg: '<path d="M3 5 L12 5 L3 9 Z" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'slope': { name: 'Slope', pixels: [[3,10],[4,10],[5,10],[6,10],[7,10],[8,10],[9,10],[10,10],[11,10],[12,10],[3,5],[3,6],[3,7],[3,8],[3,9],[4,6],[5,6],[6,7],[7,7],[8,8],[9,8],[10,9],[11,9]], svg: '<path d="M3 5 L3 10 L12 10 Z" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'counterbore': { name: 'Counterbore', pixels: [[3,5],[3,6],[3,7],[3,8],[3,9],[3,10],[4,10],[5,10],[6,10],[7,10],[8,10],[9,10],[10,10],[11,10],[12,10],[12,5],[12,6],[12,7],[12,8],[12,9]], svg: '<path d="M3 5 L3 10 L12 10 L12 5" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'countersink': { name: 'Countersink', pixels: [[2,5],[3,6],[4,7],[5,8],[6,9],[7,10],[8,10],[9,9],[10,8],[11,7],[12,6],[13,5]], svg: '<path d="M2 5 L7.5 10 L13 5" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'depth': { name: 'Depth', pixels: [[3,3],[4,3],[5,3],[6,3],[7,3],[8,3],[9,3],[10,3],[11,3],[7,4],[7,5],[7,6],[7,7],[7,8],[7,9],[7,10],[7,11],[5,9],[6,10],[9,9],[8,10]], svg: '<line x1="3" y1="3" x2="11" y2="3" stroke="currentColor" stroke-width="1"/><line x1="7" y1="3" x2="7" y2="11" stroke="currentColor" stroke-width="1"/><path d="M5 9 L7 11 L9 9" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'centerline': { name: 'Centerline', pixels: [[5,5],[6,5],[7,5],[8,5],[4,6],[4,7],[4,8],[4,9],[5,10],[6,10],[7,10],[8,10],[6,2],[6,3],[6,4],[6,6],[6,7],[6,8],[6,9],[6,11],[6,12],[6,13],[7,13],[8,13]], svg: '<path d="M8 5 L5 5 L4 6 L4 9 L5 10 L8 10" fill="none" stroke="currentColor" stroke-width="1"/><line x1="6" y1="2" x2="6" y2="13" stroke="currentColor" stroke-width="1"/><line x1="6" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="1"/>' },
+            'circularProjection': { name: 'Circular Projection', pixels: [[5,3],[6,3],[7,3],[8,3],[3,4],[4,4],[9,4],[10,4],[2,5],[11,5],[2,6],[11,6],[2,7],[11,7],[2,8],[11,8],[2,9],[11,9],[3,10],[4,10],[9,10],[10,10],[5,11],[6,11],[7,11],[8,11],[12,7],[13,7],[14,7],[15,7],[13,5],[14,6],[13,9],[14,8]], svg: '<circle cx="6.5" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1"/><line x1="11" y1="7" x2="15" y2="7" stroke="currentColor" stroke-width="1"/><path d="M13 5 L15 7 L13 9" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'section': { name: 'Section', pixels: [[6,2],[7,2],[8,2],[5,3],[9,3],[5,4],[6,5],[7,5],[8,5],[9,6],[5,7],[6,7],[7,7],[8,7],[9,7],[5,8],[6,9],[7,9],[8,9],[9,10],[5,11],[9,11],[6,12],[7,12],[8,12]], svg: '<text x="4" y="13" font-size="13" font-family="serif" fill="currentColor">§</text>' },
+            'between': { name: 'Between', pixels: [[3,8],[4,8],[5,8],[6,8],[7,8],[8,8],[9,8],[10,8],[11,8],[12,8],[2,8],[3,7],[4,6],[3,9],[4,10],[13,8],[12,7],[11,6],[12,9],[11,10]], svg: '<line x1="2" y1="8" x2="13" y2="8" stroke="currentColor" stroke-width="1"/><path d="M4 6 L2 8 L4 10" fill="none" stroke="currentColor" stroke-width="1"/><path d="M11 6 L13 8 L11 10" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'integral': { name: 'Integral', pixels: [[9,1],[10,1],[9,2],[8,3],[8,4],[8,5],[7,6],[7,7],[7,8],[6,9],[6,10],[6,11],[5,12],[4,13],[5,13]], svg: '<path d="M10 1 Q9 1 9 3 L7 12 Q7 14 5 13" fill="none" stroke="currentColor" stroke-width="1"/>' },
+            'coaxiality': { name: 'Coaxiality', pixels: [[6,2],[7,2],[8,2],[9,2],[4,3],[5,3],[10,3],[11,3],[3,4],[12,4],[3,5],[12,5],[2,6],[13,6],[2,7],[13,7],[2,8],[13,8],[2,9],[13,9],[3,10],[12,10],[3,11],[12,11],[4,12],[5,12],[10,12],[11,12],[6,13],[7,13],[8,13],[9,13],[6,5],[7,5],[8,5],[9,5],[5,6],[10,6],[5,7],[10,7],[5,8],[10,8],[5,9],[10,9],[6,10],[7,10],[8,10],[9,10]], svg: '<circle cx="7.5" cy="7.5" r="6" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="7.5" cy="7.5" r="3" fill="none" stroke="currentColor" stroke-width="1"/>' }
         };
         const SYMBOL_KEYS = Object.keys(SYMBOLS);
         
@@ -601,6 +666,87 @@
             document.getElementById('label-scaled').className = 'preview-label ' + theme;
         }
 
+        function drawDesignGuidelines(ctx, size, pixelScale, theme) {
+            const pixels = size / pixelScale;
+            const isDark = theme === 'dark';
+            const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
+            const guideColor = isDark ? 'rgba(255, 255, 255, 0.28)' : 'rgba(0, 0, 0, 0.28)';
+            const axisColor = isDark ? 'rgba(255, 255, 255, 0.45)' : 'rgba(0, 0, 0, 0.45)';
+            const center = 8 * pixelScale;
+
+            ctx.save();
+            ctx.lineWidth = 1;
+
+            // Pixel grid — lines at every pixel boundary
+            ctx.strokeStyle = gridColor;
+            for (let i = 0; i <= pixels; i++) {
+                const pos = i * pixelScale + 0.5;
+                ctx.beginPath();
+                ctx.moveTo(pos, 0);
+                ctx.lineTo(pos, size);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, pos);
+                ctx.lineTo(size, pos);
+                ctx.stroke();
+            }
+
+            // Diagonals
+            ctx.strokeStyle = guideColor;
+            ctx.beginPath();
+            ctx.moveTo(0.5, 0.5);
+            ctx.lineTo(size - 0.5, size - 0.5);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(size - 0.5, 0.5);
+            ctx.lineTo(0.5, size - 0.5);
+            ctx.stroke();
+
+            // Concentric circles (2, 4, 6, 8 pixel radius), center at pixel boundary 8
+            ctx.strokeStyle = guideColor;
+            const radii = [2, 4, 6, 8];
+            for (const r of radii) {
+                ctx.beginPath();
+                ctx.arc(center, center, r * pixelScale, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // Inner square (8×8 px safe area)
+            const inset = 4 * pixelScale;
+            ctx.strokeRect(inset + 0.5, inset + 0.5, size - inset * 2 - 1, size - inset * 2 - 1);
+
+            // Center axes — pixel-aligned at column/row 8
+            ctx.strokeStyle = axisColor;
+            ctx.beginPath();
+            ctx.moveTo(center + 0.5, 0);
+            ctx.lineTo(center + 0.5, size);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, center + 0.5);
+            ctx.lineTo(size, center + 0.5);
+            ctx.stroke();
+
+            // Outer border
+            ctx.strokeRect(0.5, 0.5, size - 1, size - 1);
+
+            ctx.restore();
+        }
+
+        function drawScaledPreview(canvasActual, canvasScaled, showGuidelines) {
+            const size = 128;
+            const pixelScale = 8;
+            canvasScaled.width = size;
+            canvasScaled.height = size;
+            const ctxScaled = canvasScaled.getContext('2d');
+            ctxScaled.imageSmoothingEnabled = false;
+            ctxScaled.clearRect(0, 0, size, size);
+            ctxScaled.drawImage(canvasActual, 0, 0, size, size);
+            if (showGuidelines) {
+                const theme = document.querySelector('input[name="theme"]:checked').value;
+                drawDesignGuidelines(ctxScaled, size, pixelScale, theme);
+            }
+        }
+
         function generatePreview() {
             const theme = document.querySelector('input[name="theme"]:checked').value;
             const color = theme === 'light' ? 'black' : 'white';
@@ -631,11 +777,7 @@
             }
 
             if (!editedPixels) {
-                canvasScaled.width = 128;
-                canvasScaled.height = 128;
-                const ctxScaled = canvasScaled.getContext('2d');
-                ctxScaled.imageSmoothingEnabled = false;
-                ctxScaled.drawImage(canvasActual, 0, 0, 128, 128);
+                drawScaledPreview(canvasActual, canvasScaled, currentTab === 'symbols');
             }
             
             document.getElementById('specs').textContent = specText;
@@ -671,34 +813,56 @@
         }
 
         function initSymbolGrid() {
-            const grid = document.getElementById('symbol-grid');
-            grid.innerHTML = '';
+            const container = document.getElementById('symbol-grid');
+            container.innerHTML = '';
+            const table = document.createElement('table');
+            const tbody = document.createElement('tbody');
+
             SYMBOL_KEYS.forEach((key, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'symbol-btn' + (index === 0 ? ' selected' : '');
-                btn.title = SYMBOLS[key].name;
+                const row = document.createElement('tr');
+                row.className = 'symbol-row' + (index === 0 ? ' selected' : '');
+                row.dataset.index = index;
+
+                const cellIcon = document.createElement('td');
+                cellIcon.className = 'symbol-cell';
+                const iconWrap = document.createElement('div');
+                iconWrap.className = 'symbol-icon';
                 const canvas = document.createElement('canvas');
                 canvas.width = 16;
                 canvas.height = 16;
                 drawSymbolIcon(canvas, key, 'black');
                 canvas.style.width = '32px';
                 canvas.style.height = '32px';
-                btn.appendChild(canvas);
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.symbol-btn').forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
+                iconWrap.appendChild(canvas);
+                cellIcon.appendChild(iconWrap);
+
+                const cellLabel = document.createElement('td');
+                cellLabel.className = 'symbol-label';
+                cellLabel.textContent = SYMBOLS[key].name;
+
+                row.appendChild(cellIcon);
+                row.appendChild(cellLabel);
+                row.addEventListener('click', () => {
+                    document.querySelectorAll('.symbol-row').forEach(r => r.classList.remove('selected'));
+                    row.classList.add('selected');
                     selectedSymbol = index;
-                    editedPixels = null;  // Reset edited pixels when switching symbols
+                    editedPixels = null;
                     generatePreview();
                 });
-                grid.appendChild(btn);
+
+                tbody.appendChild(row);
             });
+
+            table.appendChild(tbody);
+            container.appendChild(table);
         }
 
         function switchTab(tabId) {
             currentTab = tabId;
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.toggle('active', content.id === 'tab-' + tabId));
+            document.getElementById('workspace').classList.toggle('symbols-mode', tabId === 'symbols');
+            document.body.classList.toggle('symbols-mode', tabId === 'symbols');
             generatePreview();
         }
 
@@ -784,12 +948,8 @@
                 ctx.fillRect(x, y, 1, 1);
             });
             
-            // Scale up
-            canvasScaled.width = 128;
-            canvasScaled.height = 128;
-            const ctxScaled = canvasScaled.getContext('2d');
-            ctxScaled.imageSmoothingEnabled = false;
-            ctxScaled.drawImage(canvasActual, 0, 0, 128, 128);
+            // Scale up with design guidelines
+            drawScaledPreview(canvasActual, canvasScaled, true);
         }
         
         async function savePixelChanges() {
@@ -806,8 +966,8 @@
             SYMBOLS[symbolKey].pixels = newPixels;
             
             // Update the symbol grid button
-            const gridBtns = document.querySelectorAll('.symbol-btn');
-            const canvas = gridBtns[selectedSymbol].querySelector('canvas');
+            const rows = document.querySelectorAll('.symbol-row');
+            const canvas = rows[selectedSymbol].querySelector('canvas');
             drawSymbolIcon(canvas, symbolKey, 'black');
             
             // Save to file
@@ -833,8 +993,8 @@
             editedPixels = null;
             
             // Update the symbol grid button
-            const gridBtns = document.querySelectorAll('.symbol-btn');
-            const canvas = gridBtns[selectedSymbol].querySelector('canvas');
+            const rows = document.querySelectorAll('.symbol-row');
+            const canvas = rows[selectedSymbol].querySelector('canvas');
             drawSymbolIcon(canvas, symbolKey, 'black');
             
             // Regenerate preview
