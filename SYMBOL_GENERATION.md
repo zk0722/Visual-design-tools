@@ -6,15 +6,23 @@ Guidelines for generating the 29 GD&T special symbols on a **16×16 pixel grid**
 
 | File | Role |
 |---|---|
-| `custom-symbols.json` | **Authoritative** pixel data after manual edits |
-| `generate_symbols.js` | Reference batch generator from rules below |
+| `references/*.png` | Refined 16×16 reference PNGs (one per symbol) |
+| `custom-symbols.json` | **Authoritative** pixel data (extracted from references) |
+| `import_references.py` | Re-extract pixels from `references/` → JSON + index.html |
+| `generate_symbols.js` | Preview PNG from `custom-symbols.json` |
 | `index.html` | App + baked-in defaults (keep in sync with JSON) |
 
-Run the generator for previews or batch updates:
+Re-import after editing reference PNGs:
+
+```bash
+python3 import_references.py
+```
+
+Run the generator for previews:
 
 ```bash
 node generate_symbols.js              # preview PNG only
-node generate_symbols.js --write      # update custom-symbols.json + index.html
+node generate_symbols.js --write      # sync index.html pixels from custom-symbols.json
 ```
 
 Glyph-style symbols (`integral`, `section`, `centerline`) are copied from `custom-symbols.json` unless explicitly regenerated.

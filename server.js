@@ -64,7 +64,11 @@ const server = http.createServer((req, res) => {
                 res.end('Server error');
             }
         } else {
-            res.writeHead(200, { 'Content-Type': contentType });
+            const headers = { 'Content-Type': contentType };
+            if (ext === '.html' || ext === '.js') {
+                headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+            }
+            res.writeHead(200, headers);
             res.end(content);
         }
     });

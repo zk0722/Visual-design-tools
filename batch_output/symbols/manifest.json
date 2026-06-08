@@ -1,0 +1,350 @@
+[
+  {
+    "key": "straightness",
+    "name": "Straightness",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Straightness_light.png"
+  },
+  {
+    "key": "straightness",
+    "name": "Straightness",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Straightness_dark.png"
+  },
+  {
+    "key": "flatness",
+    "name": "Flatness",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Flatness_light.png"
+  },
+  {
+    "key": "flatness",
+    "name": "Flatness",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Flatness_dark.png"
+  },
+  {
+    "key": "roundness",
+    "name": "Roundness",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Roundness_light.png"
+  },
+  {
+    "key": "roundness",
+    "name": "Roundness",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Roundness_dark.png"
+  },
+  {
+    "key": "cylindricity",
+    "name": "Cylindricity",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Cylindricity_light.png"
+  },
+  {
+    "key": "cylindricity",
+    "name": "Cylindricity",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Cylindricity_dark.png"
+  },
+  {
+    "key": "lineProfile",
+    "name": "Line Profile",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Line Profile_light.png"
+  },
+  {
+    "key": "lineProfile",
+    "name": "Line Profile",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Line Profile_dark.png"
+  },
+  {
+    "key": "surfaceProfile",
+    "name": "Surface Profile",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Surface Profile_light.png"
+  },
+  {
+    "key": "surfaceProfile",
+    "name": "Surface Profile",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Surface Profile_dark.png"
+  },
+  {
+    "key": "angularity",
+    "name": "Angularity",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Angularity_light.png"
+  },
+  {
+    "key": "angularity",
+    "name": "Angularity",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Angularity_dark.png"
+  },
+  {
+    "key": "perpendicularity",
+    "name": "Perpendicularity",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Perpendicularity_light.png"
+  },
+  {
+    "key": "perpendicularity",
+    "name": "Perpendicularity",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Perpendicularity_dark.png"
+  },
+  {
+    "key": "parallelism",
+    "name": "Parallelism",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Parallelism_light.png"
+  },
+  {
+    "key": "parallelism",
+    "name": "Parallelism",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Parallelism_dark.png"
+  },
+  {
+    "key": "position",
+    "name": "Position",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Position_light.png"
+  },
+  {
+    "key": "position",
+    "name": "Position",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Position_dark.png"
+  },
+  {
+    "key": "concentricity",
+    "name": "Concentricity",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Concentricity_light.png"
+  },
+  {
+    "key": "concentricity",
+    "name": "Concentricity",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Concentricity_dark.png"
+  },
+  {
+    "key": "symmetry",
+    "name": "Symmetry",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Symmetry_light.png"
+  },
+  {
+    "key": "symmetry",
+    "name": "Symmetry",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Symmetry_dark.png"
+  },
+  {
+    "key": "circularRunout",
+    "name": "Circular Runout",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Circular Runout_light.png"
+  },
+  {
+    "key": "circularRunout",
+    "name": "Circular Runout",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Circular Runout_dark.png"
+  },
+  {
+    "key": "totalRunout",
+    "name": "Total Runout",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Total Runout_light.png"
+  },
+  {
+    "key": "totalRunout",
+    "name": "Total Runout",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Total Runout_dark.png"
+  },
+  {
+    "key": "diameter",
+    "name": "Diameter",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Diameter_light.png"
+  },
+  {
+    "key": "diameter",
+    "name": "Diameter",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Diameter_dark.png"
+  },
+  {
+    "key": "plusMinus",
+    "name": "Plus/Minus",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Plus-Minus_light.png"
+  },
+  {
+    "key": "plusMinus",
+    "name": "Plus/Minus",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Plus-Minus_dark.png"
+  },
+  {
+    "key": "degree",
+    "name": "Degree",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Degree_light.png"
+  },
+  {
+    "key": "degree",
+    "name": "Degree",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Degree_dark.png"
+  },
+  {
+    "key": "square",
+    "name": "Square",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Square_light.png"
+  },
+  {
+    "key": "square",
+    "name": "Square",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Square_dark.png"
+  },
+  {
+    "key": "taper",
+    "name": "Taper",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Taper_light.png"
+  },
+  {
+    "key": "taper",
+    "name": "Taper",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Taper_dark.png"
+  },
+  {
+    "key": "slope",
+    "name": "Slope",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Slope_light.png"
+  },
+  {
+    "key": "slope",
+    "name": "Slope",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Slope_dark.png"
+  },
+  {
+    "key": "counterbore",
+    "name": "Counterbore",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Counterbore_light.png"
+  },
+  {
+    "key": "counterbore",
+    "name": "Counterbore",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Counterbore_dark.png"
+  },
+  {
+    "key": "countersink",
+    "name": "Countersink",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Countersink_light.png"
+  },
+  {
+    "key": "countersink",
+    "name": "Countersink",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Countersink_dark.png"
+  },
+  {
+    "key": "depth",
+    "name": "Depth",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Depth_light.png"
+  },
+  {
+    "key": "depth",
+    "name": "Depth",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Depth_dark.png"
+  },
+  {
+    "key": "centerline",
+    "name": "Centerline",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Centerline_light.png"
+  },
+  {
+    "key": "centerline",
+    "name": "Centerline",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Centerline_dark.png"
+  },
+  {
+    "key": "circularProjection",
+    "name": "Circular Projection",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Circular Projection_light.png"
+  },
+  {
+    "key": "circularProjection",
+    "name": "Circular Projection",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Circular Projection_dark.png"
+  },
+  {
+    "key": "section",
+    "name": "Section",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Section_light.png"
+  },
+  {
+    "key": "section",
+    "name": "Section",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Section_dark.png"
+  },
+  {
+    "key": "between",
+    "name": "Between",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Between_light.png"
+  },
+  {
+    "key": "between",
+    "name": "Between",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Between_dark.png"
+  },
+  {
+    "key": "integral",
+    "name": "Integral",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Integral_light.png"
+  },
+  {
+    "key": "integral",
+    "name": "Integral",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Integral_dark.png"
+  },
+  {
+    "key": "coaxiality",
+    "name": "Coaxiality",
+    "theme": "light",
+    "path": "batch_output/symbols/light/Coaxiality_light.png"
+  },
+  {
+    "key": "coaxiality",
+    "name": "Coaxiality",
+    "theme": "dark",
+    "path": "batch_output/symbols/dark/Coaxiality_dark.png"
+  }
+]

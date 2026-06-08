@@ -192,10 +192,11 @@ function generateSymbol(key) {
       });
     case 'totalRunout':
       return build(s => {
-        line(s, 2, 14, 7, 5);
-        polyline(s, [[5, 5], [7, 5], [7, 7]]);
-        line(s, 8, 14, 13, 5);
-        polyline(s, [[11, 5], [13, 5], [13, 7]]);
+        line(s, 2, 14, 8, 4);
+        polyline(s, [[5, 4], [8, 4], [8, 7]]);
+        line(s, 8, 14, 14, 4);
+        polyline(s, [[11, 4], [14, 4], [14, 7]]);
+        line(s, 2, 14, 8, 14);
       });
     case 'diameter':
       return build(s => {
@@ -223,7 +224,7 @@ function generateSymbol(key) {
     case 'counterbore':
       return build(s => polyline(s, [[2, 3], [2, 13], [14, 13], [14, 3]]));
     case 'countersink':
-      return build(s => polyline(s, [[2, 4], [8, 12], [14, 4]]));
+      return build(s => polyline(s, [[1, 3], [7, 12], [8, 12], [14, 3]]));
     case 'depth':
       return build(s => {
         line(s, 2, 2, 13, 2);
@@ -270,12 +271,8 @@ function pixelsToSet(pixels) {
 const out = {};
 
 for (const key of keys) {
-  if (GLYPH_KEYS.includes(key)) {
-    out[key] = saved[key];
-    continue;
-  }
-  const generated = generateSymbol(key);
-  out[key] = generated || saved[key];
+  // custom-symbols.json is authoritative (extracted from reference PNGs in references/)
+  out[key] = saved[key];
 }
 
 function writePreview() {
