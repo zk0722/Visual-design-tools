@@ -1,0 +1,3442 @@
+[
+  {
+    "letters": "LS",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/light/icon_LS_outline_light.png"
+  },
+  {
+    "letters": "LS",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/dark/icon_LS_outline_dark.png"
+  },
+  {
+    "letters": "LP",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/light/icon_LP_outline_light.png"
+  },
+  {
+    "letters": "LP",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/dark/icon_LP_outline_dark.png"
+  },
+  {
+    "letters": "SA",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/light/icon_SA_outline_light.png"
+  },
+  {
+    "letters": "SA",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/dark/icon_SA_outline_dark.png"
+  },
+  {
+    "letters": "SD",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/light/icon_SD_outline_light.png"
+  },
+  {
+    "letters": "SD",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/dark/icon_SD_outline_dark.png"
+  },
+  {
+    "letters": "SM",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/light/icon_SM_outline_light.png"
+  },
+  {
+    "letters": "SM",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/dark/icon_SM_outline_dark.png"
+  },
+  {
+    "letters": "SN",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/light/icon_SN_outline_light.png"
+  },
+  {
+    "letters": "SN",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/dark/icon_SN_outline_dark.png"
+  },
+  {
+    "letters": "SR",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/light/icon_SR_outline_light.png"
+  },
+  {
+    "letters": "SR",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/dark/icon_SR_outline_dark.png"
+  },
+  {
+    "letters": "SQ",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/light/icon_SQ_outline_light.png"
+  },
+  {
+    "letters": "SQ",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/dark/icon_SQ_outline_dark.png"
+  },
+  {
+    "letters": "SX",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/light/icon_SX_outline_light.png"
+  },
+  {
+    "letters": "SX",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "pill",
+    "path": "batch_output/Letter combination/100/dark/icon_SX_outline_dark.png"
+  },
+  {
+    "letters": "UF",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/100/light/icon_UF_no-outline_light.png"
+  },
+  {
+    "letters": "UF",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/100/dark/icon_UF_no-outline_dark.png"
+  },
+  {
+    "letters": "UZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/100/light/icon_UZ_no-outline_light.png"
+  },
+  {
+    "letters": "UZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/100/dark/icon_UZ_no-outline_dark.png"
+  },
+  {
+    "letters": "ACS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/100/light/icon_ACS_no-outline_light.png"
+  },
+  {
+    "letters": "ACS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/100/dark/icon_ACS_no-outline_dark.png"
+  },
+  {
+    "letters": "ALS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/100/light/icon_ALS_no-outline_light.png"
+  },
+  {
+    "letters": "ALS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/100/dark/icon_ALS_no-outline_dark.png"
+  },
+  {
+    "letters": "SCS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/100/light/icon_SCS_no-outline_light.png"
+  },
+  {
+    "letters": "SCS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/100/dark/icon_SCS_no-outline_dark.png"
+  },
+  {
+    "letters": "SIM",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/100/light/icon_SIM_no-outline_light.png"
+  },
+  {
+    "letters": "SIM",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/100/dark/icon_SIM_no-outline_dark.png"
+  },
+  {
+    "letters": "CF",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/light/icon_CF_no-outline_light.png"
+  },
+  {
+    "letters": "CF",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/dark/icon_CF_no-outline_dark.png"
+  },
+  {
+    "letters": "CT",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/light/icon_CT_no-outline_light.png"
+  },
+  {
+    "letters": "CT",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/dark/icon_CT_no-outline_dark.png"
+  },
+  {
+    "letters": "CZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/light/icon_CZ_no-outline_light.png"
+  },
+  {
+    "letters": "CZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/dark/icon_CZ_no-outline_dark.png"
+  },
+  {
+    "letters": "DV",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/light/icon_DV_no-outline_light.png"
+  },
+  {
+    "letters": "DV",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/dark/icon_DV_no-outline_dark.png"
+  },
+  {
+    "letters": "LD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/light/icon_LD_no-outline_light.png"
+  },
+  {
+    "letters": "LD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/dark/icon_LD_no-outline_dark.png"
+  },
+  {
+    "letters": "LE",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/light/icon_LE_no-outline_light.png"
+  },
+  {
+    "letters": "LE",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/dark/icon_LE_no-outline_dark.png"
+  },
+  {
+    "letters": "MD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/light/icon_MD_no-outline_light.png"
+  },
+  {
+    "letters": "MD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/dark/icon_MD_no-outline_dark.png"
+  },
+  {
+    "letters": "NC",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/light/icon_NC_no-outline_light.png"
+  },
+  {
+    "letters": "NC",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/dark/icon_NC_no-outline_dark.png"
+  },
+  {
+    "letters": "PD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/light/icon_PD_no-outline_light.png"
+  },
+  {
+    "letters": "PD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/dark/icon_PD_no-outline_dark.png"
+  },
+  {
+    "letters": "SZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/light/icon_SZ_no-outline_light.png"
+  },
+  {
+    "letters": "SZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/100/dark/icon_SZ_no-outline_dark.png"
+  },
+  {
+    "letters": "A",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/light/icon_A_outline_light.png"
+  },
+  {
+    "letters": "A",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/dark/icon_A_outline_dark.png"
+  },
+  {
+    "letters": "E",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/light/icon_E_outline_light.png"
+  },
+  {
+    "letters": "E",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/dark/icon_E_outline_dark.png"
+  },
+  {
+    "letters": "F",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/light/icon_F_outline_light.png"
+  },
+  {
+    "letters": "F",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/dark/icon_F_outline_dark.png"
+  },
+  {
+    "letters": "L",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/light/icon_L_outline_light.png"
+  },
+  {
+    "letters": "L",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/dark/icon_L_outline_dark.png"
+  },
+  {
+    "letters": "M",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/light/icon_M_outline_light.png"
+  },
+  {
+    "letters": "M",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/dark/icon_M_outline_dark.png"
+  },
+  {
+    "letters": "P",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/light/icon_P_outline_light.png"
+  },
+  {
+    "letters": "P",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/dark/icon_P_outline_dark.png"
+  },
+  {
+    "letters": "R",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/light/icon_R_outline_light.png"
+  },
+  {
+    "letters": "R",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/dark/icon_R_outline_dark.png"
+  },
+  {
+    "letters": "T",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/light/icon_T_outline_light.png"
+  },
+  {
+    "letters": "T",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle",
+    "path": "batch_output/Letter combination/100/dark/icon_T_outline_dark.png"
+  },
+  {
+    "letters": "U",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/light/icon_U_outline_light.png"
+  },
+  {
+    "letters": "U",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/dark/icon_U_outline_dark.png"
+  },
+  {
+    "letters": "CA",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/light/icon_CA_outline_light.png"
+  },
+  {
+    "letters": "CA",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/dark/icon_CA_outline_dark.png"
+  },
+  {
+    "letters": "CC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/light/icon_CC_outline_light.png"
+  },
+  {
+    "letters": "CC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/dark/icon_CC_outline_dark.png"
+  },
+  {
+    "letters": "CV",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/light/icon_CV_outline_light.png"
+  },
+  {
+    "letters": "CV",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/dark/icon_CV_outline_dark.png"
+  },
+  {
+    "letters": "GC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/light/icon_GC_outline_light.png"
+  },
+  {
+    "letters": "GC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/dark/icon_GC_outline_dark.png"
+  },
+  {
+    "letters": "GG",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/light/icon_GG_outline_light.png"
+  },
+  {
+    "letters": "GG",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/dark/icon_GG_outline_dark.png"
+  },
+  {
+    "letters": "GN",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/light/icon_GN_outline_light.png"
+  },
+  {
+    "letters": "GN",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/dark/icon_GN_outline_dark.png"
+  },
+  {
+    "letters": "GX",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/light/icon_GX_outline_light.png"
+  },
+  {
+    "letters": "GX",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/dark/icon_GX_outline_dark.png"
+  },
+  {
+    "letters": "LC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/light/icon_LC_outline_light.png"
+  },
+  {
+    "letters": "LC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/dark/icon_LC_outline_dark.png"
+  },
+  {
+    "letters": "LG",
+    "outline": true,
+    "theme": "light",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/light/icon_LG_outline_light.png"
+  },
+  {
+    "letters": "LG",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 100,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/100/dark/icon_LG_outline_dark.png"
+  },
+  {
+    "letters": "LS",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/light/icon_LS_outline_light.png"
+  },
+  {
+    "letters": "LS",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/dark/icon_LS_outline_dark.png"
+  },
+  {
+    "letters": "LP",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/light/icon_LP_outline_light.png"
+  },
+  {
+    "letters": "LP",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/dark/icon_LP_outline_dark.png"
+  },
+  {
+    "letters": "SA",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/light/icon_SA_outline_light.png"
+  },
+  {
+    "letters": "SA",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/dark/icon_SA_outline_dark.png"
+  },
+  {
+    "letters": "SD",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/light/icon_SD_outline_light.png"
+  },
+  {
+    "letters": "SD",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/dark/icon_SD_outline_dark.png"
+  },
+  {
+    "letters": "SM",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/light/icon_SM_outline_light.png"
+  },
+  {
+    "letters": "SM",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/dark/icon_SM_outline_dark.png"
+  },
+  {
+    "letters": "SN",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/light/icon_SN_outline_light.png"
+  },
+  {
+    "letters": "SN",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/dark/icon_SN_outline_dark.png"
+  },
+  {
+    "letters": "SR",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/light/icon_SR_outline_light.png"
+  },
+  {
+    "letters": "SR",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/dark/icon_SR_outline_dark.png"
+  },
+  {
+    "letters": "SQ",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/light/icon_SQ_outline_light.png"
+  },
+  {
+    "letters": "SQ",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/dark/icon_SQ_outline_dark.png"
+  },
+  {
+    "letters": "SX",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/light/icon_SX_outline_light.png"
+  },
+  {
+    "letters": "SX",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "pill",
+    "path": "batch_output/Letter combination/150/dark/icon_SX_outline_dark.png"
+  },
+  {
+    "letters": "UF",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/150/light/icon_UF_no-outline_light.png"
+  },
+  {
+    "letters": "UF",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/150/dark/icon_UF_no-outline_dark.png"
+  },
+  {
+    "letters": "UZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/150/light/icon_UZ_no-outline_light.png"
+  },
+  {
+    "letters": "UZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/150/dark/icon_UZ_no-outline_dark.png"
+  },
+  {
+    "letters": "ACS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/150/light/icon_ACS_no-outline_light.png"
+  },
+  {
+    "letters": "ACS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/150/dark/icon_ACS_no-outline_dark.png"
+  },
+  {
+    "letters": "ALS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/150/light/icon_ALS_no-outline_light.png"
+  },
+  {
+    "letters": "ALS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/150/dark/icon_ALS_no-outline_dark.png"
+  },
+  {
+    "letters": "SCS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/150/light/icon_SCS_no-outline_light.png"
+  },
+  {
+    "letters": "SCS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/150/dark/icon_SCS_no-outline_dark.png"
+  },
+  {
+    "letters": "SIM",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/150/light/icon_SIM_no-outline_light.png"
+  },
+  {
+    "letters": "SIM",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/150/dark/icon_SIM_no-outline_dark.png"
+  },
+  {
+    "letters": "CF",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/light/icon_CF_no-outline_light.png"
+  },
+  {
+    "letters": "CF",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/dark/icon_CF_no-outline_dark.png"
+  },
+  {
+    "letters": "CT",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/light/icon_CT_no-outline_light.png"
+  },
+  {
+    "letters": "CT",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/dark/icon_CT_no-outline_dark.png"
+  },
+  {
+    "letters": "CZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/light/icon_CZ_no-outline_light.png"
+  },
+  {
+    "letters": "CZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/dark/icon_CZ_no-outline_dark.png"
+  },
+  {
+    "letters": "DV",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/light/icon_DV_no-outline_light.png"
+  },
+  {
+    "letters": "DV",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/dark/icon_DV_no-outline_dark.png"
+  },
+  {
+    "letters": "LD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/light/icon_LD_no-outline_light.png"
+  },
+  {
+    "letters": "LD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/dark/icon_LD_no-outline_dark.png"
+  },
+  {
+    "letters": "LE",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/light/icon_LE_no-outline_light.png"
+  },
+  {
+    "letters": "LE",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/dark/icon_LE_no-outline_dark.png"
+  },
+  {
+    "letters": "MD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/light/icon_MD_no-outline_light.png"
+  },
+  {
+    "letters": "MD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/dark/icon_MD_no-outline_dark.png"
+  },
+  {
+    "letters": "NC",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/light/icon_NC_no-outline_light.png"
+  },
+  {
+    "letters": "NC",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/dark/icon_NC_no-outline_dark.png"
+  },
+  {
+    "letters": "PD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/light/icon_PD_no-outline_light.png"
+  },
+  {
+    "letters": "PD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/dark/icon_PD_no-outline_dark.png"
+  },
+  {
+    "letters": "SZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/light/icon_SZ_no-outline_light.png"
+  },
+  {
+    "letters": "SZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/150/dark/icon_SZ_no-outline_dark.png"
+  },
+  {
+    "letters": "A",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/light/icon_A_outline_light.png"
+  },
+  {
+    "letters": "A",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/dark/icon_A_outline_dark.png"
+  },
+  {
+    "letters": "E",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/light/icon_E_outline_light.png"
+  },
+  {
+    "letters": "E",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/dark/icon_E_outline_dark.png"
+  },
+  {
+    "letters": "F",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/light/icon_F_outline_light.png"
+  },
+  {
+    "letters": "F",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/dark/icon_F_outline_dark.png"
+  },
+  {
+    "letters": "L",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/light/icon_L_outline_light.png"
+  },
+  {
+    "letters": "L",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/dark/icon_L_outline_dark.png"
+  },
+  {
+    "letters": "M",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/light/icon_M_outline_light.png"
+  },
+  {
+    "letters": "M",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/dark/icon_M_outline_dark.png"
+  },
+  {
+    "letters": "P",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/light/icon_P_outline_light.png"
+  },
+  {
+    "letters": "P",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/dark/icon_P_outline_dark.png"
+  },
+  {
+    "letters": "R",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/light/icon_R_outline_light.png"
+  },
+  {
+    "letters": "R",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/dark/icon_R_outline_dark.png"
+  },
+  {
+    "letters": "T",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/light/icon_T_outline_light.png"
+  },
+  {
+    "letters": "T",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle",
+    "path": "batch_output/Letter combination/150/dark/icon_T_outline_dark.png"
+  },
+  {
+    "letters": "U",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/light/icon_U_outline_light.png"
+  },
+  {
+    "letters": "U",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/dark/icon_U_outline_dark.png"
+  },
+  {
+    "letters": "CA",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/light/icon_CA_outline_light.png"
+  },
+  {
+    "letters": "CA",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/dark/icon_CA_outline_dark.png"
+  },
+  {
+    "letters": "CC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/light/icon_CC_outline_light.png"
+  },
+  {
+    "letters": "CC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/dark/icon_CC_outline_dark.png"
+  },
+  {
+    "letters": "CV",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/light/icon_CV_outline_light.png"
+  },
+  {
+    "letters": "CV",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/dark/icon_CV_outline_dark.png"
+  },
+  {
+    "letters": "GC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/light/icon_GC_outline_light.png"
+  },
+  {
+    "letters": "GC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/dark/icon_GC_outline_dark.png"
+  },
+  {
+    "letters": "GG",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/light/icon_GG_outline_light.png"
+  },
+  {
+    "letters": "GG",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/dark/icon_GG_outline_dark.png"
+  },
+  {
+    "letters": "GN",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/light/icon_GN_outline_light.png"
+  },
+  {
+    "letters": "GN",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/dark/icon_GN_outline_dark.png"
+  },
+  {
+    "letters": "GX",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/light/icon_GX_outline_light.png"
+  },
+  {
+    "letters": "GX",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/dark/icon_GX_outline_dark.png"
+  },
+  {
+    "letters": "LC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/light/icon_LC_outline_light.png"
+  },
+  {
+    "letters": "LC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/dark/icon_LC_outline_dark.png"
+  },
+  {
+    "letters": "LG",
+    "outline": true,
+    "theme": "light",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/light/icon_LG_outline_light.png"
+  },
+  {
+    "letters": "LG",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 150,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/150/dark/icon_LG_outline_dark.png"
+  },
+  {
+    "letters": "LS",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/light/icon_LS_outline_light.png"
+  },
+  {
+    "letters": "LS",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/dark/icon_LS_outline_dark.png"
+  },
+  {
+    "letters": "LP",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/light/icon_LP_outline_light.png"
+  },
+  {
+    "letters": "LP",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/dark/icon_LP_outline_dark.png"
+  },
+  {
+    "letters": "SA",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/light/icon_SA_outline_light.png"
+  },
+  {
+    "letters": "SA",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/dark/icon_SA_outline_dark.png"
+  },
+  {
+    "letters": "SD",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/light/icon_SD_outline_light.png"
+  },
+  {
+    "letters": "SD",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/dark/icon_SD_outline_dark.png"
+  },
+  {
+    "letters": "SM",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/light/icon_SM_outline_light.png"
+  },
+  {
+    "letters": "SM",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/dark/icon_SM_outline_dark.png"
+  },
+  {
+    "letters": "SN",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/light/icon_SN_outline_light.png"
+  },
+  {
+    "letters": "SN",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/dark/icon_SN_outline_dark.png"
+  },
+  {
+    "letters": "SR",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/light/icon_SR_outline_light.png"
+  },
+  {
+    "letters": "SR",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/dark/icon_SR_outline_dark.png"
+  },
+  {
+    "letters": "SQ",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/light/icon_SQ_outline_light.png"
+  },
+  {
+    "letters": "SQ",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/dark/icon_SQ_outline_dark.png"
+  },
+  {
+    "letters": "SX",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/light/icon_SX_outline_light.png"
+  },
+  {
+    "letters": "SX",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "pill",
+    "path": "batch_output/Letter combination/200/dark/icon_SX_outline_dark.png"
+  },
+  {
+    "letters": "UF",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/200/light/icon_UF_no-outline_light.png"
+  },
+  {
+    "letters": "UF",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/200/dark/icon_UF_no-outline_dark.png"
+  },
+  {
+    "letters": "UZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/200/light/icon_UZ_no-outline_light.png"
+  },
+  {
+    "letters": "UZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/200/dark/icon_UZ_no-outline_dark.png"
+  },
+  {
+    "letters": "ACS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/200/light/icon_ACS_no-outline_light.png"
+  },
+  {
+    "letters": "ACS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/200/dark/icon_ACS_no-outline_dark.png"
+  },
+  {
+    "letters": "ALS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/200/light/icon_ALS_no-outline_light.png"
+  },
+  {
+    "letters": "ALS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/200/dark/icon_ALS_no-outline_dark.png"
+  },
+  {
+    "letters": "SCS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/200/light/icon_SCS_no-outline_light.png"
+  },
+  {
+    "letters": "SCS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/200/dark/icon_SCS_no-outline_dark.png"
+  },
+  {
+    "letters": "SIM",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/200/light/icon_SIM_no-outline_light.png"
+  },
+  {
+    "letters": "SIM",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/200/dark/icon_SIM_no-outline_dark.png"
+  },
+  {
+    "letters": "CF",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/light/icon_CF_no-outline_light.png"
+  },
+  {
+    "letters": "CF",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/dark/icon_CF_no-outline_dark.png"
+  },
+  {
+    "letters": "CT",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/light/icon_CT_no-outline_light.png"
+  },
+  {
+    "letters": "CT",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/dark/icon_CT_no-outline_dark.png"
+  },
+  {
+    "letters": "CZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/light/icon_CZ_no-outline_light.png"
+  },
+  {
+    "letters": "CZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/dark/icon_CZ_no-outline_dark.png"
+  },
+  {
+    "letters": "DV",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/light/icon_DV_no-outline_light.png"
+  },
+  {
+    "letters": "DV",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/dark/icon_DV_no-outline_dark.png"
+  },
+  {
+    "letters": "LD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/light/icon_LD_no-outline_light.png"
+  },
+  {
+    "letters": "LD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/dark/icon_LD_no-outline_dark.png"
+  },
+  {
+    "letters": "LE",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/light/icon_LE_no-outline_light.png"
+  },
+  {
+    "letters": "LE",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/dark/icon_LE_no-outline_dark.png"
+  },
+  {
+    "letters": "MD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/light/icon_MD_no-outline_light.png"
+  },
+  {
+    "letters": "MD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/dark/icon_MD_no-outline_dark.png"
+  },
+  {
+    "letters": "NC",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/light/icon_NC_no-outline_light.png"
+  },
+  {
+    "letters": "NC",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/dark/icon_NC_no-outline_dark.png"
+  },
+  {
+    "letters": "PD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/light/icon_PD_no-outline_light.png"
+  },
+  {
+    "letters": "PD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/dark/icon_PD_no-outline_dark.png"
+  },
+  {
+    "letters": "SZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/light/icon_SZ_no-outline_light.png"
+  },
+  {
+    "letters": "SZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/200/dark/icon_SZ_no-outline_dark.png"
+  },
+  {
+    "letters": "A",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/light/icon_A_outline_light.png"
+  },
+  {
+    "letters": "A",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/dark/icon_A_outline_dark.png"
+  },
+  {
+    "letters": "E",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/light/icon_E_outline_light.png"
+  },
+  {
+    "letters": "E",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/dark/icon_E_outline_dark.png"
+  },
+  {
+    "letters": "F",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/light/icon_F_outline_light.png"
+  },
+  {
+    "letters": "F",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/dark/icon_F_outline_dark.png"
+  },
+  {
+    "letters": "L",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/light/icon_L_outline_light.png"
+  },
+  {
+    "letters": "L",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/dark/icon_L_outline_dark.png"
+  },
+  {
+    "letters": "M",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/light/icon_M_outline_light.png"
+  },
+  {
+    "letters": "M",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/dark/icon_M_outline_dark.png"
+  },
+  {
+    "letters": "P",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/light/icon_P_outline_light.png"
+  },
+  {
+    "letters": "P",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/dark/icon_P_outline_dark.png"
+  },
+  {
+    "letters": "R",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/light/icon_R_outline_light.png"
+  },
+  {
+    "letters": "R",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/dark/icon_R_outline_dark.png"
+  },
+  {
+    "letters": "T",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/light/icon_T_outline_light.png"
+  },
+  {
+    "letters": "T",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle",
+    "path": "batch_output/Letter combination/200/dark/icon_T_outline_dark.png"
+  },
+  {
+    "letters": "U",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/light/icon_U_outline_light.png"
+  },
+  {
+    "letters": "U",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/dark/icon_U_outline_dark.png"
+  },
+  {
+    "letters": "CA",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/light/icon_CA_outline_light.png"
+  },
+  {
+    "letters": "CA",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/dark/icon_CA_outline_dark.png"
+  },
+  {
+    "letters": "CC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/light/icon_CC_outline_light.png"
+  },
+  {
+    "letters": "CC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/dark/icon_CC_outline_dark.png"
+  },
+  {
+    "letters": "CV",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/light/icon_CV_outline_light.png"
+  },
+  {
+    "letters": "CV",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/dark/icon_CV_outline_dark.png"
+  },
+  {
+    "letters": "GC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/light/icon_GC_outline_light.png"
+  },
+  {
+    "letters": "GC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/dark/icon_GC_outline_dark.png"
+  },
+  {
+    "letters": "GG",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/light/icon_GG_outline_light.png"
+  },
+  {
+    "letters": "GG",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/dark/icon_GG_outline_dark.png"
+  },
+  {
+    "letters": "GN",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/light/icon_GN_outline_light.png"
+  },
+  {
+    "letters": "GN",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/dark/icon_GN_outline_dark.png"
+  },
+  {
+    "letters": "GX",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/light/icon_GX_outline_light.png"
+  },
+  {
+    "letters": "GX",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/dark/icon_GX_outline_dark.png"
+  },
+  {
+    "letters": "LC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/light/icon_LC_outline_light.png"
+  },
+  {
+    "letters": "LC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/dark/icon_LC_outline_dark.png"
+  },
+  {
+    "letters": "LG",
+    "outline": true,
+    "theme": "light",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/light/icon_LG_outline_light.png"
+  },
+  {
+    "letters": "LG",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 200,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/200/dark/icon_LG_outline_dark.png"
+  },
+  {
+    "letters": "LS",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/light/icon_LS_outline_light.png"
+  },
+  {
+    "letters": "LS",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/dark/icon_LS_outline_dark.png"
+  },
+  {
+    "letters": "LP",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/light/icon_LP_outline_light.png"
+  },
+  {
+    "letters": "LP",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/dark/icon_LP_outline_dark.png"
+  },
+  {
+    "letters": "SA",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/light/icon_SA_outline_light.png"
+  },
+  {
+    "letters": "SA",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/dark/icon_SA_outline_dark.png"
+  },
+  {
+    "letters": "SD",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/light/icon_SD_outline_light.png"
+  },
+  {
+    "letters": "SD",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/dark/icon_SD_outline_dark.png"
+  },
+  {
+    "letters": "SM",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/light/icon_SM_outline_light.png"
+  },
+  {
+    "letters": "SM",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/dark/icon_SM_outline_dark.png"
+  },
+  {
+    "letters": "SN",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/light/icon_SN_outline_light.png"
+  },
+  {
+    "letters": "SN",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/dark/icon_SN_outline_dark.png"
+  },
+  {
+    "letters": "SR",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/light/icon_SR_outline_light.png"
+  },
+  {
+    "letters": "SR",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/dark/icon_SR_outline_dark.png"
+  },
+  {
+    "letters": "SQ",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/light/icon_SQ_outline_light.png"
+  },
+  {
+    "letters": "SQ",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/dark/icon_SQ_outline_dark.png"
+  },
+  {
+    "letters": "SX",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/light/icon_SX_outline_light.png"
+  },
+  {
+    "letters": "SX",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "pill",
+    "path": "batch_output/Letter combination/300/dark/icon_SX_outline_dark.png"
+  },
+  {
+    "letters": "UF",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/300/light/icon_UF_no-outline_light.png"
+  },
+  {
+    "letters": "UF",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/300/dark/icon_UF_no-outline_dark.png"
+  },
+  {
+    "letters": "UZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/300/light/icon_UZ_no-outline_light.png"
+  },
+  {
+    "letters": "UZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/300/dark/icon_UZ_no-outline_dark.png"
+  },
+  {
+    "letters": "ACS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/300/light/icon_ACS_no-outline_light.png"
+  },
+  {
+    "letters": "ACS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/300/dark/icon_ACS_no-outline_dark.png"
+  },
+  {
+    "letters": "ALS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/300/light/icon_ALS_no-outline_light.png"
+  },
+  {
+    "letters": "ALS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/300/dark/icon_ALS_no-outline_dark.png"
+  },
+  {
+    "letters": "SCS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/300/light/icon_SCS_no-outline_light.png"
+  },
+  {
+    "letters": "SCS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/300/dark/icon_SCS_no-outline_dark.png"
+  },
+  {
+    "letters": "SIM",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/300/light/icon_SIM_no-outline_light.png"
+  },
+  {
+    "letters": "SIM",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/300/dark/icon_SIM_no-outline_dark.png"
+  },
+  {
+    "letters": "CF",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/light/icon_CF_no-outline_light.png"
+  },
+  {
+    "letters": "CF",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/dark/icon_CF_no-outline_dark.png"
+  },
+  {
+    "letters": "CT",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/light/icon_CT_no-outline_light.png"
+  },
+  {
+    "letters": "CT",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/dark/icon_CT_no-outline_dark.png"
+  },
+  {
+    "letters": "CZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/light/icon_CZ_no-outline_light.png"
+  },
+  {
+    "letters": "CZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/dark/icon_CZ_no-outline_dark.png"
+  },
+  {
+    "letters": "DV",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/light/icon_DV_no-outline_light.png"
+  },
+  {
+    "letters": "DV",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/dark/icon_DV_no-outline_dark.png"
+  },
+  {
+    "letters": "LD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/light/icon_LD_no-outline_light.png"
+  },
+  {
+    "letters": "LD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/dark/icon_LD_no-outline_dark.png"
+  },
+  {
+    "letters": "LE",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/light/icon_LE_no-outline_light.png"
+  },
+  {
+    "letters": "LE",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/dark/icon_LE_no-outline_dark.png"
+  },
+  {
+    "letters": "MD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/light/icon_MD_no-outline_light.png"
+  },
+  {
+    "letters": "MD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/dark/icon_MD_no-outline_dark.png"
+  },
+  {
+    "letters": "NC",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/light/icon_NC_no-outline_light.png"
+  },
+  {
+    "letters": "NC",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/dark/icon_NC_no-outline_dark.png"
+  },
+  {
+    "letters": "PD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/light/icon_PD_no-outline_light.png"
+  },
+  {
+    "letters": "PD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/dark/icon_PD_no-outline_dark.png"
+  },
+  {
+    "letters": "SZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/light/icon_SZ_no-outline_light.png"
+  },
+  {
+    "letters": "SZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/300/dark/icon_SZ_no-outline_dark.png"
+  },
+  {
+    "letters": "A",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/light/icon_A_outline_light.png"
+  },
+  {
+    "letters": "A",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/dark/icon_A_outline_dark.png"
+  },
+  {
+    "letters": "E",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/light/icon_E_outline_light.png"
+  },
+  {
+    "letters": "E",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/dark/icon_E_outline_dark.png"
+  },
+  {
+    "letters": "F",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/light/icon_F_outline_light.png"
+  },
+  {
+    "letters": "F",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/dark/icon_F_outline_dark.png"
+  },
+  {
+    "letters": "L",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/light/icon_L_outline_light.png"
+  },
+  {
+    "letters": "L",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/dark/icon_L_outline_dark.png"
+  },
+  {
+    "letters": "M",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/light/icon_M_outline_light.png"
+  },
+  {
+    "letters": "M",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/dark/icon_M_outline_dark.png"
+  },
+  {
+    "letters": "P",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/light/icon_P_outline_light.png"
+  },
+  {
+    "letters": "P",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/dark/icon_P_outline_dark.png"
+  },
+  {
+    "letters": "R",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/light/icon_R_outline_light.png"
+  },
+  {
+    "letters": "R",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/dark/icon_R_outline_dark.png"
+  },
+  {
+    "letters": "T",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/light/icon_T_outline_light.png"
+  },
+  {
+    "letters": "T",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle",
+    "path": "batch_output/Letter combination/300/dark/icon_T_outline_dark.png"
+  },
+  {
+    "letters": "U",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/light/icon_U_outline_light.png"
+  },
+  {
+    "letters": "U",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/dark/icon_U_outline_dark.png"
+  },
+  {
+    "letters": "CA",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/light/icon_CA_outline_light.png"
+  },
+  {
+    "letters": "CA",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/dark/icon_CA_outline_dark.png"
+  },
+  {
+    "letters": "CC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/light/icon_CC_outline_light.png"
+  },
+  {
+    "letters": "CC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/dark/icon_CC_outline_dark.png"
+  },
+  {
+    "letters": "CV",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/light/icon_CV_outline_light.png"
+  },
+  {
+    "letters": "CV",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/dark/icon_CV_outline_dark.png"
+  },
+  {
+    "letters": "GC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/light/icon_GC_outline_light.png"
+  },
+  {
+    "letters": "GC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/dark/icon_GC_outline_dark.png"
+  },
+  {
+    "letters": "GG",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/light/icon_GG_outline_light.png"
+  },
+  {
+    "letters": "GG",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/dark/icon_GG_outline_dark.png"
+  },
+  {
+    "letters": "GN",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/light/icon_GN_outline_light.png"
+  },
+  {
+    "letters": "GN",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/dark/icon_GN_outline_dark.png"
+  },
+  {
+    "letters": "GX",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/light/icon_GX_outline_light.png"
+  },
+  {
+    "letters": "GX",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/dark/icon_GX_outline_dark.png"
+  },
+  {
+    "letters": "LC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/light/icon_LC_outline_light.png"
+  },
+  {
+    "letters": "LC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/dark/icon_LC_outline_dark.png"
+  },
+  {
+    "letters": "LG",
+    "outline": true,
+    "theme": "light",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/light/icon_LG_outline_light.png"
+  },
+  {
+    "letters": "LG",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 300,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/300/dark/icon_LG_outline_dark.png"
+  },
+  {
+    "letters": "LS",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/light/icon_LS_outline_light.png"
+  },
+  {
+    "letters": "LS",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/dark/icon_LS_outline_dark.png"
+  },
+  {
+    "letters": "LP",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/light/icon_LP_outline_light.png"
+  },
+  {
+    "letters": "LP",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/dark/icon_LP_outline_dark.png"
+  },
+  {
+    "letters": "SA",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/light/icon_SA_outline_light.png"
+  },
+  {
+    "letters": "SA",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/dark/icon_SA_outline_dark.png"
+  },
+  {
+    "letters": "SD",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/light/icon_SD_outline_light.png"
+  },
+  {
+    "letters": "SD",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/dark/icon_SD_outline_dark.png"
+  },
+  {
+    "letters": "SM",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/light/icon_SM_outline_light.png"
+  },
+  {
+    "letters": "SM",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/dark/icon_SM_outline_dark.png"
+  },
+  {
+    "letters": "SN",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/light/icon_SN_outline_light.png"
+  },
+  {
+    "letters": "SN",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/dark/icon_SN_outline_dark.png"
+  },
+  {
+    "letters": "SR",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/light/icon_SR_outline_light.png"
+  },
+  {
+    "letters": "SR",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/dark/icon_SR_outline_dark.png"
+  },
+  {
+    "letters": "SQ",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/light/icon_SQ_outline_light.png"
+  },
+  {
+    "letters": "SQ",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/dark/icon_SQ_outline_dark.png"
+  },
+  {
+    "letters": "SX",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/light/icon_SX_outline_light.png"
+  },
+  {
+    "letters": "SX",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "pill",
+    "path": "batch_output/Letter combination/400/dark/icon_SX_outline_dark.png"
+  },
+  {
+    "letters": "UF",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/400/light/icon_UF_no-outline_light.png"
+  },
+  {
+    "letters": "UF",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/400/dark/icon_UF_no-outline_dark.png"
+  },
+  {
+    "letters": "UZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/400/light/icon_UZ_no-outline_light.png"
+  },
+  {
+    "letters": "UZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/400/dark/icon_UZ_no-outline_dark.png"
+  },
+  {
+    "letters": "ACS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/400/light/icon_ACS_no-outline_light.png"
+  },
+  {
+    "letters": "ACS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/400/dark/icon_ACS_no-outline_dark.png"
+  },
+  {
+    "letters": "ALS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/400/light/icon_ALS_no-outline_light.png"
+  },
+  {
+    "letters": "ALS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/400/dark/icon_ALS_no-outline_dark.png"
+  },
+  {
+    "letters": "SCS",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/400/light/icon_SCS_no-outline_light.png"
+  },
+  {
+    "letters": "SCS",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/400/dark/icon_SCS_no-outline_dark.png"
+  },
+  {
+    "letters": "SIM",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/400/light/icon_SIM_no-outline_light.png"
+  },
+  {
+    "letters": "SIM",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-mixed",
+    "path": "batch_output/Letter combination/400/dark/icon_SIM_no-outline_dark.png"
+  },
+  {
+    "letters": "CF",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/light/icon_CF_no-outline_light.png"
+  },
+  {
+    "letters": "CF",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/dark/icon_CF_no-outline_dark.png"
+  },
+  {
+    "letters": "CT",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/light/icon_CT_no-outline_light.png"
+  },
+  {
+    "letters": "CT",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/dark/icon_CT_no-outline_dark.png"
+  },
+  {
+    "letters": "CZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/light/icon_CZ_no-outline_light.png"
+  },
+  {
+    "letters": "CZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/dark/icon_CZ_no-outline_dark.png"
+  },
+  {
+    "letters": "DV",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/light/icon_DV_no-outline_light.png"
+  },
+  {
+    "letters": "DV",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/dark/icon_DV_no-outline_dark.png"
+  },
+  {
+    "letters": "LD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/light/icon_LD_no-outline_light.png"
+  },
+  {
+    "letters": "LD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/dark/icon_LD_no-outline_dark.png"
+  },
+  {
+    "letters": "LE",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/light/icon_LE_no-outline_light.png"
+  },
+  {
+    "letters": "LE",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/dark/icon_LE_no-outline_dark.png"
+  },
+  {
+    "letters": "MD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/light/icon_MD_no-outline_light.png"
+  },
+  {
+    "letters": "MD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/dark/icon_MD_no-outline_dark.png"
+  },
+  {
+    "letters": "NC",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/light/icon_NC_no-outline_light.png"
+  },
+  {
+    "letters": "NC",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/dark/icon_NC_no-outline_dark.png"
+  },
+  {
+    "letters": "PD",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/light/icon_PD_no-outline_light.png"
+  },
+  {
+    "letters": "PD",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/dark/icon_PD_no-outline_dark.png"
+  },
+  {
+    "letters": "SZ",
+    "outline": false,
+    "theme": "light",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/light/icon_SZ_no-outline_light.png"
+  },
+  {
+    "letters": "SZ",
+    "outline": false,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "plain-2",
+    "path": "batch_output/Letter combination/400/dark/icon_SZ_no-outline_dark.png"
+  },
+  {
+    "letters": "A",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/light/icon_A_outline_light.png"
+  },
+  {
+    "letters": "A",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/dark/icon_A_outline_dark.png"
+  },
+  {
+    "letters": "E",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/light/icon_E_outline_light.png"
+  },
+  {
+    "letters": "E",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/dark/icon_E_outline_dark.png"
+  },
+  {
+    "letters": "F",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/light/icon_F_outline_light.png"
+  },
+  {
+    "letters": "F",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/dark/icon_F_outline_dark.png"
+  },
+  {
+    "letters": "L",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/light/icon_L_outline_light.png"
+  },
+  {
+    "letters": "L",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/dark/icon_L_outline_dark.png"
+  },
+  {
+    "letters": "M",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/light/icon_M_outline_light.png"
+  },
+  {
+    "letters": "M",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/dark/icon_M_outline_dark.png"
+  },
+  {
+    "letters": "P",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/light/icon_P_outline_light.png"
+  },
+  {
+    "letters": "P",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/dark/icon_P_outline_dark.png"
+  },
+  {
+    "letters": "R",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/light/icon_R_outline_light.png"
+  },
+  {
+    "letters": "R",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/dark/icon_R_outline_dark.png"
+  },
+  {
+    "letters": "T",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/light/icon_T_outline_light.png"
+  },
+  {
+    "letters": "T",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle",
+    "path": "batch_output/Letter combination/400/dark/icon_T_outline_dark.png"
+  },
+  {
+    "letters": "U",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/light/icon_U_outline_light.png"
+  },
+  {
+    "letters": "U",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/dark/icon_U_outline_dark.png"
+  },
+  {
+    "letters": "CA",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/light/icon_CA_outline_light.png"
+  },
+  {
+    "letters": "CA",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/dark/icon_CA_outline_dark.png"
+  },
+  {
+    "letters": "CC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/light/icon_CC_outline_light.png"
+  },
+  {
+    "letters": "CC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/dark/icon_CC_outline_dark.png"
+  },
+  {
+    "letters": "CV",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/light/icon_CV_outline_light.png"
+  },
+  {
+    "letters": "CV",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/dark/icon_CV_outline_dark.png"
+  },
+  {
+    "letters": "GC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/light/icon_GC_outline_light.png"
+  },
+  {
+    "letters": "GC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/dark/icon_GC_outline_dark.png"
+  },
+  {
+    "letters": "GG",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/light/icon_GG_outline_light.png"
+  },
+  {
+    "letters": "GG",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/dark/icon_GG_outline_dark.png"
+  },
+  {
+    "letters": "GN",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/light/icon_GN_outline_light.png"
+  },
+  {
+    "letters": "GN",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/dark/icon_GN_outline_dark.png"
+  },
+  {
+    "letters": "GX",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/light/icon_GX_outline_light.png"
+  },
+  {
+    "letters": "GX",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/dark/icon_GX_outline_dark.png"
+  },
+  {
+    "letters": "LC",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/light/icon_LC_outline_light.png"
+  },
+  {
+    "letters": "LC",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/dark/icon_LC_outline_dark.png"
+  },
+  {
+    "letters": "LG",
+    "outline": true,
+    "theme": "light",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/light/icon_LG_outline_light.png"
+  },
+  {
+    "letters": "LG",
+    "outline": true,
+    "theme": "dark",
+    "resolution": 400,
+    "group": "circle-pill",
+    "path": "batch_output/Letter combination/400/dark/icon_LG_outline_dark.png"
+  }
+]
