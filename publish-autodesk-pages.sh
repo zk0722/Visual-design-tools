@@ -11,6 +11,7 @@ echo "==> Syncing ${PAGES_BRANCH} from main..."
 git checkout "$PAGES_BRANCH"
 git checkout main -- \
   index.html \
+  gifenc.bundle.js \
   custom-symbols.json \
   fonts/ \
   references/ \
