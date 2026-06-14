@@ -188,6 +188,9 @@
             min-width: 52px;
             line-height: 1.2;
         }
+        body.symbols-mode .resolution-option.letters-only {
+            display: none;
+        }
         .resolution-option label small {
             display: block;
             font-size: 10px;
@@ -259,6 +262,7 @@
         }
         .font-settings-group.hidden { display: none; }
         .symbol-settings-group.hidden { display: none; }
+        .slack-color-group.hidden { display: none; }
         
         input[type="text"] {
             width: 100%;
@@ -333,6 +337,15 @@
             line-height: 0;
         }
         .preview-scaled-wrap .preview-scaled { display: block; }
+        .slack-shuffle-preview .preview-scaled-wrap {
+            background:
+                repeating-conic-gradient(#d8d8d8 0% 25%, #ffffff 0% 50%) 50% / 14px 14px;
+            border-radius: 4px;
+        }
+        .preview-container.dark.slack-shuffle-preview .preview-scaled-wrap {
+            background:
+                repeating-conic-gradient(#4a4a4a 0% 25%, #606060 0% 50%) 50% / 14px 14px;
+        }
         .specs {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 12px;
@@ -377,6 +390,7 @@
         .tool-btn.reset { background: #ff3b30; color: white; border-color: #ff3b30; }
         .tool-btn.reset:hover { background: #d63029; }
         #preview-scaled { cursor: crosshair; outline: 1px solid rgba(128, 128, 128, 0.3); }
+        .slack-shuffle-preview #preview-scaled { cursor: pointer; }
         .symbols-mode #preview-scaled { outline: none; }
         .editor-hint {
             font-size: 11px;
@@ -555,7 +569,15 @@
                             <input type="radio" name="resolution" id="res-400" value="400">
                             <label for="res-400">400<small>80px</small></label>
                         </div>
+                        <div class="resolution-option letters-only">
+                            <input type="radio" name="resolution" id="res-128" value="128">
+                            <label for="res-128">128px<small>Slack emoji</small></label>
+                        </div>
                     </div>
+                </div>
+
+                <div class="form-group slack-color-group hidden" id="slack-color-group">
+                    <p class="font-settings-note" id="slack-color-note">128px Slack emoji: each letter zooms in from 2× size, fades out, then the next appears. Click the preview to restart.</p>
                 </div>
 
                 <div class="form-group font-settings-group" id="font-settings-group">
@@ -661,6 +683,8 @@
     <canvas id="export-light" class="hidden-canvas"></canvas>
     <canvas id="export-dark" class="hidden-canvas"></canvas>
 
+    <script>var exports = {};</script>
+    <script src="gifenc.bundle.js"></script>
     <script>
         // Current mode: 'letters' or 'symbols'
         let currentTab = 'letters';
@@ -672,11 +696,64 @@
         let shapeStart = null;
         let editedPixels = null;  // Stores edited pixel data for current symbol
         let ORIGINAL_SYMBOLS = null;  // Will be set after SYMBOLS is defined
+        let slackEmojiPalette = null;
+        let slackEmojiAnimationFrames = [];
+        let slackEmojiAnimationTimer = null;
+        let slackEmojiFrameIndex = 0;
         const GRID_SIZE = 16;
         const BASE_RESOLUTION = 100;
+        const SLACK_EMOJI_RESOLUTION = 128;
+        const SLACK_COLOR_SHUFFLE_FONT_SIZE = 55;
+        const SLACK_COLOR_SHUFFLE_TWO_LETTER_FONT_SIZE = 80;
+        const SLACK_CANVAS_CORNER_RADIUS = 21;
+        const SLACK_EMOJI_FONT_WEIGHT = 700;
+        const SLACK_EMOJI_LETTER_COLOR = '#ffffff';
+        const SLACK_REVEAL_START_SCALE = 2;
+        const SLACK_REVEAL_END_SCALE = 1;
+        const SLACK_REVEAL_DEFAULT_FRAME_MS = 50;
+        const SLACK_ASSEMBLE_FRAMES = 4;
+        const SLACK_ASSEMBLE_FRAME_MS = 55;
+        const SLACK_HOLD_MS = 2000;
+        const SLACK_HOLD_FRAME_MS = 100;
+
+        function getSlackRevealTiming(letterCount) {
+            if (letterCount >= 3) {
+                return { steps: 8, frameMs: 40, exitSteps: 4, exitFrameMs: 32 };
+            }
+            if (letterCount === 2) {
+                return { steps: 10, frameMs: 50, exitSteps: 5, exitFrameMs: 38 };
+            }
+            return { steps: 12, frameMs: 65, exitSteps: 6, exitFrameMs: 50 };
+        }
+
+        function getSlackAssembleTiming(letterCount) {
+            if (letterCount >= 3) {
+                return { frames: 3, frameMs: 38 };
+            }
+            if (letterCount === 2) {
+                return { frames: 3, frameMs: 48 };
+            }
+            return { frames: SLACK_ASSEMBLE_FRAMES, frameMs: SLACK_ASSEMBLE_FRAME_MS };
+        }
+
+        function getSlackColorShuffleFontSize(letterCount) {
+            return letterCount === 2 ? SLACK_COLOR_SHUFFLE_TWO_LETTER_FONT_SIZE : SLACK_COLOR_SHUFFLE_FONT_SIZE;
+        }
+
+        function shouldUseSlackColorShuffle() {
+            return currentTab === 'letters' && isSlackEmojiResolution(getResolution());
+        }
 
         function getResolution() {
             return parseInt(document.querySelector('input[name="resolution"]:checked').value, 10);
+        }
+
+        function isSlackEmojiResolution(resolution) {
+            return resolution === SLACK_EMOJI_RESOLUTION;
+        }
+
+        function formatResolutionLabel(resolution) {
+            return isSlackEmojiResolution(resolution) ? '128px' : `${resolution}%`;
         }
 
         function getPixelScale() {
@@ -686,6 +763,7 @@
         function getOutputSize() {
             const res = getResolution();
             if (res === BASE_RESOLUTION) return GRID_SIZE;
+            if (isSlackEmojiResolution(res)) return SLACK_EMOJI_RESOLUTION;
             return Math.round(res * 20 / 100);
         }
 
@@ -704,7 +782,7 @@
         }
 
         function resolveLetterVectorColor(color, resolution) {
-            if (resolution === 150 || resolution === 200) {
+            if (resolution === 150 || resolution === 200 || isSlackEmojiResolution(resolution)) {
                 if (color === 'black' || color === '#000' || color === '#000000') return '#000000';
                 if (color === 'white' || color === '#fff' || color === '#ffffff') return '#ffffff';
                 return color;
@@ -716,13 +794,16 @@
             const res = getResolution();
             const size = currentTab === 'symbols' ? getSymbolCanvasSize() : getOutputSize();
             const renderNote = res > BASE_RESOLUTION ? ' • vector' : '';
-            const scaledLabel = `${res}% (${size}px)${renderNote}`;
+            const scaledLabel = isSlackEmojiResolution(res)
+                ? `128px${renderNote}`
+                : `${res}% (${size}px)${renderNote}`;
             const theme = document.querySelector('input[name="theme"]:checked').value;
             document.getElementById('label-scaled').textContent = scaledLabel;
             document.getElementById('label-scaled').className = 'preview-label ' + theme;
         }
 
-        const VECTOR_RESOLUTIONS = [150, 200, 300, 400];
+        const VECTOR_RESOLUTIONS = [150, 200, 300, 400, SLACK_EMOJI_RESOLUTION];
+        const SYMBOL_VECTOR_RESOLUTIONS = [150, 200, 300, 400];
         const FONT_FAMILY_OPTIONS = [
             { id: 'pixelify', label: 'Pixelify Sans' },
             { id: 'monospace', label: 'Monospace' },
@@ -736,6 +817,7 @@
         ];
         function getOutputSizeForResolution(resolution) {
             if (resolution === BASE_RESOLUTION) return GRID_SIZE;
+            if (isSlackEmojiResolution(resolution)) return SLACK_EMOJI_RESOLUTION;
             return Math.round(resolution * 20 / 100);
         }
 
@@ -760,37 +842,43 @@
                 150: { fontSize: 21, outlineThickness: 1.5, textY: 15, letterGap: 1.5 },
                 200: { fontSize: 27, outlineThickness: 2, textY: 20, letterGap: 2 },
                 300: { fontSize: 41, outlineThickness: 3, textY: 31, letterGap: 3 },
-                400: { fontSize: 55, outlineThickness: 4, textY: 41, letterGap: 4 }
+                400: { fontSize: 55, outlineThickness: 4, textY: 41, letterGap: 4 },
+                128: { fontSize: 88, outlineThickness: 6.4, textY: 65.6, letterGap: 6.4 }
             },
             '1-plain': {
                 150: { fontSize: 26, outlineThickness: 1.5, textY: 14.25, letterGap: 1.5 },
                 200: { fontSize: 33, outlineThickness: 2, textY: 19, letterGap: 2 },
                 300: { fontSize: 53, outlineThickness: 3, textY: 28.5, letterGap: 3 },
-                400: { fontSize: 71, outlineThickness: 4, textY: 39, letterGap: 4 }
+                400: { fontSize: 71, outlineThickness: 4, textY: 39, letterGap: 4 },
+                128: { fontSize: 114, outlineThickness: 6.4, textY: 62.4, letterGap: 6.4 }
             },
             '2-outline': {
                 150: { fontSize: 12, outlineThickness: 1.3, textY: 15, letterGap: 1 },
                 200: { fontSize: 16, outlineThickness: 1.5, textY: 19.5, letterGap: 1 },
                 300: { fontSize: 25, outlineThickness: 2, textY: 29, letterGap: 2 },
-                400: { fontSize: 36, outlineThickness: 3, textY: 39, letterGap: 2 }
+                400: { fontSize: 36, outlineThickness: 3, textY: 39, letterGap: 2 },
+                128: { fontSize: 80, outlineThickness: 4.8, textY: 62.4, letterGap: 3.2 }
             },
             '2-plain': {
                 150: { fontSize: 19, outlineThickness: 1, textY: 14, letterGap: 1 },
                 200: { fontSize: 28, outlineThickness: 1, textY: 19, letterGap: 1 },
                 300: { fontSize: 40, outlineThickness: 2, textY: 29, letterGap: 2 },
-                400: { fontSize: 54, outlineThickness: 3, textY: 39, letterGap: 2 }
+                400: { fontSize: 54, outlineThickness: 3, textY: 39, letterGap: 2 },
+                128: { fontSize: 80, outlineThickness: 4.8, textY: 62.4, letterGap: 3.2 }
             },
             '3-outline': {
                 150: { fontSize: 10, outlineThickness: 1.6, textY: 14.5, letterGap: 0 },
                 200: { fontSize: 13, outlineThickness: 1.6, textY: 19, letterGap: 0 },
                 300: { fontSize: 22, outlineThickness: 2, textY: 29, letterGap: 0 },
-                400: { fontSize: 26, outlineThickness: 3, textY: 39, letterGap: 0 }
+                400: { fontSize: 26, outlineThickness: 3, textY: 39, letterGap: 0 },
+                128: { fontSize: 42, outlineThickness: 4.8, textY: 62.4, letterGap: 0 }
             },
             '3-plain': {
                 150: { fontSize: 12, outlineThickness: 1, textY: 14, letterGap: 0 },
                 200: { fontSize: 16, outlineThickness: 1, textY: 20, letterGap: 0 },
                 300: { fontSize: 22, outlineThickness: 2, textY: 29, letterGap: 0 },
-                400: { fontSize: 36, outlineThickness: 3, textY: 39, letterGap: 0 }
+                400: { fontSize: 36, outlineThickness: 3, textY: 39, letterGap: 0 },
+                128: { fontSize: 58, outlineThickness: 4.8, textY: 62.4, letterGap: 0 }
             }
         };
 
@@ -798,7 +886,8 @@
             150: { family: 'sans', weight: 400, fontSize: 13, outlineThickness: 1, textY: 14, letterGap: 1 },
             200: { family: 'sans', weight: 400, fontSize: 18, outlineThickness: 1, textY: 19, letterGap: 1 },
             300: { family: 'sans', weight: 400, fontSize: 25, outlineThickness: 2, textY: 29, letterGap: 2 },
-            400: { family: 'sans', weight: 400, fontSize: 36, outlineThickness: 3, textY: 39, letterGap: 2 }
+            400: { family: 'sans', weight: 400, fontSize: 36, outlineThickness: 3, textY: 39, letterGap: 2 },
+            128: { family: 'sans', weight: SLACK_EMOJI_FONT_WEIGHT, fontSize: 58, outlineThickness: 4.8, textY: 62.4, letterGap: 3.2 }
         };
         const loadedPixelifyWeights = new Set();
 
@@ -812,7 +901,7 @@
             VECTOR_RESOLUTIONS.forEach(resolution => {
                 resolutionFontSettings[resolution] = {
                     family: 'sans',
-                    weight: 400,
+                    weight: isSlackEmojiResolution(resolution) ? SLACK_EMOJI_FONT_WEIGHT : 400,
                     ...preset[resolution]
                 };
             });
@@ -851,7 +940,7 @@
                     letterGap: getPixelLetterGap()
                 };
             }
-            return resolutionFontSettings[resolution] || {
+            const settings = resolutionFontSettings[resolution] || {
                 family: 'sans',
                 weight: 400,
                 fontSize: 17,
@@ -859,6 +948,10 @@
                 textY: 19,
                 letterGap: 0
             };
+            if (isSlackEmojiResolution(resolution)) {
+                return { ...settings, weight: SLACK_EMOJI_FONT_WEIGHT };
+            }
+            return settings;
         }
 
         function getFontFamilyLabel(familyId) {
@@ -952,6 +1045,11 @@
         }
 
         function onLetterLayoutChange() {
+            if (shouldUseSlackColorShuffle()) {
+                refreshSlackEmojiAnimation(true);
+            } else {
+                resetSlackEmojiPalette();
+            }
             const { letterCount, outlineOn } = getLetterParams();
             applyLetterLayoutPreset(letterCount, outlineOn);
             syncVectorSettingsTable();
@@ -973,13 +1071,13 @@
             if (activeRes === BASE_RESOLUTION) {
                 const settings = getResolutionFontSettings(activeRes);
                 const gapNote = settings.letterGap > 0 ? ` • gap ${settings.letterGap}px` : '';
-                note.textContent = `${getPixelGlyphFontLabel()} at 100% — ${settings.fontSize}px glyph • outline 1px pixel • text start Y ${settings.textY}${gapNote}. Change to 150–400% to edit vector settings.`;
+                note.textContent = `${getPixelGlyphFontLabel()} at 100% — ${settings.fontSize}px glyph • outline 1px pixel • text start Y ${settings.textY}${gapNote}. Change to 150–400% or 128px to edit vector settings.`;
                 return;
             }
 
             const settings = getResolutionFontSettings(activeRes);
             const gapNote = settings.letterGap > 0 ? ` • gap ${settings.letterGap}px` : '';
-            note.textContent = `Previewing ${activeRes}% — ${getFontFamilyLabel(settings.family)} ${getFontWeightLabel(settings.weight)} • ${settings.fontSize}px • outline ${settings.outlineThickness}px • text Y ${settings.textY}px${gapNote}.`;
+            note.textContent = `Previewing ${formatResolutionLabel(activeRes)} — ${getFontFamilyLabel(settings.family)} ${getFontWeightLabel(settings.weight)} • ${settings.fontSize}px • outline ${settings.outlineThickness}px • text Y ${settings.textY}px${gapNote}.`;
         }
 
         function initFontResolutionTable() {
@@ -992,7 +1090,7 @@
                 row.dataset.resolution = String(resolution);
 
                 const resCell = document.createElement('td');
-                resCell.textContent = `${resolution}%`;
+                resCell.textContent = formatResolutionLabel(resolution);
 
                 const familyCell = document.createElement('td');
                 const weightCell = document.createElement('td');
@@ -1507,7 +1605,7 @@
             const tbody = document.getElementById('symbol-resolution-body');
             tbody.innerHTML = '';
 
-            [BASE_RESOLUTION, ...VECTOR_RESOLUTIONS].forEach(resolution => {
+            [BASE_RESOLUTION, ...SYMBOL_VECTOR_RESOLUTIONS].forEach(resolution => {
                 const row = document.createElement('tr');
                 row.dataset.resolution = String(resolution);
 
@@ -1833,27 +1931,31 @@
             pixels.forEach(([x, y]) => ctx.fillRect(x * scale, y * scale, scale, scale));
         }
 
-        function drawVectorCircleOutline(ctx, size, color, strokeWidth) {
-            const stroke = Math.max(0.5, strokeWidth);
+        function getVectorCircleMetrics(size, strokeWidth = 0) {
+            const stroke = Math.max(0, strokeWidth);
             const cx = size / 2;
             const cy = size / 2;
-            const r = (size - stroke * 3) / 2;
-            ctx.strokeStyle = color;
-            ctx.lineWidth = stroke;
-            ctx.beginPath();
-            ctx.arc(cx, cy, r, 0, Math.PI * 2);
-            ctx.stroke();
+            const r = strokeWidth > 0 ? (size - stroke * 3) / 2 : size / 2 - 1;
+            return { cx, cy, r };
         }
 
-        function drawVectorPillOutline(ctx, size, color, strokeWidth) {
-            const stroke = Math.max(0.5, strokeWidth);
+        function getVectorPillMetrics(size) {
             const x = size * 0.05;
             const w = size * 0.9;
             const h = size * 0.45;
             const y = size * 0.25;
             const r = h / 2;
-            ctx.strokeStyle = color;
-            ctx.lineWidth = stroke;
+            return { x, y, w, h, r };
+        }
+
+        function traceVectorCirclePath(ctx, size, strokeWidth = 0) {
+            const { cx, cy, r } = getVectorCircleMetrics(size, strokeWidth);
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        }
+
+        function traceVectorPillPath(ctx, size) {
+            const { x, y, w, h, r } = getVectorPillMetrics(size);
             ctx.beginPath();
             ctx.moveTo(x + r, y);
             ctx.lineTo(x + w - r, y);
@@ -1861,22 +1963,487 @@
             ctx.lineTo(x + r, y + h);
             ctx.arc(x + r, y + r, r, Math.PI / 2, -Math.PI / 2);
             ctx.closePath();
+        }
+
+        function drawVectorCircleOutline(ctx, size, color, strokeWidth) {
+            const stroke = Math.max(0.5, strokeWidth);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = stroke;
+            traceVectorCirclePath(ctx, size, strokeWidth);
             ctx.stroke();
         }
 
-        async function drawLetterIconVector(canvas, color) {
+        function drawVectorPillOutline(ctx, size, color, strokeWidth) {
+            const stroke = Math.max(0.5, strokeWidth);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = stroke;
+            traceVectorPillPath(ctx, size);
+            ctx.stroke();
+        }
+
+        function hashString(value) {
+            let hash = 2166136261;
+            for (let i = 0; i < value.length; i++) {
+                hash ^= value.charCodeAt(i);
+                hash = Math.imul(hash, 16777619);
+            }
+            return hash >>> 0;
+        }
+
+        function hslToHex(h, s, l) {
+            const hue = ((h % 360) + 360) % 360;
+            const sat = Math.max(0, Math.min(100, s)) / 100;
+            const light = Math.max(0, Math.min(100, l)) / 100;
+            const c = (1 - Math.abs(2 * light - 1)) * sat;
+            const x = c * (1 - Math.abs(((hue / 60) % 2) - 1));
+            const m = light - c / 2;
+            let r = 0;
+            let g = 0;
+            let b = 0;
+            if (hue < 60) { r = c; g = x; }
+            else if (hue < 120) { r = x; g = c; }
+            else if (hue < 180) { g = c; b = x; }
+            else if (hue < 240) { g = x; b = c; }
+            else if (hue < 300) { r = x; b = c; }
+            else { r = c; b = x; }
+            const toHex = (channel) => Math.round((channel + m) * 255).toString(16).padStart(2, '0');
+            return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+        }
+
+        function relativeLuminanceFromRgb(r, g, b) {
+            const channel = (value) => {
+                const scaled = value / 255;
+                return scaled <= 0.03928 ? scaled / 12.92 : ((scaled + 0.055) / 1.055) ** 2.4;
+            };
+            return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
+        }
+
+        function pickReadableTextColorFromCanvas(ctx, x, y, width, height, canvasSize) {
+            const left = Math.max(0, Math.floor(x));
+            const top = Math.max(0, Math.floor(y - height / 2));
+            const right = Math.min(canvasSize, Math.ceil(x + width));
+            const bottom = Math.min(canvasSize, Math.ceil(y + height / 2));
+            const sampleWidth = Math.max(1, right - left);
+            const sampleHeight = Math.max(1, bottom - top);
+            const { data } = ctx.getImageData(left, top, sampleWidth, sampleHeight);
+            let total = 0;
+            let count = 0;
+            for (let i = 0; i < data.length; i += 4) {
+                if (data[i + 3] === 0) {
+                    continue;
+                }
+                total += relativeLuminanceFromRgb(data[i], data[i + 1], data[i + 2]);
+                count += 1;
+            }
+            const luminance = count > 0 ? total / count : 0.5;
+            return luminance > 0.45 ? '#000000' : '#ffffff';
+        }
+
+        function generateSlackEmojiPalette(letters, letterCount, outlineOn) {
+            const baseHash = hashString(`${letters}|${letterCount}|${outlineOn ? 1 : 0}`);
+            const roll = Math.random();
+            const primaryHue = (baseHash % 360 + roll * 72) % 360;
+            const secondaryHue = (primaryHue + 35 + (baseHash % 90) + roll * 48) % 360;
+            const accentHue = (secondaryHue + 55 + (baseHash % 60)) % 360;
+            const saturation = 62 + (baseHash % 28);
+            const lightness = 46 + (baseHash % 18);
+            return {
+                colors: [
+                    hslToHex(primaryHue, saturation, lightness),
+                    hslToHex(secondaryHue, saturation - 4, lightness + 6),
+                    hslToHex(accentHue, saturation + 6, lightness - 4)
+                ]
+            };
+        }
+
+        function createSlackCanvasFill(ctx, size, palette, angleDeg = 135) {
+            const rad = (angleDeg * Math.PI) / 180;
+            const cx = size / 2;
+            const cy = size / 2;
+            const radius = size * 0.72;
+            const x0 = cx - Math.cos(rad) * radius;
+            const y0 = cy - Math.sin(rad) * radius;
+            const x1 = cx + Math.cos(rad) * radius;
+            const y1 = cy + Math.sin(rad) * radius;
+            const gradient = ctx.createLinearGradient(x0, y0, x1, y1);
+            gradient.addColorStop(0, palette.colors[0]);
+            gradient.addColorStop(0.5, palette.colors[1]);
+            gradient.addColorStop(1, palette.colors[2]);
+            return gradient;
+        }
+
+        function easeOutElastic(t) {
+            const c4 = (2 * Math.PI) / 3;
+            if (t === 0) {
+                return 0;
+            }
+            if (t === 1) {
+                return 1;
+            }
+            return (2 ** (-10 * t)) * Math.sin((t * 10 - 0.75) * c4) + 1;
+        }
+
+        function easeInElastic(t) {
+            const c4 = (2 * Math.PI) / 3;
+            if (t === 0) {
+                return 0;
+            }
+            if (t === 1) {
+                return 1;
+            }
+            return -((2 ** (10 * t - 10)) * Math.sin((t * 10 - 10.75) * c4));
+        }
+
+        function easeOutCubic(t) {
+            return 1 - (1 - t) ** 3;
+        }
+
+        function computeSlackHeroFontSize(ctx, char, renderSettings, canvasSize) {
+            const probeSize = 100;
+            ctx.font = buildVectorFontCss(probeSize, renderSettings);
+            const width = ctx.measureText(char).width;
+            const height = probeSize * 1.05;
+            const target = canvasSize * 0.92;
+            return Math.min((target / width) * probeSize, (target / height) * probeSize);
+        }
+
+        function resolveSlackEmojiTextColor() {
+            return SLACK_EMOJI_LETTER_COLOR;
+        }
+
+        async function drawSlackEmojiFrame(canvas, color, frame, options = {}) {
+            await ensureResolutionFont(SLACK_EMOJI_RESOLUTION);
+            const vectorSettings = getResolutionFontSettings(SLACK_EMOJI_RESOLUTION);
+            const size = SLACK_EMOJI_RESOLUTION;
+            const { letters, letterCount } = getLetterParams();
+            const renderSettings = {
+                ...vectorSettings,
+                weight: SLACK_EMOJI_FONT_WEIGHT,
+                fontSize: getSlackColorShuffleFontSize(letterCount),
+                textY: size / 2
+            };
+            const ctx = canvas.getContext('2d');
+            canvas.width = size;
+            canvas.height = size;
+            ctx.clearRect(0, 0, size, size);
+
+            fillSlackCanvas(
+                ctx,
+                size,
+                createSlackCanvasFill(ctx, size, frame.palette, frame.gradientAngle ?? 135)
+            );
+
+            const textColor = resolveSlackEmojiTextColor();
+            ctx.fillStyle = textColor;
+
+            if (frame.mode === 'reveal') {
+                const ch = letters[frame.charIndex];
+                if (ch) {
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    const heroSize = computeSlackHeroFontSize(ctx, ch, renderSettings, size);
+                    const fontSize = heroSize * frame.scale;
+                    ctx.font = buildVectorFontCss(fontSize, renderSettings);
+                    const opacity = frame.opacity ?? 1;
+                    if (opacity > 0) {
+                        ctx.globalAlpha = opacity;
+                        ctx.fillText(ch, size / 2, size / 2);
+                        ctx.globalAlpha = 1;
+                    }
+                }
+            } else {
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.font = buildVectorFontCss(renderSettings.fontSize, renderSettings);
+                const chars = letters.split('');
+                const letterSpacing = renderSettings.letterGap;
+                const widths = chars.map(ch => ctx.measureText(ch).width);
+                const totalWidth = widths.reduce((sum, w) => sum + w, 0) + letterSpacing * (chars.length - 1);
+                let x = (size - totalWidth) / 2;
+                const centerY = renderSettings.textY;
+                const popScale = frame.popScale ?? 1;
+                const cx = size / 2;
+                const cy = centerY;
+
+                ctx.save();
+                if (popScale !== 1) {
+                    ctx.translate(cx, cy);
+                    ctx.scale(popScale, popScale);
+                    ctx.translate(-cx, -cy);
+                }
+                chars.forEach((ch, i) => {
+                    ctx.fillText(ch, x, centerY);
+                    x += widths[i] + (i < chars.length - 1 ? letterSpacing : 0);
+                });
+                ctx.restore();
+            }
+
+            applySlackCanvasTransparencyMask(ctx, size);
+        }
+
+        function traceSlackCanvasPath(ctx, size, radius) {
+            const r = Math.min(radius, size / 2);
+            ctx.beginPath();
+            if (typeof ctx.roundRect === 'function') {
+                ctx.roundRect(0, 0, size, size, r);
+                return;
+            }
+            ctx.moveTo(r, 0);
+            ctx.lineTo(size - r, 0);
+            ctx.quadraticCurveTo(size, 0, size, r);
+            ctx.lineTo(size, size - r);
+            ctx.quadraticCurveTo(size, size, size - r, size);
+            ctx.lineTo(r, size);
+            ctx.quadraticCurveTo(0, size, 0, size - r);
+            ctx.lineTo(0, r);
+            ctx.quadraticCurveTo(0, 0, r, 0);
+            ctx.closePath();
+        }
+
+        function fillSlackCanvas(ctx, size, fillStyle) {
+            traceSlackCanvasPath(ctx, size, SLACK_CANVAS_CORNER_RADIUS);
+            ctx.fillStyle = fillStyle;
+            ctx.fill();
+        }
+
+        function applySlackCanvasTransparencyMask(ctx, size) {
+            ctx.save();
+            traceSlackCanvasPath(ctx, size, SLACK_CANVAS_CORNER_RADIUS);
+            ctx.globalCompositeOperation = 'destination-in';
+            ctx.fillStyle = '#000000';
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function writeTransparentSlackGifFrame(gif, imageData, size, delayCs) {
+            const { quantize, applyPalette, prequantize } = exports;
+            const rgba = new Uint8ClampedArray(imageData.data);
+            const transparentIndex = 0;
+
+            prequantize(rgba, { oneBitAlpha: 127, roundRGB: 5, roundAlpha: 10 });
+
+            let palette = quantize(rgba, 255, {
+                format: 'rgba4444',
+                clearAlpha: false,
+                oneBitAlpha: 127
+            });
+
+            const existingTransparent = palette.findIndex((color) => color.length >= 4 && color[3] === 0);
+            if (existingTransparent === -1) {
+                palette.unshift([0, 0, 0, 0]);
+            } else if (existingTransparent !== 0) {
+                const [transparentColor] = palette.splice(existingTransparent, 1);
+                palette.unshift(transparentColor);
+            }
+
+            while (palette.length < 256) {
+                palette.push([0, 0, 0, 255]);
+            }
+
+            const index = applyPalette(rgba, palette, 'rgba4444');
+            for (let i = 0; i < rgba.length; i += 4) {
+                if (rgba[i + 3] < 128) {
+                    index[i / 4] = transparentIndex;
+                }
+            }
+
+            gif.writeFrame(index, size, size, {
+                palette,
+                delay: delayCs,
+                transparent: true,
+                transparentIndex,
+                dispose: 2
+            });
+        }
+
+        function resetSlackEmojiPalette() {
+            slackEmojiPalette = null;
+            slackEmojiAnimationFrames = [];
+            slackEmojiFrameIndex = 0;
+            stopSlackEmojiAnimation();
+        }
+
+        function stopSlackEmojiAnimation() {
+            if (slackEmojiAnimationTimer !== null) {
+                clearTimeout(slackEmojiAnimationTimer);
+                slackEmojiAnimationTimer = null;
+            }
+        }
+
+        async function buildSlackAnimationSequence() {
+            const { letterCount, letters, outlineOn } = getLetterParams();
+            const chars = [...letters];
+            const frames = [];
+            const seed = `${letters}|${letterCount}|${outlineOn ? 1 : 0}|${Math.random()}`;
+            const baseHash = hashString(seed);
+            const finalPalette = generateSlackEmojiPalette(letters, letterCount, outlineOn);
+            const revealTiming = getSlackRevealTiming(letterCount);
+            const assembleTiming = getSlackAssembleTiming(letterCount);
+
+            chars.forEach((ch, charIndex) => {
+                const palette = generateSlackEmojiPalette(letters, letterCount, outlineOn);
+                const baseAngle = ((baseHash % 360) + charIndex * 85) % 360;
+
+                for (let step = 0; step < revealTiming.steps; step += 1) {
+                    const t = step / Math.max(1, revealTiming.steps - 1);
+                    const scaleEased = easeOutElastic(t);
+                    const opacityEased = easeOutCubic(t);
+                    const scale = SLACK_REVEAL_START_SCALE
+                        + (SLACK_REVEAL_END_SCALE - SLACK_REVEAL_START_SCALE) * scaleEased;
+                    frames.push({
+                        mode: 'reveal',
+                        charIndex,
+                        scale,
+                        opacity: Math.min(1, opacityEased),
+                        palette,
+                        gradientAngle: baseAngle + t * 55,
+                        delayMs: revealTiming.frameMs
+                    });
+                }
+
+                for (let step = 0; step < revealTiming.exitSteps; step += 1) {
+                    const t = (step + 1) / revealTiming.exitSteps;
+                    const fadeEased = easeInElastic(t);
+                    const scaleEased = easeInElastic(t);
+                    const exitScale = SLACK_REVEAL_END_SCALE + (SLACK_REVEAL_START_SCALE - SLACK_REVEAL_END_SCALE) * scaleEased * 0.35;
+                    frames.push({
+                        mode: 'reveal',
+                        charIndex,
+                        scale: exitScale,
+                        opacity: Math.max(0, 1 - fadeEased),
+                        palette,
+                        gradientAngle: baseAngle + 55 + t * 20,
+                        delayMs: revealTiming.exitFrameMs
+                    });
+                }
+            });
+
+            for (let step = 0; step < assembleTiming.frames; step += 1) {
+                const t = (step + 1) / assembleTiming.frames;
+                frames.push({
+                    mode: 'final',
+                    palette: finalPalette,
+                    gradientAngle: (baseHash % 360) + 40 + t * 18,
+                    popScale: 0.78 + easeOutElastic(t) * 0.22,
+                    delayMs: assembleTiming.frameMs
+                });
+            }
+
+            const holdCount = Math.max(1, Math.round(SLACK_HOLD_MS / SLACK_HOLD_FRAME_MS));
+            for (let i = 0; i < holdCount; i += 1) {
+                frames.push({
+                    mode: 'final',
+                    palette: finalPalette,
+                    gradientAngle: (baseHash % 360) + 58 + (i / holdCount) * 22,
+                    delayMs: SLACK_HOLD_FRAME_MS
+                });
+            }
+
+            slackEmojiAnimationFrames = frames;
+        }
+
+        async function refreshSlackEmojiAnimation(forceNewPalettes = false) {
+            stopSlackEmojiAnimation();
+            if (!shouldUseSlackColorShuffle()) {
+                slackEmojiAnimationFrames = [];
+                slackEmojiPalette = null;
+                return;
+            }
+            if (forceNewPalettes || slackEmojiAnimationFrames.length === 0) {
+                await buildSlackAnimationSequence();
+                slackEmojiFrameIndex = 0;
+            }
+            slackEmojiPalette = slackEmojiAnimationFrames[slackEmojiFrameIndex]?.palette ?? null;
+        }
+
+        function startSlackEmojiAnimation() {
+            stopSlackEmojiAnimation();
+            if (!shouldUseSlackColorShuffle() || slackEmojiAnimationFrames.length === 0) {
+                return;
+            }
+            const frame = slackEmojiAnimationFrames[slackEmojiFrameIndex];
+            slackEmojiAnimationTimer = setTimeout(
+                tickSlackEmojiAnimation,
+                frame?.delayMs ?? SLACK_REVEAL_DEFAULT_FRAME_MS
+            );
+        }
+
+        async function tickSlackEmojiAnimation() {
+            slackEmojiAnimationTimer = null;
+            if (!shouldUseSlackColorShuffle()) {
+                return;
+            }
+            slackEmojiFrameIndex = (slackEmojiFrameIndex + 1) % slackEmojiAnimationFrames.length;
+            const frame = slackEmojiAnimationFrames[slackEmojiFrameIndex];
+            slackEmojiPalette = frame.palette;
+            const canvasScaled = document.getElementById('preview-scaled');
+            const theme = document.querySelector('input[name="theme"]:checked').value;
+            const color = theme === 'light' ? 'black' : 'white';
+            await drawSlackEmojiFrame(canvasScaled, color, frame);
+            slackEmojiAnimationTimer = setTimeout(
+                tickSlackEmojiAnimation,
+                frame.delayMs ?? SLACK_REVEAL_DEFAULT_FRAME_MS
+            );
+        }
+
+        function applySlackEmojiPalette(forceNew = false) {
+            refreshSlackEmojiAnimation(forceNew);
+            return shouldUseSlackColorShuffle();
+        }
+
+        function updateSlackColorUi() {
+            const group = document.getElementById('slack-color-group');
+            const note = document.getElementById('slack-color-note');
+            const previewContainer = document.getElementById('preview-container');
+            const canvasScaled = document.getElementById('preview-scaled');
+            const show = shouldUseSlackColorShuffle();
+            group.classList.toggle('hidden', !show);
+            previewContainer.classList.toggle('slack-shuffle-preview', show);
+            canvasScaled.style.cursor = show ? 'pointer' : '';
+            if (!show) {
+                return;
+            }
+            note.textContent = slackEmojiPalette
+                ? 'Each letter starts oversized and invisible, zooms to full size, fades out, then the next letter appears. Final layout holds for 2s. Click the preview to restart.'
+                : '128px Slack emoji mode plays a dramatic letter reveal animation. Click the preview to restart.';
+            updateExportButtonLabel();
+        }
+
+        function updateExportButtonLabel() {
+            const exportBtn = document.getElementById('export-btn');
+            const isSlackGif = currentTab === 'letters' && shouldUseSlackColorShuffle();
+            exportBtn.childNodes.forEach((node) => {
+                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                    node.textContent = isSlackGif ? ' Export GIF' : ' Export';
+                }
+            });
+        }
+
+        async function drawLetterIconVector(canvas, color, options = {}) {
             const resolution = getResolution();
             await ensureResolutionFont(resolution);
             const vectorSettings = getResolutionFontSettings(resolution);
             const size = getOutputSize();
             const { letterCount, letters, outlineOn } = getLetterParams();
             const resolvedColor = resolveLetterVectorColor(color, resolution);
+            const palette = options.palette || slackEmojiPalette;
+            const useSlackPalette = isSlackEmojiResolution(resolution) && palette;
+            const renderSettings = useSlackPalette
+                ? {
+                    ...vectorSettings,
+                    weight: SLACK_EMOJI_FONT_WEIGHT,
+                    fontSize: getSlackColorShuffleFontSize(letterCount),
+                    textY: size / 2
+                }
+                : vectorSettings;
             const ctx = canvas.getContext('2d');
             canvas.width = size;
             canvas.height = size;
             ctx.clearRect(0, 0, size, size);
 
-            if (outlineOn) {
+            if (useSlackPalette) {
+                fillSlackCanvas(ctx, size, createSlackCanvasFill(ctx, size, palette));
+            } else if (outlineOn) {
                 if (letterCount === 1) {
                     drawVectorCircleOutline(ctx, size, resolvedColor, vectorSettings.outlineThickness);
                 } else {
@@ -1884,22 +2451,31 @@
                 }
             }
 
-            ctx.font = buildVectorFontCss(vectorSettings.fontSize, vectorSettings);
-            ctx.fillStyle = resolvedColor;
+            ctx.font = buildVectorFontCss(renderSettings.fontSize, renderSettings);
             ctx.textAlign = 'left';
             ctx.textBaseline = 'middle';
 
             const chars = letters.split('');
-            const letterSpacing = vectorSettings.letterGap;
+            const letterSpacing = renderSettings.letterGap;
             const widths = chars.map(ch => ctx.measureText(ch).width);
             const totalWidth = widths.reduce((sum, w) => sum + w, 0) + letterSpacing * (chars.length - 1);
             let x = (size - totalWidth) / 2;
-            const centerY = vectorSettings.textY;
+            const centerY = renderSettings.textY;
+
+            if (useSlackPalette) {
+                ctx.fillStyle = SLACK_EMOJI_LETTER_COLOR;
+            } else {
+                ctx.fillStyle = resolvedColor;
+            }
 
             chars.forEach((ch, i) => {
                 ctx.fillText(ch, x, centerY);
                 x += widths[i] + (i < chars.length - 1 ? letterSpacing : 0);
             });
+
+            if (useSlackPalette) {
+                applySlackCanvasTransparencyMask(ctx, size);
+            }
 
             return letters;
         }
@@ -2263,6 +2839,45 @@
             link.click();
         }
 
+        function downloadGifBytes(bytes, filename) {
+            const blob = new Blob([bytes], { type: 'image/gif' });
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+
+        async function exportSlackEmojiGif(filename) {
+            const { GIFEncoder } = exports;
+            if (!GIFEncoder) {
+                throw new Error('GIF encoder failed to load');
+            }
+            stopSlackEmojiAnimation();
+            if (slackEmojiAnimationFrames.length === 0) {
+                await refreshSlackEmojiAnimation(true);
+            }
+            const canvas = document.getElementById('export-light');
+            const size = SLACK_EMOJI_RESOLUTION;
+            const gif = GIFEncoder();
+            const frames = slackEmojiAnimationFrames.slice();
+
+            for (let i = 0; i < frames.length; i += 1) {
+                const frame = frames[i];
+                await drawSlackEmojiFrame(canvas, 'black', frame);
+                const imageData = canvas.getContext('2d').getImageData(0, 0, size, size);
+                writeTransparentSlackGifFrame(
+                    gif,
+                    imageData,
+                    size,
+                    Math.max(1, Math.round(frame.delayMs / 10))
+                );
+            }
+            gif.finish();
+            downloadGifBytes(new Uint8Array(gif.bytes()), `icon_${filename}_128.gif`);
+            startSlackEmojiAnimation();
+        }
+
         function canvasToPngBytes(canvas) {
             return new Promise((resolve, reject) => {
                 canvas.toBlob((blob) => {
@@ -2522,7 +3137,12 @@
                 const theme = document.querySelector('input[name="theme"]:checked').value;
                 const color = theme === 'light' ? 'black' : 'white';
                 if (useVectorLetters) {
-                    await drawLetterIconVector(canvasScaled, color);
+                    if (shouldUseSlackColorShuffle() && slackEmojiAnimationFrames.length > 0) {
+                        const frame = slackEmojiAnimationFrames[slackEmojiFrameIndex];
+                        await drawSlackEmojiFrame(canvasScaled, color, frame);
+                    } else {
+                        await drawLetterIconVector(canvasScaled, color);
+                    }
                 } else {
                     const symbolKey = SYMBOL_KEYS[selectedSymbol];
                     if (editedPixels) {
@@ -2551,6 +3171,7 @@
         }
 
         async function generatePreview() {
+            await refreshSlackEmojiAnimation(false);
             const theme = document.querySelector('input[name="theme"]:checked').value;
             const color = theme === 'light' ? 'black' : 'white';
             const canvasActual = document.getElementById('preview-actual');
@@ -2564,10 +3185,20 @@
                 const renderMode = isHighResolution() ? 'vector' : 'pixel';
                 const fontSettings = getResolutionFontSettings(getResolution());
                 const gapSpec = fontSettings.letterGap > 0 ? ` • gap ${fontSettings.letterGap}px` : '';
-                const fontSpec = isHighResolution()
-                    ? ` • ${getFontFamilyLabel(fontSettings.family)} ${getFontWeightLabel(fontSettings.weight)} ${fontSettings.fontSize}px • outline ${fontSettings.outlineThickness}px • text Y ${fontSettings.textY}px${gapSpec}`
-                    : ` • ${fontSettings.label} ${fontSettings.fontSize}px glyph • outline 1px • text start Y ${fontSettings.textY}${gapSpec}`;
-                specText = `16×16 base • ${getResolution()}% → ${outSize}×${outSize}px • ${renderMode}${fontSpec} • ${letterCount} letter${letterCount > 1 ? 's' : ''} • "${letters}" • outline ${outlineOn ? 'on' : 'off'}${!outlineOn && letterCount > 1 ? ' • large' : ''}`;
+                const shuffleFontSize = getSlackColorShuffleFontSize(letterCount);
+                const fontSpec = slackEmojiPalette
+                    ? ` • ${getFontFamilyLabel(fontSettings.family)} ${getFontWeightLabel(fontSettings.weight)} ${shuffleFontSize}px • text Y ${outSize / 2}px • white text${gapSpec}`
+                    : isHighResolution()
+                        ? ` • ${getFontFamilyLabel(fontSettings.family)} ${getFontWeightLabel(fontSettings.weight)} ${fontSettings.fontSize}px • outline ${fontSettings.outlineThickness}px • text Y ${fontSettings.textY}px${gapSpec}`
+                        : ` • ${fontSettings.label} ${fontSettings.fontSize}px glyph • outline 1px • text start Y ${fontSettings.textY}${gapSpec}`;
+                const resLabel = isSlackEmojiResolution(getResolution())
+                    ? `${SLACK_EMOJI_RESOLUTION}×${SLACK_EMOJI_RESOLUTION}px`
+                    : `${getResolution()}% → ${outSize}×${outSize}px`;
+                const colorSpec = slackEmojiPalette ? ' • dramatic letter reveal GIF' : '';
+                const outlineSpec = slackEmojiPalette
+                    ? ' • rounded fill'
+                    : ` • outline ${outlineOn ? 'on' : 'off'}${!outlineOn && letterCount > 1 ? ' • large' : ''}`;
+                specText = `16×16 base • ${resLabel} • ${renderMode}${fontSpec}${colorSpec} • ${letterCount} letter${letterCount > 1 ? 's' : ''} • "${letters}"${outlineSpec}`;
                 document.getElementById('letters').maxLength = letterCount;
                 updatePixelSettingsReadonly();
                 showEditorTools(false);
@@ -2599,7 +3230,11 @@
             }
             
             document.getElementById('specs').textContent = specText;
+            updateSlackColorUi();
             updateTheme();
+            if (shouldUseSlackColorShuffle()) {
+                startSlackEmojiAnimation();
+            }
         }
 
         async function exportIcons() {
@@ -2608,6 +3243,18 @@
             const resSuffix = getResolutionFileSuffix();
 
             if (currentTab === 'letters') {
+                if (shouldUseSlackColorShuffle()) {
+                    const exportBtn = document.getElementById('export-btn');
+                    const originalDisabled = exportBtn.disabled;
+                    exportBtn.disabled = true;
+                    try {
+                        const filename = getLetterParams().letters;
+                        await exportSlackEmojiGif(filename);
+                    } finally {
+                        exportBtn.disabled = originalDisabled;
+                    }
+                    return;
+                }
                 const filename = await drawLetterIconForExport(canvasLight, 'black');
                 await drawLetterIconForExport(canvasDark, 'white');
                 downloadCanvasPng(canvasLight, `icon_${filename}_light${resSuffix}.png`);
@@ -2675,6 +3322,7 @@
         function updateExportButton() {
             const isSymbols = currentTab === 'symbols';
             document.getElementById('export-split').classList.toggle('has-menu', isSymbols);
+            updateExportButtonLabel();
             closeExportMenu();
         }
 
@@ -2693,6 +3341,12 @@
         }
 
         function switchTab(tabId) {
+            if (tabId === 'symbols' && isSlackEmojiResolution(getResolution())) {
+                document.getElementById('res-100').checked = true;
+            }
+            if (tabId === 'symbols') {
+                resetSlackEmojiPalette();
+            }
             currentTab = tabId;
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.toggle('active', content.id === 'tab-' + tabId));
@@ -2814,6 +3468,14 @@
 
         function initPixelEditor() {
             const canvasScaled = document.getElementById('preview-scaled');
+
+            canvasScaled.addEventListener('click', async () => {
+                if (!shouldUseSlackColorShuffle()) {
+                    return;
+                }
+                await refreshSlackEmojiAnimation(true);
+                generatePreview();
+            });
             
             canvasScaled.addEventListener('mousedown', (e) => {
                 if (currentTab !== 'symbols') return;
@@ -2998,8 +3660,22 @@
         document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
         document.querySelectorAll('input[name="letterCount"]').forEach(radio => radio.addEventListener('change', onLetterLayoutChange));
         document.querySelectorAll('input[name="theme"]').forEach(radio => radio.addEventListener('change', generatePreview));
-        document.querySelectorAll('input[name="resolution"]').forEach(radio => radio.addEventListener('change', generatePreview));
-        document.getElementById('letters').addEventListener('input', generatePreview);
+        document.querySelectorAll('input[name="resolution"]').forEach(radio => radio.addEventListener('change', () => {
+            if (shouldUseSlackColorShuffle()) {
+                refreshSlackEmojiAnimation(true);
+            } else {
+                resetSlackEmojiPalette();
+            }
+            generatePreview();
+        }));
+        document.getElementById('letters').addEventListener('input', () => {
+            if (shouldUseSlackColorShuffle()) {
+                refreshSlackEmojiAnimation(true);
+            } else {
+                resetSlackEmojiPalette();
+            }
+            generatePreview();
+        });
         document.getElementById('container-outline').addEventListener('change', onLetterLayoutChange);
         document.getElementById('export-btn').addEventListener('click', exportIcons);
         document.getElementById('export-menu-btn').addEventListener('click', (e) => {

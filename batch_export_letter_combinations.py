@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export all letter combinations at 100–400% in light and dark themes via the web app renderer."""
+"""Export all letter combinations at 100–400% and 128px Slack emoji in light and dark themes via the web app renderer."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "batch_output" / "Letter combination"
 REVIEW_PAD = 48
-RESOLUTIONS = [100, 150, 200, 300, 400]
+RESOLUTIONS = [100, 150, 200, 300, 400, 128]
 
 # Same specs as generate_batch_icons.py
 ICON_GROUPS: list[tuple[str, list[tuple[str, bool]]]] = [
@@ -145,7 +145,14 @@ def create_review_png(records: list[dict]) -> Path:
     label_h = 14
 
     def icon_size(res: int) -> int:
-        return 16 if res == 100 else round(res * 20 / 100)
+        if res == 100:
+            return 16
+        if res == 128:
+            return 128
+        return round(res * 20 / 100)
+
+    def resolution_label(res: int) -> str:
+        return "128px" if res == 128 else f"{res}%"
 
     max_cell = max(icon_size(r) for r in RESOLUTIONS)
     cell = max_cell
@@ -179,7 +186,7 @@ def create_review_png(records: list[dict]) -> Path:
         sz = icon_size(res)
         for theme in ("light", "dark"):
             cx = x0 + col * (cell + col_gap) + (cell - sz) // 2
-            label = f"{res}% {theme}"
+            label = f"{resolution_label(res)} {theme}"
             draw.text((cx, y0), label, fill=(80, 80, 80, 255), font=font)
             col += 1
 
